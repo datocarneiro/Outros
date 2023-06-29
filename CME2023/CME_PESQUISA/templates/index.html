@@ -30,10 +30,10 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: left;
+            align-items: center;
             min-height: 50%;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             padding: 15px;
             border: 0.2px scale3d;
             border-radius: 10px;
@@ -51,11 +51,19 @@
             border-color: #fff;
         }
     </style>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const notFoundMsg = document.getElementById('not-found-msg');
+    
+        if (urlParams.has('not-found')) {
+            notFoundMsg.style.display = 'block';
+        }
+    </script>
 </head>
 <body>
     <div class="center-div">
         <div class="search-div">
-            <h1 class = "h1" >Pesquisar na Planilha</h1>
+            <h1 class = "h1" ># A GISLAINE CONSULTA #</h1>
             <h2 class = "h1" > </h2>
             <form class = "form" method="POST" action="/" enctype="multipart/form-data">
                 <input type="file" name="file" accept=".xlsx, .xls, .csv, .pdf" required>
