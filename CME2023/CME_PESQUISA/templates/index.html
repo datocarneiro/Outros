@@ -21,9 +21,28 @@
             height: 100vh;
         }
 
-        .h1, form {
-          color: #808080;
-    
+        .h1 {
+          color: #fff; /*branco*/
+          width: 100%; /*caixa campo de digitação e botaão de*/
+        }
+        .h2 {
+          color: #000000; /*preto*/
+          display: block;
+        }
+        .form {
+          color: #fff; /*amarelo*/
+        }
+        .keyword {
+          color: #000000; /*preto*/
+        }
+        .busca {
+          font-size: 32px;
+          color: #000;
+          width: 400px; /* Defina a largura desejada */
+          height: 40px; /* Defina a altura desejada */
+        }
+        .botão {
+          align-items: right;
         }
         .search-div {
             background-color: #503850;
@@ -36,39 +55,32 @@
             max-width: 500px;
             padding: 15px;
             border: 0.2px scale3d;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
         }
-
-        .search-div input[type="text"],
-        .search-div input[type="submit"] {
+        .search-div input[type="text"], busca,  {
+            color: #000000;
             width: 100%;
         }
-
+        .search-div input[type="submit"] { 
+ pesquisa*/
+        }
         .btn-custom {
             background-color: #1b1c26;
             color: #fff;
             border-color: #fff;
+            float: right;
         }
     </style>
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const notFoundMsg = document.getElementById('not-found-msg');
-    
-        if (urlParams.has('not-found')) {
-            notFoundMsg.style.display = 'block';
-        }
-    </script>
 </head>
 <body>
     <div class="center-div">
         <div class="search-div">
             <h1 class = "h1" ># A GISLAINE CONSULTA #</h1>
-            <h2 class = "h1" > </h2>
-            <form class = "form" method="POST" action="/" enctype="multipart/form-data">
+            <form class = "form" method="POST" action="/"><enctype="multipart/form-data">
                 <input type="file" name="file" accept=".xlsx, .xls, .csv, .pdf" required>
                 <br>
-                <input type="text" name="keyword" placeholder="Digite sua busca" required>
+                <input class = "busca" type="text" name="keyword" placeholder="Digite sua busca" required> 
                 <br>
                 <br>
                 <input type="submit" value="Pesquisar" class="btn btn-custom">

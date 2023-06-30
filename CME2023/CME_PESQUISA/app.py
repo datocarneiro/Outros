@@ -22,8 +22,6 @@ def search_in_files(keyword, file_content):
             }
             resultados.append(resultado)
     return resultados
-
-
 @app.route('/', methods=['GET', 'POST'])
 def search_keyword():
     if request.method == 'POST':
