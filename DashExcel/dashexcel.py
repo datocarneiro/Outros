@@ -6,16 +6,13 @@ Lembre-se de substituir as configurações usuario, senha, url_login e arquivo_s
  URL de login e nome de arquivo desejado.
 O código acima usará o navegador Edge para fazer o download do relatório a cada 30 minutos.
  Certifique-se de ter configurado corretamente o Microsoft Edge WebDriver no seu ambiente.
-
- Certifique-se de ter o Microsoft Edge instalado e atualizado em seu sistema. Além disso, v
- erifique se você possui a versão correta do driver do Microsoft Edge (MicrosoftWebDriver) 
- para a versão do Edge instalada em seu sistema operacional.
-Após fazer essas modificações, o código deve funcionar corretamente com o navegador Microsoft Edge.
 '''
+
 
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from msedge.selenium_tools import EdgeOptions, Edge
 
 # Configurações iniciais
 usuario = "dashboard3"
@@ -24,11 +21,12 @@ url_login = "https://amplo.eship.com.br"
 arquivo_saida = "dashexp.xlsx"
 
 # Função para fazer o download do relatório
+
 def baixar_relatorio():
-    driver_options = webdriver.EdgeOptions()
+    driver_options = EdgeOptions()
     driver_options.use_chromium = True
     
-    driver = webdriver.Edge(options=driver_options)
+    driver = Edge(options=driver_options)
     
     driver.get(url_login)
     
