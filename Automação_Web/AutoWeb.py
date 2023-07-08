@@ -15,7 +15,7 @@ navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
 navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
 
 # Aguardar o carregamento da página
-time.sleep(5)
+time.sleep(7)
 
 # Selecionar a codificação em ISO-8859-1
 navegador.find_element(By.XPATH, '//*[@id="formulario"]/div[1]/div[2]/div/div[1]/div/div/div[2]/div[2]/div[1]/div/div[2]/div[1]/div/div[2]/div[2]/label').click()
