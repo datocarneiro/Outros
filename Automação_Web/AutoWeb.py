@@ -1,10 +1,9 @@
 import time
+import os
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.select import Select
 
 servico = Service(ChromeDriverManager().install())
 navegador = webdriver.Chrome(service=servico)
@@ -27,13 +26,24 @@ navegador.find_element(By.XPATH, '//*[@id="formulario"]/div[1]/div[2]/div/div[1]
 navegador.find_element(By.XPATH, '//*[@id="cFuncaoListarRemessas_Exportar"]/span').click()
 
 # Aguardar o download ser concluído
-time.sleep(30)
+time.sleep(20)
+
+# Renomear o arquivo para "dashexp.xlsx"
+nome_arquivo = "dashexp.xlsx"
+path_atual = "C:/Users/dato/OneDrive/Documentos/Datoo"  # Definir o diretório atual do script
+path_download = os.path.join(path_atual, nome_arquivo)
+
+if os.path.exists(path_download):
+    os.remove(path_download)  # Remover o arquivo anterior
+
+# Mover o arquivo baixado para o nome desejado
+os.rename(os.path.join(path_atual, "download.xlsx"), path_download)
 
 # Fechar o navegador
 #navegador.quit()
-print(input("deseja sair:(s/n)"))
+print(input("Deseja sair? (s/n): "))
 
 # Executar a função de download do relatório a cada 30 minutos
 while True:
     # fazer_download_relatorio()
-    time.sleep(1800)  # Esperar 30 minutos (1800 segundos) antes de realizar o próximo download
+    time.sleep(60)  # Esperar 1 minuto (60 segundos) antes de realizar o próximo download
