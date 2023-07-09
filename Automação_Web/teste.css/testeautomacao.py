@@ -11,10 +11,25 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 
 # Configuração das opções do Chrome
-servico = Service(ChromeDriverManager().install())
-navegador = webdriver.Chrome(service=servico)
+
+# Executar em modo headless (sem abrir janela do navegador)
+servico = Service(ChromeDriverManager().install()) # atualizar versão do selenium automaticamente
+opcoes = Options()
+opcoes.add_argument("--headless")    
+
+'''
+# habilitar se quiser visualizar as ações na tela 
+servico = Service(ChromeDriverManager().install()) # atualizar o selenium automaticamente oara a ultima versão
+'''
+
+# Obter o caminho absoluto do diretório atual
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 
 while True:
+    # modo de execução
+    navegador = webdriver.Chrome(service=servico, options=opcoes) # habilitar comando para execultar em modo off, ver linha 16
+    # navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
+
     # Criar uma instância do WebDriver e acessar a página de login
     navegador.get("https://amplo.eship.com.br/")
     navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
@@ -26,7 +41,7 @@ while True:
 
     # Abrir visualização para lista de 100
     navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
-    time.sleep(5)
+    time.sleep(1)
 
     # Palavras-chave a serem contadas
     palavras_chave = ["TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA"]
@@ -57,6 +72,7 @@ while True:
         proxima_pagina[0].click()
 
     # Preencher os resultados no arquivo HTML
+
     resultado_html = ""
     for palavra, contador in contador_palavras_chave.items():
         resultado_html += f"""
@@ -65,21 +81,21 @@ while True:
                 <td>{contador}</td>
             </tr>
         """
-
-    with open("resultado.html", "r") as arquivo:
+    navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
+    with open(os.path.join(diretorio_atual, "resultado.html"), "r") as arquivo:
         html = arquivo.read()
 
     # Inserir os resultados no arquivo HTML
     html = html.replace("<!-- Os resultados das palavras-chave serão preenchidos aqui -->", resultado_html)
 
-    with open("resultado.html", "w") as arquivo:
+    with open(os.path.join(diretorio_atual, "resultado.html"), "w") as arquivo:
         arquivo.write(html)
 
     # Abrir o arquivo no navegador
-    navegador.get(os.path.abspath("resultado.html"))
+    navegador.get("file://" + os.path.join(diretorio_atual, "resultado.html"))
 
     # Fechar o navegador
-    navegador.quit()
+    # navegador.quit()
 
     # Aguardar antes de repetir o ciclo
     time.sleep(30)

@@ -7,9 +7,10 @@ th,
 td {
     text-align: left;
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #13d023;
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #74a641;
+    color: white;
 }
