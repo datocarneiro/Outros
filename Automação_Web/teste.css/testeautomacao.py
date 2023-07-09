@@ -1,7 +1,5 @@
 import time
 import os
-from tabulate import tabulate
-import pandas as pd
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -13,22 +11,11 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 
 # Configuração das opções do Chrome
-
-# Executar em modo headless (sem abrir janela do navegador)
-servico = Service(ChromeDriverManager().install()) # atualizar versão do selenium automaticamente
-opcoes = Options()
-opcoes.add_argument("--headless")    
-
-'''
-# habilitar se quiser visualizar as ações na tela 
 servico = Service(ChromeDriverManager().install())
-'''
+navegador = webdriver.Chrome(service=servico)
 
 while True:
-    # Criar uma instância do WebDriver
-    # navegador = webdriver.Chrome(service=servico, options=opcoes) # habiitar para modo headless (sem abrir janela do navegador) ver linha 15
-    navegador = webdriver.Chrome(service=servico) # habiitar para modo de visualização (abrir janela do navegador) ver linha 22
-    # Acessar a página de login
+    # Criar uma instância do WebDriver e acessar a página de login
     navegador.get("https://amplo.eship.com.br/")
     navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
     navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
@@ -39,25 +26,24 @@ while True:
 
     # Abrir visualização para lista de 100
     navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
-    time.sleep(3)
- 
+    time.sleep(5)
+
     # Palavras-chave a serem contadas
-    palavras_chave = ["TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA","TESTE1", "TESTE2"]
+    palavras_chave = ["TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA"]
     contador_palavras_chave = {palavra: 0 for palavra in palavras_chave}
 
-    while True: 
+    while True:
         try:
             # Obter elementos com a soma das palavras-chave
-            elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]') 
+            elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]')
 
-            time.sleep(3) # tempo de captura de palavra chave, ajustar de acordo com a conexão de internet local.
-
+            time.sleep(4)
             # Contagem das palavras-chave nos elementos da página atual
             for elemento in elementos:
                 conteudo_elemento = elemento.text
                 for palavra in palavras_chave:
                     contador_palavras_chave[palavra] += conteudo_elemento.count(palavra)
-        
+
         except NoSuchElementException:
             # XPath não corresponde a nenhum elemento na página
             break
@@ -70,14 +56,27 @@ while True:
         # Ir para a próxima página
         proxima_pagina[0].click()
 
-    # Criar um DataFrame com base no dicionário contador_palavras_chave
-    df = pd.DataFrame.from_dict(contador_palavras_chave, orient='index', columns=['Quantidade'])
+    # Preencher os resultados no arquivo HTML
+    resultado_html = ""
+    for palavra, contador in contador_palavras_chave.items():
+        resultado_html += f"""
+            <tr>
+                <td>{palavra}</td>
+                <td>{contador}</td>
+            </tr>
+        """
 
-    # Transformar o DataFrame em uma lista de listas
-    data = df.reset_index().values.tolist()
+    with open("resultado.html", "r") as arquivo:
+        html = arquivo.read()
 
-    # Exibir resultados em formato de grid, sem índice
-    print(tabulate(data, headers=df.columns, tablefmt='grid', showindex=False))
+    # Inserir os resultados no arquivo HTML
+    html = html.replace("<!-- Os resultados das palavras-chave serão preenchidos aqui -->", resultado_html)
+
+    with open("resultado.html", "w") as arquivo:
+        arquivo.write(html)
+
+    # Abrir o arquivo no navegador
+    navegador.get(os.path.abspath("resultado.html"))
 
     # Fechar o navegador
     navegador.quit()
