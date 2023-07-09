@@ -81,7 +81,7 @@ while True:
                 <td>{contador}</td>
             </tr>
         """
-    navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
+    navegador = webdriver.Chrome(service=servico) # abrir o navegador para apresentar o resultado
     with open(os.path.join(diretorio_atual, "resultado.html"), "r") as arquivo:
         html = arquivo.read()
 
