@@ -62,28 +62,6 @@ while True:
             # XPath não corresponde a nenhum elemento na página
             break
                
-        # Verificar se há próxima página
-        # //*[@id="FormListarRemessas"]/ul/li[7]
-        # //*[@id="FormListarRemessas"]/ul/li[7]/a
-        # //*[@id="FormListarRemessas"]/ul/li[6]/a/svg
-        # //*[@id="FormListarRemessas"]/ul/li[8]/a/svg
-        #
-        # //*[@id="FormListarRemessas"]/ul/li[6]/a
-        # //*[@id="FormListarRemessas"]/ul/li[6]/a
-        # //*[@id="FormListarRemessas"]/ul/li[6]/a
-        # //*[@id="FormListarRemessas"]/ul/li[6]/a/svg
-        # //*[@id="FormListarRemessas"]/ul/li[6]
-        # //*[@id="FormListarRemessas"]/ul/li[8]
-        # //*[@id="FormListarRemessas"]/ul/li[8]
-        # #FormListarRemessas > ul > li.waves-effect.item_paginacao.right_next
-        # #FormListarRemessas > ul > li.disabled.item_paginacao.right_next
-        # //*[@id="FormListarRemessas"]/ul/li[8]/a/svg
-        # //*[@id="FormListarRemessas"]/ul/li[8]/a/svg/path
-        # //*[@id="FormListarRemessas"]/ul/li[8]
-        # /html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]
-        # /html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]/a/svg
-        # /html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]/a/svg
-
         proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
 
         if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
