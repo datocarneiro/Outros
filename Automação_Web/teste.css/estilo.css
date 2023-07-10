@@ -1,16 +1,24 @@
 table {
     border-collapse: collapse;
-    width: 400px;
+    color: rgb(0, 0, 0);
+    width:500px;
+    background-color: rgb(217, 217, 217);
+
 }
 
 th,
 td {
     text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #13d023;
+    padding: 10px;
+    border-bottom: 3px solid #358a5b;
 }
 
 th {
-    background-color: #74a641;
+    background-color: #567b30;
     color: white;
+}
+
+.replace {
+    color: blue;
+
 }
