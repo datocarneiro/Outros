@@ -27,6 +27,7 @@ while True:
     habilitar se quiser visualizar as ações na tela 
     navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
     '''
+
     # Acessar a página de login
     navegador.get("https://amplo.eship.com.br/")
     navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
@@ -66,12 +67,13 @@ while True:
         confirmar_button = navegador.find_element(By.XPATH, '//*[@id="cFuncaoListarRemessas_CheckAvancarRemessa_Confirmar"]/span')
         confirmar_button.click()
         time.sleep(5)
+
     except NoSuchElementException:
         navegador.quit()  # Fechar o navegador
-        time.sleep(15)
+        time.sleep(180)
         continue  # Reiniciar o loop
 
     navegador.quit()  # Fechar o navegador
 
-    time.sleep(15)
+    time.sleep(180)
     continue  # Reiniciar o loop
