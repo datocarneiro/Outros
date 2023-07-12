@@ -32,18 +32,19 @@
 
 <body>
     <nav>
-        <h1>Contagem das Palavras-Chave</h1>
+        <h3>Dashboard Expedição</h3>
     </nav>
     <table>
+        <!--
         <tr>
-            <th>Transporte</th>
+            <th>Transporte</th> cabelho
         </tr>
-
+         -->
         {% for palavra, quantidade in resultados.items() %}
         {% if loop.index0 % 4 == 0 %}
         <tr>
             {% endif %}
-            <td>{{ palavra }} <br> <h1>{{ quantidade }}</h1></td>
+            <td><h2>{{ palavra }}</h2> <br> <h1>{{ quantidade }}</h1></td>
             {% if (loop.index + 1) % 5 == 0 or loop.last %}
         </tr>
         {% endif %}
