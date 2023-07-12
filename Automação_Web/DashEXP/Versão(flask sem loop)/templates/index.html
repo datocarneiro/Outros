@@ -34,15 +34,19 @@
     <h1>Contagem das Palavras-Chave</h1>
 
     <table>
+        <!--
         <tr>
-            <th>Palavra-Chave</th>
-            <th>Quantidade</th>
+            <th>Transporte</th> cabelho
         </tr>
+            -->
         {% for palavra, quantidade in resultados.items() %}
+        {% if loop.index0 % 4 == 0 %}
         <tr>
-            <td>{{ palavra }}</td>
-            <td>{{ quantidade }}</td>
+            {% endif %}
+            <td><h2>{{ palavra }}</h2> <br> <h1>{{ quantidade }}</h1></td>
+            {% if (loop.index + 1) % 5 == 0 or loop.last %}
         </tr>
+        {% endif %}
         {% endfor %}
     </table>
 

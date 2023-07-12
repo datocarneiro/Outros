@@ -1,0 +1,73 @@
+body{
+    border: 5px solid rgb(45, 76, 107);
+    margin: 10px 5px;
+    padding: 10px;
+    display: block;
+}
+div {
+    margin: 10px 5px;
+    padding: 10px;
+    display: block;
+
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    color: brown;
+}
+h6 {
+    display: block;
+    font-size: 0.67em;
+    font-style: italic;
+    margin-block-start: 2.33em;
+    margin-block-end: 2.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+
+.tabela {
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: rgb(70, 99, 128);
+    color: rgb(255, 255, 255);
+}
+
+td {
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: rgb(70, 99, 128);
+    color: rgb(255, 255, 255);
+}
+tr:nth-child(even) td {
+    background-color: rgb(226, 120, 63);
+    color: rgb(238, 237, 237);
+}
+.transp {
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 80px;
+    background-color: rgb(121, 124, 231);
+    color: rgb(0, 0, 0);
+}
+.qtd {
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 50px;
+    background-color: rgb(220, 129, 200);
+    color: rgb(0, 0, 0);
+}
+
+

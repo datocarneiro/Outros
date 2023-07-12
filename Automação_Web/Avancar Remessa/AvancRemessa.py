@@ -19,14 +19,15 @@ servico = Service(ChromeDriverManager().install())
 
 while True:
     # Executar em modo headless (sem abrir janela do navegador)
+    '''
     opcoes = Options()
     opcoes.add_argument("--headless")    
     navegador = webdriver.Chrome(service=servico, options=opcoes) 
-    
     '''
+  
     # habilitar se quiser visualizar as ações na tela 
     navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
-    '''
+  
 
     # DEFINA AS AÇÕES QUE SERÃO AUTOMATIZADAS 
     # Acessar a página de login

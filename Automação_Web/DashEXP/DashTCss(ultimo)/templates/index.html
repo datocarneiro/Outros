@@ -1,10 +1,3 @@
-<!--Neste exemplo, temos uma tabela com 4 linhas e 3 colunas.
- A primeira linha (<tr>) contém cabeçalhos de coluna 
-    (<td>) li - que especificam os títulos das colunas. As três linhas subsequentes 
-    (<tr>) contêm células de dados 
-    (<tr>) ul - com informações sobre cada fruta.
-    -->
-
 <!DOCTYPE html>
 <html>
 
@@ -14,40 +7,52 @@
         table {
             border-collapse: collapse;
             width: 100%;
+            display: grid;
         }
 
+        th,
         td {
             text-align: center;
             padding: 8px;
-            font-weight: bold;
-            font-size: 20px;
         }
 
-        tr:nth-child(even) td {
-            background-color: rgb(231, 231, 238);
+        tr:nth-child(even) {
+            background-color: rgb(200, 200, 211);
             color: rgb(0, 0, 0);
+        
+            
         }
+    
     </style>
+    <head>
+        <title>Resultados</title>
+</head>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="refresh" content="15">
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 15000);
+    </script>
+    <title>Resultados</title>
 </head>
 
 <body>
-    <nav>
-        <h3>Dashboard Expedição</h3>
-    </nav>
-    <table>
-        <!--
+    <h1>Contagem das Palavras-Chave</h1>
+
+    <table >
         <tr>
-            <th>Transporte</th> cabelho
+            <th>Transporte</th>
+            <th>Quantidade</th>
         </tr>
-         -->
         {% for palavra, quantidade in resultados.items() %}
-        {% if loop.index0 % 4 == 0 %}
         <tr>
-            {% endif %}
-            <td><h2>{{ palavra }}</h2> <br> <h1>{{ quantidade }}</h1></td>
-            {% if (loop.index + 1) % 5 == 0 or loop.last %}
+            <td>{{ palavra }}</td>
+            <td>{{ quantidade }}</td>
         </tr>
-        {% endif %}
         {% endfor %}
     </table>
 
