@@ -10,31 +10,28 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 
-# Configuração das opções do Chrome
+# atualiza webdriver automaticamento
+servico = Service(ChromeDriverManager().install())
 
-# Executar em modo headless (sem abrir janela do navegador)
-servico = Service(ChromeDriverManager().install()) # atualizar versão do selenium automaticamente
-opcoes = Options()
-opcoes.add_argument("--headless")    
-
-'''
-# habilitar se quiser visualizar as ações na tela 
-servico = Service(ChromeDriverManager().install()) # atualizar o selenium automaticamente oara a ultima versão
-'''
-
-# Obter o caminho absoluto do diretório atual
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 
 while True:
-    # modo de execução
-    navegador = webdriver.Chrome(service=servico, options=opcoes) # habilitar comando para execultar em modo off, ver linha 16
+    # Executar em modo headless (sem abrir janela do navegador)
+   
+    opcoes = Options()
+    opcoes.add_argument("--headless")    
+    navegador = webdriver.Chrome(service=servico, options=opcoes) 
+    
+    # habilitar se quiser visualizar as ações na tela 
     # navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
 
-    # Criar uma instância do WebDriver e acessar a página de login
+    # DEFINA AS AÇÕES QUE SERÃO AUTOMATIZADAS 
+    # Acessar a página de login
     navegador.get("https://amplo.eship.com.br/")
     navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
     navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
     navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
+
 
     # Aguardar o carregamento da página
     time.sleep(5)
@@ -94,8 +91,5 @@ while True:
     # Abrir o arquivo no navegador
     navegador.get("file://" + os.path.join(diretorio_atual, "resultado.html"))
 
-    # Fechar o navegador
-    # navegador.quit()
-
     # Aguardar antes de repetir o ciclo
-    time.sleep(30)
+    time.sleep(15)

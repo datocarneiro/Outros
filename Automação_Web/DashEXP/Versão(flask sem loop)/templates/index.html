@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Resultados da Contagem de Palavras-chave</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgb(125, 125, 139);
+            color: white;
+        }
+    </style>
+    <head>
+        <title>Resultados</title>
+</head>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Resultados</title>
+</head>
+
+<body>
+    <h1>Contagem das Palavras-Chave</h1>
+
+    <table>
+        <tr>
+            <th>Palavra-Chave</th>
+            <th>Quantidade</th>
+        </tr>
+        {% for palavra, quantidade in resultados.items() %}
+        <tr>
+            <td>{{ palavra }}</td>
+            <td>{{ quantidade }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Total de Palavras: {{ total_palavras }}</h2>
+</body>
+
+</html>

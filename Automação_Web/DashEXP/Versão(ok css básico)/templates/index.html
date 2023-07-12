@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Resultados da Contagem de Palavras-chave</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            display: grid;
+        }
+
+        th,
+        td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgb(200, 200, 211);
+            color: rgb(0, 0, 0);
+        
+            
+        }
+    
+    </style>
+    <head>
+        <title>Resultados</title>
+</head>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="refresh" content="15">
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 15000);
+    </script>
+    <title>Resultados</title>
+</head>
+
+<body>
+    <h1>Contagem das Palavras-Chave</h1>
+
+    <table >
+        <tr>
+            <th>Transporte</th>
+            <th>Quantidade</th>
+        </tr>
+        {% for palavra, quantidade in resultados.items() %}
+        <tr>
+            <td>{{ palavra }}</td>
+            <td>{{ quantidade }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Total Pendentes: {{ total_palavras }}</h2>
+</body>
+
+</html>

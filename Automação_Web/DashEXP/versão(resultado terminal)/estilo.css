@@ -5,6 +5,15 @@ table {
     background-color: rgb(217, 217, 217);
 
 }
+.h1 {
+    color: #ff0000; /*branco*/
+    width: 100%; /*caixa campo de digitação e botaão de*/
+
+
+{
+    color: #ffff000;
+}
+
 
 th,
 td {

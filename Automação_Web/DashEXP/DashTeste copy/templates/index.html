@@ -1,0 +1,56 @@
+<!--Neste exemplo, temos uma tabela com 4 linhas e 3 colunas.
+ A primeira linha (<tr>) contém cabeçalhos de coluna 
+    (<td>) li - que especificam os títulos das colunas. As três linhas subsequentes 
+    (<tr>) contêm células de dados 
+    (<tr>) ul - com informações sobre cada fruta.
+    -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Resultados da Contagem de Palavras-chave</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        tr:nth-child(even) td {
+            background-color: rgb(231, 231, 238);
+            color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h1>Contagem das Palavras-Chave</h1>
+    </nav>
+    <table>
+        <tr>
+            <th>Transporte</th>
+        </tr>
+
+        {% for palavra, quantidade in resultados.items() %}
+        {% if loop.index0 % 4 == 0 %}
+        <tr>
+            {% endif %}
+            <td>{{ palavra }} <br> <h1>{{ quantidade }}</h1></td>
+            {% if (loop.index + 1) % 5 == 0 or loop.last %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+    <h2>Total Pendentes: {{ total_palavras }}</h2>
+</body>
+
+</html>
