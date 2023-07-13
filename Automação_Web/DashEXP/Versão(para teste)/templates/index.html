@@ -1,35 +1,5 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <title>Resultados da Contagem de Palavras-chave</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            display: grid;
-        }
-
-        th,
-        td {
-            text-align: center;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: rgb(200, 200, 211);
-            color: rgb(0, 0, 0);
-        
-            
-        }
-    
-    </style>
-    <head>
-        <title>Resultados</title>
-</head>
-<!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta http-equiv="refresh" content="15">
     <script>
@@ -38,25 +8,34 @@
         }, 15000);
     </script>
     <title>Resultados</title>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Expedição</title>
+   
 </head>
 
 <body>
-    <h1>Contagem das Palavras-Chave</h1>
+    <h1>Dash Expedição</h1>
 
-    <table >
-        <tr>
-            <th>Transporte</th>
-            <th>Quantidade</th>
-        </tr>
+    <form action="/" method="post">
+        <label for="usuario">Usuário:<br></label><br>
+        <input type="text" id="usuario" name="usuario"><br>
+        <label for="senha">Senha:<br></label><br>
+        <input type="password" id="senha" name="senha"><br>
+        <button type="submit">Buscar pendentes</button><br>
+    </form>
+
+    <div class="grid-container">
+        <div class="header">Transporte</div> <!--palavra-chave-->
+        <div class="header">Quantidade</div>
         {% for palavra, quantidade in resultados.items() %}
-        <tr>
-            <td>{{ palavra }}</td>
-            <td>{{ quantidade }}</td>
-        </tr>
+        <div>{{Transporte }}</div>
+        <div>{{ Quantidade }}</div>
         {% endfor %}
-    </table>
+    </div>
 
-    <h2>Total Pendentes: {{ total_palavras }}</h2>
+    <p>Total Pendentes: {{ total_palavras }}</p>
 </body>
 
 </html>

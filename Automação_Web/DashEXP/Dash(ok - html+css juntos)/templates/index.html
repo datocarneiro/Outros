@@ -2,60 +2,87 @@
 <html>
 
 <head>
-    <title>Resultados da Contagem de Palavras-chave</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            display: grid;
-        }
-
-        th,
-        td {
-            text-align: center;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: rgb(200, 200, 211);
-            color: rgb(0, 0, 0);
-        
-            
-        }
-    
-    </style>
-    <head>
-        <title>Resultados</title>
-</head>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta http-equiv="refresh" content="15">
+    <!--<meta http-equiv="refresh" content="15">
     <script>
         setTimeout(function() {
             location.reload();
         }, 15000);
     </script>
-    <title>Resultados</title>
+-->
+    <title>Resultados da Contagem de Palavras-chave</title>
+    <style>
+        body {
+            margin: 2px;
+        }
+        table {
+            width: 100%; /* Define a tabela para ocupar toda a largura disponível */
+        }
+        .titulo{
+            font-size: 45px;
+            text-align: center;
+            color: white;
+            background-color: rgb(6, 135, 51);
+        }
+
+        th,
+        td {
+            width: 25%;
+            font-size: 40px;
+            text-align: center;
+            padding: 8px;
+            border: 3px solid black;    
+            margin: 20px;     
+            background-color: rgb(216, 216, 216); 
+   
+        }
+
+        tr:nth-child(even) {
+            
+            background-color: rgb(200, 200, 211);
+            color: rgb(0, 0, 0);
+
+        }
+    
+        h2 {
+            color: red;
+        }
+        .tpt {
+            background-color: black;
+            color: white;
+        
+        }
+        .qtd{
+            font-size: 80px;
+        }
+        tr {
+        
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Contagem das Palavras-Chave</h1>
+    <h1 class="titulo">Dashboard Expedição</h1>
 
-    <table >
-        <tr>
-            <th>Transporte</th>
-            <th>Quantidade</th>
-        </tr>
+    <table>
+        <colgroup>
+            <col style="width: 33,3%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 33,3%;">
+            <col style="width: 33,3%;">
+          </colgroup>
         {% for palavra, quantidade in resultados.items() %}
+        {% if loop.index0 % 3 == 0 %}
         <tr>
-            <td>{{ palavra }}</td>
-            <td>{{ quantidade }}</td>
+        {% endif %}
+            <td>
+                <strong class="tpt">{{ palavra }}</strong>
+                <br>
+                <strong class="qtd">{{ quantidade }}</strong>
+            </td>
+        {% if loop.index % 3 == 0 or loop.last %}
         </tr>
+        {% endif %}
         {% endfor %}
     </table>
-
     <h2>Total Pendentes: {{ total_palavras }}</h2>
 </body>
 

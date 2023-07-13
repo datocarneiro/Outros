@@ -20,7 +20,7 @@ while True:
 
         while True:
             opcoes = Options()
-            opcoes.add_argument("--headless")
+            opcoes.headless = True # modo off ou não 
             navegador = webdriver.Chrome(service=servico, options=opcoes)
 
             #navegador.get("https://amplo.eship.com.br/?logOut=1")
@@ -29,8 +29,8 @@ while True:
             navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
             navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
             navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
-
-            time.sleep(5)
+            time.sleep(3)
+            print("Buscando...")
 
             navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
             time.sleep(1)
@@ -41,7 +41,6 @@ while True:
             while True:
                 try:
                     elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]')
-
                     time.sleep(4)
                     for elemento in elementos:
                         conteudo_elemento = elemento.text
@@ -52,13 +51,11 @@ while True:
                     break
 
                 proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
-                
+                time.sleep(5)
                 if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
                     break
 
                 proxima_pagina[0].click()
-
-            navegador.quit()
 
             # Atualizar a exibição dos resultados na página
             resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
@@ -69,9 +66,9 @@ while True:
     @app.route('/')
     def exibir_resultados():
         global palavras_chave, resultados  # usar as variáveis globais
-        palavras_chave = ["TESTE", "TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "BIT HOME", "RETIRA", "LATAM"]
+        palavras_chave = ["TESTE", "TOTAL EXP"]
         return contar_palavras_chave()
 
     if __name__ == '__main__':
         app.run()
-  
+  # ,"AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"
