@@ -2,11 +2,20 @@
 <html>
 
 <head>
-    <meta http-equiv="refresh" content="15">
+    <meta http-equiv="refresh" content="40">
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/");
+        xhr.send();
+    });
+    
         setTimeout(function() {
             location.reload();
-        }, 15000);
+        }, 40000);
+
+
+
     </script>
 
     <title>Resultados da Contagem de Palavras-chave</title>

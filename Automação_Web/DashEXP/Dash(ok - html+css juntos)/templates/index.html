@@ -15,30 +15,46 @@
             margin: 2px;
         }
         table {
+            border-collapse: collapse;
             width: 100%; /* Define a tabela para ocupar toda a largura disponível */
+    
         }
         .titulo{
             font-size: 45px;
             text-align: center;
             color: white;
             background-color: rgb(6, 135, 51);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6); /* Define a sombra 3D */
         }
 
         th,
         td {
+            padding: 10px;
             width: 25%;
+            font-size: 60px;
+            /*text-align: center;
+            border: 0px outset rgb(173, 167, 164);    
+            border-radius: 20px; /* Define o raio do arredondamento da borda */
+           /* box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6); /* Define a sombra 3D */
+            /*margin: 80px;     
+            background-color: rgb(240, 240, 240); */
+   
+        }
+        .interno {
+            width: 92%;
+            height: 92%;
             font-size: 40px;
             text-align: center;
-            padding: 8px;
-            border: 3px solid black;    
-            margin: 20px;     
-            background-color: rgb(216, 216, 216); 
-   
+            padding: 15px;
+            border: 0px outset rgb(237, 235, 234);    
+            border-radius: 20px; /* Define o raio do arredondamento da borda */
+            box-shadow: 10px 10px 10px rgba(97, 97, 97, 0.6); /* Define a sombra 3D */   
+            background-color: rgb(247, 243, 243); 
         }
 
         tr:nth-child(even) {
             
-            background-color: rgb(200, 200, 211);
+            background-color: rgb(255, 255, 255); /*sei o que é */
             color: rgb(0, 0, 0);
 
         }
@@ -47,7 +63,7 @@
             color: red;
         }
         .tpt {
-            background-color: black;
+            background-color: rgb(148, 59, 18);
             color: white;
         
         }
@@ -57,6 +73,7 @@
         tr {
         
         }
+
     </style>
 </head>
 
@@ -65,18 +82,20 @@
 
     <table>
         <colgroup>
-            <col style="width: 33,3%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
-            <col style="width: 33,3%;">
-            <col style="width: 33,3%;">
+            <col style="width: 20,3%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 20,3%;">
+            <col style="width: 20,3%;">
           </colgroup>
         {% for palavra, quantidade in resultados.items() %}
         {% if loop.index0 % 3 == 0 %}
         <tr>
         {% endif %}
             <td>
+                <div class="interno">
                 <strong class="tpt">{{ palavra }}</strong>
                 <br>
                 <strong class="qtd">{{ quantidade }}</strong>
+                </div>
             </td>
         {% if loop.index % 3 == 0 or loop.last %}
         </tr>

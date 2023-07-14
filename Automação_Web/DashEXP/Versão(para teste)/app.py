@@ -57,19 +57,18 @@ while True:
 
                 proxima_pagina[0].click()
 
-            # Remover as palavras-chave com valor igual a zero
-            resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items() if quantidade > 0}
-            # Atualizar a lista de palavras-chave apenas com as chaves presentes em resultados
-            palavras_chave = list(resultados.keys())
+            # Atualizar a exibição dos resultados na página
+            resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
             total_palavras = sum(resultados.values())
-
+            
             return render_template('index.html', resultados=resultados, total_palavras=total_palavras)
 
     @app.route('/')
     def exibir_resultados():
         global palavras_chave, resultados  # usar as variáveis globais
-        palavras_chave = ["TESTE", "TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"]
+        palavras_chave = ["TESTE", "TOTAL EXP", ]
         return contar_palavras_chave()
 
     if __name__ == '__main__':
         app.run()
+# "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"
