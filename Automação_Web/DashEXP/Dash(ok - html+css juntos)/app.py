@@ -66,9 +66,9 @@ while True:
     @app.route('/')
     def exibir_resultados():
         global palavras_chave, resultados  # usar as variáveis globais
-        palavras_chave = ["TESTE", "TOTAL EXP"]
+        palavras_chave = ["TESTE", "TOTAL EXP", ]
         return contar_palavras_chave()
 
     if __name__ == '__main__':
         app.run()
-  # ,"AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"
+# "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"
