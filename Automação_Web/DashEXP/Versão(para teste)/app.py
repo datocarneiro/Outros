@@ -13,62 +13,67 @@ from selenium.common.exceptions import NoSuchElementException
 servico = Service(ChromeDriverManager().install())
 
 app = Flask(__name__)
-while True:
-    def contar_palavras_chave():
-        global resultados, palavras_chave  # usar as variáveis globais
-        resultados = {}
+
+def contar_palavras_chave():
+    global resultados, palavras_chave  # usar as variáveis globais
+    resultados = {}
+
+    while True:
+        opcoes = Options()
+        opcoes.headless = True  # modo off ou não
+        navegador = webdriver.Chrome(service=servico, options=opcoes)
+
+        #navegador.get("https://amplo.eship.com.br/?logOut=1")
+        #time.sleep(5)
+        navegador.get("https://amplo.eship.com.br/")
+        navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
+        navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
+        navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
+        time.sleep(3)
+        print("Buscando...")
+
+        navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
+        time.sleep(1)
+
+        for palavra in palavras_chave:
+            resultados[palavra] = 0
 
         while True:
-            opcoes = Options()
-            opcoes.headless = True # modo off ou não 
-            navegador = webdriver.Chrome(service=servico, options=opcoes)
+            try:
+                elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]')
+                time.sleep(4)
+                for elemento in elementos:
+                    conteudo_elemento = elemento.text
+                    for palavra in palavras_chave:
+                        resultados[palavra] += conteudo_elemento.count(palavra)
 
-            #navegador.get("https://amplo.eship.com.br/?logOut=1")
-            #time.sleep(5)
-            navegador.get("https://amplo.eship.com.br/")
-            navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
-            navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
-            navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
-            time.sleep(3)
-            print("Buscando...")
+            except NoSuchElementException:
+                break
 
-            navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
-            time.sleep(1)
+            proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
+            time.sleep(5)
+            if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
+                break
 
-            for palavra in palavras_chave:
-                resultados[palavra] = 0
+            proxima_pagina[0].click()
 
-            while True:
-                try:
-                    elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]')
-                    time.sleep(4)
-                    for elemento in elementos:
-                        conteudo_elemento = elemento.text
-                        for palavra in palavras_chave:
-                            resultados[palavra] += conteudo_elemento.count(palavra)
+        # Atualizar a exibição dos resultados na página
+        resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
+        total_palavras = sum(resultados.values())
 
-                except NoSuchElementException:
-                    break
+        return resultados, total_palavras
 
-                proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
-                time.sleep(5)
-                if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
-                    break
+@app.route('/')
+def exibir_resultados():
+    global palavras_chave, resultados  # usar as variáveis globais
+    palavras_chave = ["TESTE", "DATO", "TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"]
+    resultados, total_palavras = contar_palavras_chave()
 
-                proxima_pagina[0].click()
+    # Remover palavras-chave com valor zero
+    palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
+    resultados = {palavra: quantidade for palavra, quantidade in resultados.items() if quantidade != 0}
 
-            # Atualizar a exibição dos resultados na página
-            resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
-            total_palavras = sum(resultados.values())
-            
-            return render_template('index.html', resultados=resultados, total_palavras=total_palavras)
+    return render_template('index.html', resultados=resultados, total_palavras=total_palavras)
 
-    @app.route('/')
-    def exibir_resultados():
-        global palavras_chave, resultados  # usar as variáveis globais
-        palavras_chave = ["TESTE", "DATO", "TOTAL EXP","AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"]
-        return contar_palavras_chave()
-
-    if __name__ == '__main__':
-        app.run()
-# "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"
+if __name__ == '__main__':
+    app.run()
