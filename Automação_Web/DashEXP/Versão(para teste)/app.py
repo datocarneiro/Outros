@@ -18,55 +18,54 @@ def contar_palavras_chave():
     global resultados, palavras_chave  # usar as variáveis globais
     resultados = {}
 
+    opcoes = Options()
+    opcoes.headless = True  # modo off ou não
+    navegador = webdriver.Chrome(service=servico, options=opcoes)
+
+    navegador.get("https://amplo.eship.com.br/")
+    navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
+    navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
+    navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
+    time.sleep(3)
+    print("Buscando...")
+
+    navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
+
+    for palavra in palavras_chave:
+        resultados[palavra] = 0
+    print("passou for...")
+
     while True:
-        opcoes = Options()
-        opcoes.headless = True  # modo off ou não
-        navegador = webdriver.Chrome(service=servico, options=opcoes)
+        try:
+            elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]')
+            time.sleep(4)
+            for elemento in elementos:
+                conteudo_elemento = elemento.text
+                for palavra in palavras_chave:
+                    resultados[palavra] += conteudo_elemento.count(palavra)
+        except NoSuchElementException:
+            break
 
-        #navegador.get("https://amplo.eship.com.br/?logOut=1")
-        #time.sleep(5)
-        navegador.get("https://amplo.eship.com.br/")
-        navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
-        navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("12341234")
-        navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
+        print("passou While except...")
+        proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
         time.sleep(3)
-        print("Buscando...")
 
-        navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
-        time.sleep(1)
+        if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
+            break
+        print("passou if...")
+        proxima_pagina[0].click()
 
-        for palavra in palavras_chave:
-            resultados[palavra] = 0
+    # Atualizar a exibição dos resultados na página
+    resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
+    total_palavras = sum(resultados.values())
 
-        while True:
-            try:
-                elementos = navegador.find_elements(By.XPATH, '//*[@id="main_principal"]')
-                time.sleep(4)
-                for elemento in elementos:
-                    conteudo_elemento = elemento.text
-                    for palavra in palavras_chave:
-                        resultados[palavra] += conteudo_elemento.count(palavra)
+    return resultados, total_palavras
+    print("passou return...")
 
-            except NoSuchElementException:
-                break
-
-            proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
-            time.sleep(5)
-            if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
-                break
-
-            proxima_pagina[0].click()
-
-        # Atualizar a exibição dos resultados na página
-        resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
-        total_palavras = sum(resultados.values())
-
-        return resultados, total_palavras
-
-@app.route('/')
+@app.route('/') 
 def exibir_resultados():
     global palavras_chave, resultados  # usar as variáveis globais
-    palavras_chave = ["TESTE", "DATO", "TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"]
+    palavras_chave = ["TESTE", "BLING", "AMPLO", "DATO", "TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"]
     resultados, total_palavras = contar_palavras_chave()
 
     # Remover palavras-chave com valor zero
