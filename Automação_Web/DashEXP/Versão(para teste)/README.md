@@ -6,3 +6,8 @@ versão 1
     html e css juntos no mesmo arquivo
     resultados mostrado no formato de tabela
     
+    pip 
+    pip install tqdm
+    pip install selenium
+    pip install webdriver_manager
+    pip install flask

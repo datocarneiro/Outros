@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <title>teste</title>
 <head>
+    <title>teste</title>
     <meta http-equiv="refresh" content="15">
     <script>
+        function exibirLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        /*function ocultarLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+        */
         setTimeout(function() {
             location.reload();
         }, 15000);
+        /*
+        window.addEventListener('DOMContentLoaded', ocultarLoading);
+        window.addEventListener('beforeunload', exibirLoading);*/
     </script>
-    <title>DashByDato</title>
     <style>
         html {
             background-color: rgb(211, 219, 228);
@@ -18,17 +28,17 @@
         }
         table {
             border-collapse: separate;
-            width: 100%; /* Define a tabela para ocupar toda a largura disponível */
+            width: 100%;
             height: 100%;
         }
-        .titulo{
+        .titulo {
             font-size: 45px;
             margin-bottom: 0;
             margin-top: 1;
             text-align: center;
             color: white;
             background-color: rgb(6, 135, 51);
-            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6); /* Define a sombra 3D */
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6);
         }
         .marca {
             float: right;
@@ -48,22 +58,16 @@
             font-size: 40px;
             text-align: center;
             padding: 15px;
-            border: 0px outset rgb(237, 235, 234);    
-            border-radius: 30px; /* Define o raio do arredondamento da borda */
-            box-shadow: 16px 13px 20px rgba(120, 119, 119, 0.6); /* Define a sombra 3D */   
-            background-color: rgb(233, 235, 236); 
+            border: 0px outset rgb(237, 235, 234);
+            border-radius: 30px;
+            box-shadow: 16px 13px 20px rgba(120, 119, 119, 0.6);
+            background-color: rgb(233, 235, 236);
         }
-        /*tr:nth-child(even) {
-            
-            background-color: rgb(255, 255, 255); 
-            color: rgb(0, 0, 0);
-
-        }*/
         .tpt {
             background-color: rgb(211, 219, 228);
             color: rgb(0, 0, 0);
         }
-        .qtd{
+        .qtd {
             font-size: 80px;
         }
         h2 {
@@ -74,34 +78,57 @@
             margin-left: 15px;
             margin-bottom: -30px;
         }
-        .pd{
+        .pd {
             color: red;
             font-size: 45px;
         }
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: rgba(20, 83, 150, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader {
+            border: 16px solid #692424;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
-
 <body>
-    <div class ="basetitulo">   
-    <h1 class="titulo">Dashboard Expedição </h1> 
-    <h2>Total Pendentes: <strong class="pd">{{ total_palavras }}</strong></h2>
-    <h3 class="marca">dato®</h3>
+    <div class="basetitulo">
+        <h1 class="titulo">Dashboard Expedição</h1>
+        <h2>Total Pendentes: <strong class="pd">{{ total_palavras }}</strong></h2>
+        <h3 class="marca">dato®</h3>
     </div>
     <table>
         <colgroup>
-            <col style="width: 33%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
             <col style="width: 33%;">
             <col style="width: 33%;">
-          </colgroup>
+            <col style="width: 33%;">
+        </colgroup>
         {% for palavra, quantidade in resultados.items() %}
         {% if loop.index0 % 3 == 0 %}
         <tr>
         {% endif %}
             <td>
                 <div class="interno">
-                <strong class="tpt">{{ palavra }}</strong>
-                <br>
-                <strong class="qtd">{{ quantidade }}</strong>
+                    <strong class="tpt">{{ palavra }}</strong>
+                    <br>
+                    <strong class="qtd">{{ quantidade }}</strong>
                 </div>
             </td>
         {% if loop.index % 3 == 0 or loop.last %}
@@ -109,7 +136,8 @@
         {% endif %}
         {% endfor %}
     </table>
-    
+    <div id="loading" style="display: none;">
+        <div class="loader"></div>
+    </div>
 </body>
-
 </html>

@@ -1,18 +1,16 @@
 import time
-import os
 from flask import Flask, render_template
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+import os
+
+app = Flask(__name__, template_folder=os.path.abspath('templates'))
 
 servico = Service(ChromeDriverManager().install())
-
-app = Flask(__name__)
 
 def contar_palavras_chave():
     global resultados, palavras_chave  # usar as variáveis globais
@@ -42,7 +40,7 @@ def contar_palavras_chave():
             for elemento in elementos:
                 conteudo_elemento = elemento.text
                 for palavra in palavras_chave:
-                    resultados[palavra] += conteudo_elemento.count(palavra)
+                    resultados[palavra] = resultados.get(palavra, 0) + conteudo_elemento.count(palavra)
         except NoSuchElementException:
             break
 
@@ -60,19 +58,16 @@ def contar_palavras_chave():
     total_palavras = sum(resultados.values())
 
     return resultados, total_palavras
-    print("passou return...")
 
-@app.route('/') 
+@app.route('/')
 def exibir_resultados():
     global palavras_chave, resultados  # usar as variáveis globais
     palavras_chave = ["TESTE", "BLING", "AMPLO", "DATO", "TOTAL EXP", "AG AMINTAS", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "BIT HOME", "RETIRA"]
+
     resultados, total_palavras = contar_palavras_chave()
 
-    # Remover palavras-chave com valor zero
-    palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
-    resultados = {palavra: quantidade for palavra, quantidade in resultados.items() if quantidade != 0}
-
+    print("resultado terminal".index(resultados), "qtd:" .index(total_palavras)) #revisar comando 
     return render_template('index.html', resultados=resultados, total_palavras=total_palavras)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
