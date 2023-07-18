@@ -14,6 +14,8 @@ from webdriver_manager.chrome import ChromeDriverManager: Importa a classe Chrom
 from selenium.webdriver.common.by import By: Importa a classe By do módulo common.by da biblioteca Selenium, que é usada para selecionar elementos na página com base em diferentes estratégias de localização.
 import time: Importa o módulo time do Python, que é usado para adicionar pausas no código.
 
+***importante baixar o chromedrive e fazer o upload no replit no mesma pasta do script python "app.py**
+
 ***Lembre-e se instalar cada um no terminal**
 pip install flask
 pip install selenium
