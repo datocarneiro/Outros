@@ -13,6 +13,13 @@ from selenium.webdriver.chrome.service import Service: Importa a classe Service 
 from webdriver_manager.chrome import ChromeDriverManager: Importa a classe ChromeDriverManager do módulo chrome da biblioteca webdriver_manager, que é usada para gerenciar o driver do navegador Chrome.
 from selenium.webdriver.common.by import By: Importa a classe By do módulo common.by da biblioteca Selenium, que é usada para selecionar elementos na página com base em diferentes estratégias de localização.
 import time: Importa o módulo time do Python, que é usado para adicionar pausas no código.
+
+***Lembre-e se instalar cada um no terminal**
+pip install flask
+pip install selenium
+pip install webdriver_manager
+
+
 Configuração do Aplicativo Flask:
 
 app = Flask(__name__): Cria uma instância do aplicativo Flask.
