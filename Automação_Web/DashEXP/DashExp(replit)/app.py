@@ -46,8 +46,7 @@ def contar_palavras_chave():
   while True:
     try:
       print('loop while true ...... ')
-      elementos = navegador.find_elements(By.XPATH,
-                                          '//*[@id="main_principal"]')
+      elementos = navegador.find_elements(By.XPATH,'//*[@id="main_principal"]')
       time.sleep(5)
       for elemento in elementos:
         conteudo_elemento = elemento.text
@@ -94,10 +93,7 @@ def exibir_resultados():
     for palavra, quantidade in resultados.items() if quantidade != 0
   }
 
-  return render_template('index.html',
-                         resultados=resultados_atualizados,
-                         total_palavras=total_palavras)
-
+  return render_template('index.html',resultados=resultados_atualizados,total_palavras=total_palavras)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8080)
