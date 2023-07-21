@@ -1,0 +1,76 @@
+
+html {
+    background-color: rgb(201, 207, 214);
+}
+body {
+    margin: 2px;
+}
+table {
+    border-collapse: separate;
+    width: 100%; /* Define a tabela para ocupar toda a largura disponível */
+    height: 100%;
+    margin-top: 40px;
+}
+.titulo{
+    font-size: 45px;
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: center;
+    color: white;
+    background-color: rgb(6, 135, 51);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6); /* Define a sombra 3D */
+}
+.marca {
+    float: right;
+    text-align: right;
+    width: 20%;
+    font-size: 25px;
+    margin-right: 25px;
+    margin-top: 0px;
+}
+th,
+td {
+    padding: 5px;
+}
+.interno {
+    width: 93%;
+    height: 93%;
+    font-size: 40px;
+    text-align: center;
+    padding: 15px;
+    border: 0px outset rgb(237, 235, 234);    
+    border-radius: 30px; /* Define o raio do arredondamento da borda */
+    box-shadow: 16px 13px 20px rgba(120, 119, 119, 0.6); /* Define a sombra 3D */   
+    background-color: rgb(233, 235, 236); 
+}
+/*tr:nth-child(even) {
+    
+    background-color: rgb(255, 255, 255); 
+    color: rgb(0, 0, 0);
+
+}*/
+.tpt {
+    background-color: rgb(211, 219, 228);
+    color: rgb(0, 0, 0);
+}
+.qtd{
+    font-size: 80px;
+}
+h2 {
+    float: left;
+    width: 80%;
+    color: rgb(0, 0, 0);
+    font-size: 35px;
+    margin-left: 15px;
+    margin-bottom: -30px;
+    display: flex;
+    position: absolute;
+    top: 30px;
+}
+.pd{
+    color: red;
+    font-size: 45px;
+    padding: 0;
+    display: flex;
+    top: 65px;
+}

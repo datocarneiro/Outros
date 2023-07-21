@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amplo.DashExpedição.Dato</title>
+  <script> /* comando JavaScript */
+    setTimeout(function() {
+       location.reload(); 
+   }, 60000); /*recarrega o conteúdo da pagina - milesegundos */
+</script> 
+</head>
+<body>
+  <h1 class="titulo">Dashboard Expedição</h1>
+  <h2>Total Pendentes:<strong class="pd">{{ total_palavras }}</strong></h2>
+  <table>
+      <colgroup>
+        <col style="width: 33%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+        <col style="width: 33%;">
+        <col style="width: 33%;">
+      </colgroup>
+    {% for keyword, occurrences in resultados.items() %}
+    {% if loop.index0 % 3 == 0 %}
+    <tr>
+    {% endif %}
+      <td>
+        <div class="interno">
+            <strong class="tpt">{{ keyword }}</strong>
+            <br>
+            <strong class="qtd">{{ occurrences }}</strong>
+        </div>
+      </td>
+    {% if loop.index % 3 == 0 or loop.last %}
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+</body>
+</html>
