@@ -21,9 +21,8 @@ def contar_palavras_chave():
   options = Options()
   options.add_argument("--no-sandbox")
   options.add_argument("--disable-dev-shm-usage")
-  navegador = webdriver.Chrome(options=options)
   webdriver_service = Service(ChromeDriverManager().install())
-  navegador.execute_script("document.body.style.zoom = '25%'")
+  navegador = webdriver.Chrome(service=webdriver_service, options=options)
   navegador.get("https://amplo.eship.com.br/")
   time.sleep(15)
 

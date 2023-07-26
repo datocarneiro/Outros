@@ -22,6 +22,7 @@ def contar_palavras_chave():
     opcoes = Options()
     opcoes.headless = True  # modo off ou não
     navegador = webdriver.Chrome(service=servico, options=opcoes)
+    
     print('... Logando ...')
     navegador.get("https://amplo.eship.com.br/")
     navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dashboard3")
