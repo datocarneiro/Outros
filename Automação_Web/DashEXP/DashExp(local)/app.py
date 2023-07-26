@@ -71,7 +71,7 @@ def contar_palavras_chave():
 @app.route('/') 
 def exibir_resultados():
     global palavras_chave, resultados  # usar as variáveis globais
-    palavras_chave = ["TOTAL EXP", "DATO TESTE", "AG AMINTAS"," AG LAMANHA","OLIST RETIRA", "AG ANGELO", "ENTREGA OSVALDO", "JAD", "TRANSPORTADORA", "ESM", "LATAM","AZUL", "GOL", "ANDREIA SSA", "BIT HOME", "RETIRA", "BLING", "AMPLO"]
+    palavras_chave = ["TOTAL EXP", "FM", "DATO TESTE", "AG AMINTAS"," AG LAMENHA","OLIST RETIRA", "AG ANGELO", "ENTREGA OSVALDO", "JAD", "TRANSPORTADORA", "ESM", "LATAM","AZUL", "GOL", "ANDREIA SSA", "BIT HOME", "RETIRA", "BLING", "AMPLO"]
     resultados, total_palavras = contar_palavras_chave()
 
     # Remover palavras-chave com valor zero
