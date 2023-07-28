@@ -12,7 +12,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+
 
 # atualiza webdriver automaticamento
 servico = Service(ChromeDriverManager().install())
@@ -20,16 +23,13 @@ servico = Service(ChromeDriverManager().install())
 
 while True:
     # Executar em modo headless (sem abrir janela do navegador)
-  
     opcoes = Options()
     opcoes.add_argument("--headless")    
     navegador = webdriver.Chrome(service=servico, options=opcoes) 
-   
-  
+
     # habilitar se quiser visualizar as ações na tela 
     #navegador = webdriver.Chrome(service=servico) # habilitar comando para visualizar a tela, ver linha 23
   
-
     # DEFINA AS AÇÕES QUE SERÃO AUTOMATIZADAS 
     # Acessar a página de login
     navegador.get("https://amplo.eship.com.br/")
