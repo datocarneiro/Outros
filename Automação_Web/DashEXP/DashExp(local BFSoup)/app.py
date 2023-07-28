@@ -17,8 +17,8 @@ def get_driver(browser):
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--headless")  # Executar o navegador de forma oculta
-
         return webdriver.Chrome(ChromeDriverManager().install(), options=options)
+        
     elif browser == "firefox":
         options = FirefoxOptions()
         options.headless = True  # Executar o navegador de forma oculta
@@ -40,6 +40,7 @@ def login_to_external_site(navegador):
     username_field.send_keys("dashboard3")
     password_field.send_keys("12341234")
     login_button.click()
+    time.sleep(5)
     print("Preenchendo campos de login e senha...")
 
 def contar_palavras_chave(navegador):
@@ -53,6 +54,7 @@ def contar_palavras_chave(navegador):
     print("... Logado ...")
 
     navegador.find_element(By.XPATH, '//*[@id="FormListarRemessas"]/ul/li[2]/div/a[3]/div').click()
+    time.sleep(3)
     print('... Abriu lista... e iniciando FOR ...')
     for palavra in palavras_chave:
         resultados[palavra] = 0
