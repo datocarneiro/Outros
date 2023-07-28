@@ -10,7 +10,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 
-servico = Service(ChromeDriverManager().install())
+
+#opção para não atualizar, pode ser baixar a versão necessaria e adicionar o diretóris nas variavel de ambiente
+#será necessario deixar a chamda do navegador da linha 27 sem a chamada da variavel servico: "navegador = webdriver.Chrome(options=opcoes)"
+servico = Service(ChromeDriverManager().install()) 
 
 app = Flask(__name__)
 
@@ -21,7 +24,7 @@ def contar_palavras_chave():
 
     opcoes = Options()
     opcoes.headless = True  # modo off ou não
-    navegador = webdriver.Chrome(service=servico, options=opcoes)
+    navegador = webdriver.Chrome(service=servico, options=opcoes) 
     
     print('... Logando ...')
     navegador.get("https://amplo.eship.com.br/")
