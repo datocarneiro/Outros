@@ -4,6 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from bs4 import BeautifulSoup
+import threading
+
 
 app = Flask(__name__)
 
@@ -97,7 +99,25 @@ def exibir_resultados():
 @app.route('/api/resultados')
 def obter_resultados():
     global palavras_chave, resultados
-    palavras_chave = ["TOTAL EXP", "DATO TESTE", "AG AMINTAS"," AG LAMANHA","OLIST RETIRA", "AG ANGELO", "ENTREGA OSVALDO", "JAD", "TRANSPORTADORA", "ESM", "LATAM","AZUL", "GOL", "ANDREIA SSA", "BIT HOME", "RETIRA", "BLING", "AMPLO"]
+    palavras_chave = [  "TOTAL EXP",
+                        "DATO TESTE",
+                        "AG AMINTAS",
+                        "AG LAMANHA",
+                        "OLIST RETIRA",
+                        "AG ANGELO",
+                        "ENTREGA OSVALDO",
+                        "JAD",
+                        "TRANSPORTADORA",
+                        "ESM",
+                        "LATAM",
+                        "AZUL",
+                        "GOL",
+                        "ANDREIA SSA",
+                        "BIT HOME",
+                        "RETIRA",
+                        "BLING",
+                        "AMPLO"]
+                        
     resultados, total_palavras = consultar_palavras_chave(get_driver())
     palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
     resultados = {palavra: quantidade for palavra, quantidade in resultados.items() if quantidade != 0}
@@ -111,5 +131,32 @@ def obter_resultados():
 
     # Retornar os resultados como JSON
     return jsonify(resultados=resultados, total_palavras=total_palavras)
+
+def atualizar_resultados_periodicamente(intervalo=60):
+    while True:
+        atualizar_resultados()
+        time.sleep(intervalo)
+
+
+def atualizar_resultados():
+    global palavras_chave, resultados
+    palavras_chave = ["TOTAL EXP", "DATO TESTE", "AG AMINTAS", "AG LAMENHA", "OLIST RETIRA", "AG ANGELO", "ENTREGA OSVALDO", "JAD", "TRANSPORTADORA", "ESM", "LATAM", "AZUL", "GOL", "ANDREIA SSA", "BIT HOME", "RETIRA", "BLING", "AMPLO"]
+    resultados, total_palavras = consultar_palavras_chave(get_driver())
+    palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
+    resultados = {palavra: quantidade for palavra, quantidade in resultados.items() if quantidade != 0}
+    print()
+    print("... RETORNO - SOMENTE RESULTADOS > 0 ...")
+    print("Resultados:")
+    print("Acesse /api/resultados no seu navegador ou cliente HTTP para receber os resultados em formato JSON.")
+    for palavra, quantidade in resultados.items():
+        print(f"{palavra}: {quantidade}")
+    print()
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5000)
+    # Iniciar a thread para atualização dos resultados
+    thread_atualizacao = threading.Thread(target=atualizar_resultados_periodicamente, args=(60,))
+    thread_atualizacao.daemon = True  # Isso permite encerrar a thread quando o programa principal (o app Flask) terminar
+    thread_atualizacao.start()
+
+    # Iniciar o aplicativo Flask
+    app.run(host="0.0.0.0", port=5000)
