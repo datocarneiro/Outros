@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Acompanhante</title>
+    <!-- Link para o style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Acompanhante</h1>
+
+    <form id="reservaForm">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required>
+        <label for="data_reserva">Data:</label>
+        <input type="date" name="data_reserva" id="data_reserva" required>
+        <label for="periodo">Período:</label>
+        <select name="periodo" id="periodo" required>
+            <option value="MANHÃ">MANHÃ</option>
+            <option value="NOITE">NOITE</option>
+        </select>
+        <button type="submit">Enviar</button>
+    </form>
+  
+  <h2>Reservas:</h2>
+  <table id="reservasTable">
+      <tr>
+          <th class="data">Data</th>
+          <th class="nome">Nome</th>
+          <th>Período</th>
+      </tr>
+      {% for date in dates %}
+      <tr>
+          <td>{{ date }}</td>
+          <td></td>
+          <td></td>
+      </tr>
+      {% endfor %}
+  </table>
+  
+    <!-- Link para o jQuery -->
+  <!-- Link para o jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      function formatDate(dateString, format) {
+          const date = new Date(dateString);
+          const day = date.getDate().toString().padStart(2, '0');
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');
+          const year = date.getFullYear();
+          if (format === 'yyyy-mm-dd') {
+              return `${year}-${month}-${day}`;
+          } else {
+              return `${day}/${month}/${year}`; // Formato "dd/mm/aaaa"
+          }
+      }
+      // Enviar dados do formulário usando AJAX
+      $("#reservaForm").submit(function (event) {
+          event.preventDefault();
+          const formData = $(this).serialize();
+          $.ajax({
+              type: "POST",
+              url: "/",
+              data: formData,
+              success: function (response) {
+                  if (response.success) {
+                      const dataReserva = new Date($('#data_reserva').val());
+                      dataReserva.setDate(dataReserva.getDate() + 1); // Adicionar 1 dia
+                      const nome = $('#nome').val();
+                      const periodo = $('#periodo').val();
+      
+                      const formattedDataReserva = formatDate(dataReserva);
+                      const reservaRow = $(`#reservasTable td:contains("${formattedDataReserva}")`).parent();
+                      if (reservaRow.length) {
+                          // Se a reserva já existe, atualize a linha da tabela
+                          reservaRow.find('td:eq(1)').text(nome);
+                          reservaRow.find('td:eq(2)').text(periodo);
+                      } else {
+                          // Se é uma nova reserva, adicione uma nova linha na tabela
+                          const newRow = `<tr>
+                              <td>${formattedDataReserva}</td>
+                              <td>${nome}</td>
+                              <td>${periodo}</td>
+                          </tr>`;
+                          $('#reservasTable').append(newRow);
+                      }
+                      $('#reservaForm').trigger("reset");
+                      alert('Reserva realizada com sucesso!');
+                  }
+              }
+          });
+      });
+  </script>
+</body>
+</html>
