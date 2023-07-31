@@ -30,8 +30,7 @@ def generate_dates():
     dates = []
     current_date = start_date
     while current_date <= end_date:
-        dates.append(
-            current_date.strftime("%d/%m/%Y"))  # Modifique o formato da data aqui
+        dates.append(current_date.strftime("%d/%m/%Y"))
         current_date += datetime.timedelta(days=1)
     return dates
 
