@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservas</title>
+</head>
+    <script>        
+        function updateReservas() {
+            $.get("/", function (data) {
+                var reservas = data.reservas;
+                var tableBody = '';
+                for (var date in reservas) {
+                    tableBody += '<tr>';
+                    tableBody += '<td>' + date + '</td>';
+                    tableBody += '<td>' + reservas[date] + '</td>';
+                    tableBody += '<td><button onclick="deleteReserva(\'' + date + '\')">Excluir</button></td>';
+                    tableBody += '</tr>';
+                }
+                $('#reservasTable tbody').html(tableBody);
+            });
+        }
+
+        function deleteReserva(data_reserva) {
+            $.post("/delete", {data_reserva: data_reserva}, function (data) {
+                if (data.success) {
+                    updateReservas();
+
+                    setTimeout(function () {
+                        window.location.reload(); // Reload the page after 1 second
+                    }, 1000);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            updateReservas();
+
+            $('#reservaForm').on('submit', function (event) {
+                event.preventDefault();
+                var data_reserva = $('#data_reserva').val();
+                var reserva_info = $('#reserva_info').val();
+
+                // Check if the selected date already exists in the table
+                var dates = [];
+                $('#reservasTable tbody tr').each(function () {
+                    dates.push($(this).find('td:first').text());
+                });
+
+                if (dates.includes(data_reserva)) {
+                    alert("A reserva para essa data já foi cadastrada!");
+                } else {
+                    $.post("/", $(this).serialize(), function (data) {
+                        if (data.success) {
+                            updateReservas();
+                            $('#data_reserva').val('');
+                            $('#reserva_info').val('');
+                            
+                            setTimeout(function () {
+                                window.location.reload(); // Reload the page after 1 second
+                            }, 1000);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Reservas</h1>
+    <form method="POST" action="/">
+        <label for="data_reserva">Data da reserva:</label>
+        <input type="date" id="data_reserva" name="data_reserva" required>
+        <br>
+        <label for="reserva_info">Informações da reserva:</label>
+        <input type="text" id="reserva_info" name="reserva_info" required>
+        <br>
+        <input type="submit" value="Enviar">
+    </form>
+    <br>
+    <h2>Reservas registradas:</h2>
+    <table>
+        <tr>
+            <th>Data da Reserva</th>
+            <th>Informações</th>
+            <th>Ação</th>
+        </tr>
+        {% for date, reserva_info in reservas.items() %}
+        <tr>
+            <td>{{ date }}</td>
+            <td>{{ reserva_info }}</td>
+            <td>
+                <form method="POST" action="/delete">
+                    <input type="hidden" name="data_reserva" value="{{ date }}">
+                    <input type="submit" value="Excluir">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
