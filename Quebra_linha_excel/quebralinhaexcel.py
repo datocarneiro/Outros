@@ -4,12 +4,12 @@ import os
 
 
 # Substitua 'caminho/para/' pelo caminho real para o diretório que contém 'base.xlsx'
-caminho_arquivo_entrada = os.path.join('C:/Users/dato/OneDrive/Documentos/Datoo/REPOSITORIOS/PYTHON/Quebra de linha em excel', 'base.xlsx')
+caminho_arquivo_entrada = os.path.join('C:/Users/dato/OneDrive/Documentos/Datoo/REPOSITORIOS/PYTHON/Quebra_linha_excel', 'base.xlsx')
 
 print(os.getcwd())
 
 # Defina os caminhos do arquivo de entrada e o nome base dos arquivos de saída
-nome_base_arquivos_saida = "saida_arquivo_combinado"
+nome_base_arquivos_saida = os.path.join('C:/Users/dato/OneDrive/Documentos/Datoo/REPOSITORIOS/PYTHON/Quebra_linha_excel/Arquivos_Combinados', 'saida_arquivo_combinado')
 
 # Leia o arquivo Excel de entrada e armazene-o em um DataFrame (tabela)
 df = pd.read_excel(caminho_arquivo_entrada)
