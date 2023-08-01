@@ -8,21 +8,15 @@ app = Flask(__name__)
 # Caminho para o arquivo de dados
 DATA_FILE_PATH = 'dados.txt'
 
-
-# Função para carregar os dados de reservas do arquivo (se existir)
 def load_reservas():
     if os.path.exists(DATA_FILE_PATH):
         with open(DATA_FILE_PATH, 'r') as file:
             return json.load(file)
     return {}
 
-
-# Função para salvar os dados de reservas no arquivo
 def save_reservas(reservas):
-    # Salvar os dados de reservas no arquivo
     with open(DATA_FILE_PATH, 'w') as file:
-        json.dump(reservas, file)
-
+        json.dump(reservas, file, indent=4)
 
 def generate_dates():
     start_date = datetime.date(2023, 7, 31)
@@ -30,43 +24,42 @@ def generate_dates():
     dates = []
     current_date = start_date
     while current_date <= end_date:
-        dates.append(current_date.strftime("%d/%m/%Y"))
+        dates.append({
+            'date': current_date.strftime("%d/%m/%Y"),
+            'periodos': ['MANHÃ', 'NOITE']
+        })
         current_date += datetime.timedelta(days=1)
     return dates
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         data_reserva = request.form['data_reserva']
         reserva_info = request.form['reserva_info']
+        periodo = request.form['periodo']
 
-        # Carregar as reservas existentes
         reservas = load_reservas()
 
-        # Check if the selected date already exists in the data
-        if data_reserva in reservas:
-            return jsonify({'success': False, 'message': 'A reserva para essa data já foi cadastrada!'})
+        if data_reserva not in reservas:
+            reservas[data_reserva] = {'MANHÃ': None, 'NOITE': None}
+        if not reservas[data_reserva][periodo]:
+            reservas[data_reserva][periodo] = reserva_info
+            save_reservas(reservas)
+            return jsonify({'success': True, 'reservas': reservas})
 
-        # Adicionar a nova reserva
-        reservas[data_reserva] = reserva_info
-
-        # Salvar as reservas atualizadas
-        save_reservas(reservas)
-
-        # Retornar uma resposta JSON para a solicitação POST
-        return jsonify({'success': True, 'reservas': reservas})
+        return jsonify({'success': False, 'message': 'A reserva para essa data e período já foi cadastrada!'})
 
     dates = generate_dates()
 
-    # Carregar as reservas existentes
     reservas = load_reservas()
+    for date in dates:
+        date_str = date['date']
+        if date_str not in reservas:
+            reservas[date_str] = {'MANHÃ': None, 'NOITE': None}
 
-    # Retornar a resposta renderizada para a solicitação GET
-    return render_template('index.html',
-                           dates=dates,
-                           reservas=reservas)
+    save_reservas(reservas)
 
+    return render_template('index.html', dates=dates, reservas=reservas)
 
 @app.route('/delete', methods=['POST'])
 def delete_reserva():
@@ -87,7 +80,6 @@ def delete_reserva():
             return jsonify({'success': True, 'reservas': reservas})
         else:
             return jsonify({'success': False, 'message': 'A reserva para essa data não foi encontrada!'})
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5050)

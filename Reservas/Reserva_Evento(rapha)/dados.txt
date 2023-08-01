@@ -1,1 +1,50 @@
-{"2023-08-03": "dddddddd", "2023-08-01": "dato"}
+{
+    "31/07/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "01/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "02/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "03/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "04/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "05/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "06/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "07/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "08/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "09/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "10/08/2023": {
+        "MANH\u00c3": null,
+        "NOITE": null
+    },
+    "2023-08-01": {
+        "MANH\u00c3": "dato",
+        "NOITE": null
+    }
+}

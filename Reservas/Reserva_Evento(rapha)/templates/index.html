@@ -9,24 +9,51 @@
         $.get("/", function (data) {
             var reservas = data.reservas;
             var tableBody = '';
-            var dates = {{ dates | tojson }}; // Recebe as datas do Python e converte para JavaScript
-
-            for (var i = 0; i < dates.length; i++) {
-                var date = dates[i];
-                var reserva_info = reservas[date] || ''; // Verifica se a reserva existe
+            var sortedReservas = sortReservas(reservas);
+            
+            for (var i = 0; i < sortedReservas.length; i++) {
+                var date = sortedReservas[i].date;
+                var periodo = sortedReservas[i].periodo;
+                var reserva_info = sortedReservas[i].info;
 
                 tableBody += '<tr>';
                 tableBody += '<td>' + date + '</td>';
+                tableBody += '<td>' + periodo + '</td>';
                 tableBody += '<td>' + reserva_info + '</td>';
-                tableBody += '<td><button onclick="deleteReserva(\'' + date + '\')">Excluir</button></td>';
+                tableBody += '<td><button onclick="deleteReserva(\'' + date + '\', \'' + periodo + '\')">Excluir</button></td>';
                 tableBody += '</tr>';
             }
+
             $('#reservasTable tbody').html(tableBody);
         });
     }
 
-    function deleteReserva(data_reserva) {
-        $.post("/delete", {data_reserva: data_reserva}, function (data) {
+    function sortReservas(reservas) {
+        var sortedReservas = [];
+        for (var date in reservas) {
+            for (var periodo in reservas[date]) {
+                if (reservas[date][periodo]) {
+                    sortedReservas.push({
+                        'date': date,
+                        'periodo': periodo,
+                        'info': reservas[date][periodo]
+                    });
+                }
+            }
+        }
+        sortedReservas.sort(function (a, b) {
+            var dateA = new Date(a.date);
+            var dateB = new Date(b.date);
+            if (dateA < dateB) return -1;
+            if (dateA > dateB) return 1;
+            return a.periodo.localeCompare(b.periodo);
+        });
+        return sortedReservas;
+    }
+
+
+    function deleteReserva(data_reserva, periodo) {
+        $.post("/delete", { data_reserva: data_reserva }, function (data) {
             if (data.success) {
                 updateReservas();
 
@@ -44,21 +71,27 @@
             event.preventDefault();
             var data_reserva = $('#data_reserva').val();
             var reserva_info = $('#reserva_info').val();
+            var periodo = $('#periodo').val();
 
-            // Check if the selected date already exists in the table
+            // Check if the selected date and period already exist in the table
             var dates = [];
+            var periods = [];
             $('#reservasTable tbody tr').each(function () {
-                dates.push($(this).find('td:first').text());
+                var date = $(this).find('td:first').text();
+                var period = $(this).find('td:nth-child(2)').text();
+                dates.push(date);
+                periods.push(period);
             });
 
-            if (dates.includes(data_reserva)) {
-                alert("A reserva para essa data já foi cadastrada!");
+            if (dates.includes(data_reserva) && periods.includes(periodo)) {
+                alert("A reserva para essa data e período já foi cadastrada!");
             } else {
                 $.post("/", $(this).serialize(), function (data) {
                     if (data.success) {
                         updateReservas();
                         $('#data_reserva').val('');
                         $('#reserva_info').val('');
+                        $('#periodo').val('MANHÃ'); // Set default value to "MANHÃ"
 
                         setTimeout(function () {
                             window.location.reload(); // Reload the page after 1 second
@@ -71,12 +104,18 @@
 </script>
 <body>
     <h1>Reservas</h1>
-    <form id="reservaForm" method="POST" action="/">
+    <form id="reservaForm">
         <label for="data_reserva">Data da reserva:</label>
         <input type="date" id="data_reserva" name="data_reserva" required>
         <br>
         <label for="reserva_info">Informações da reserva:</label>
         <input type="text" id="reserva_info" name="reserva_info" required>
+        <br>
+        <label for="periodo">Período:</label>
+        <select id="periodo" name="periodo">
+            <option value="MANHÃ">MANHÃ</option>
+            <option value="NOITE">NOITE</option>
+        </select>
         <br>
         <input type="submit" value="Enviar">
     </form>
@@ -85,18 +124,10 @@
     <table id="reservasTable">
         <tr>
             <th>Data da Reserva</th>
+            <th>Período</th>
             <th>Informações</th>
             <th>Ação</th>
         </tr>
-        {% for date, reserva_info in reservas.items() %}
-        <tr>
-            <td>{{ date }}</td>
-            <td>{{ reserva_info }}</td>
-            <td>
-                <button onclick="deleteReserva('{{ date }}')">Excluir</button>
-            </td>
-        </tr>
-        {% endfor %}
     </table>
 </body>
 </html>
