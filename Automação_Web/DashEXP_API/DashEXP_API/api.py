@@ -100,9 +100,9 @@ def exibir_resultados():
 def obter_resultados():
     global palavras_chave, resultados
     palavras_chave = [  "TOTAL EXP",
-                        "DATO TESTE",
+                        "DATO",
                         "AG AMINTAS",
-                        "AG LAMANHA",
+                        "AG LAMENHA",
                         "OLIST RETIRA",
                         "AG ANGELO",
                         "ENTREGA OSVALDO",
@@ -116,7 +116,7 @@ def obter_resultados():
                         "BIT HOME",
                         "RETIRA",
                         "BLING",
-                        "AMPLO"]
+                        "SUBWAY - AMPLO"]
                         
     resultados, total_palavras = consultar_palavras_chave(get_driver())
     palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
