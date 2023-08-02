@@ -70,6 +70,7 @@ def consultar_palavras_chave(navegador):
         proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
         time.sleep(3)
         if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
+            time.sleep(2)
             break
             print("... Len DISABLE ...")
         proxima_pagina[0].click()
