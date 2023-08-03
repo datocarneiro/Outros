@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 import datetime
 import json
 import os
@@ -29,11 +29,15 @@ def load_reservas():
             return reservas
     return {}
 
+
 # Função para salvar os dados de reservas no arquivo
 def save_reservas(reservas):
+    # Ordenar as reservas por data crescente
+    reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
     # Salvar os dados de reservas no arquivo
     with open(DATA_FILE_PATH, 'w') as file:
         json.dump(reservas, file, indent=4)
+
 
 def generate_dates():
     reservas = load_reservas()
@@ -53,10 +57,17 @@ def generate_dates():
     while current_date <= end_date:
         dates.append(current_date.strftime("%d/%m/%Y"))
         current_date += datetime.timedelta(days=1)
+
     return dates
+
 
 def find_reserva_by_date(data_reserva, reservas):
     return reservas.get(data_reserva)
+
+@app.route('/get_reservas', methods=['GET'])
+def get_reservas():
+    reservas = load_reservas()
+    return jsonify({'reservas': reservas})
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -80,18 +91,20 @@ def index():
         reservas[data_reserva] = {'nome': nome, 'periodo': periodo}
         save_reservas(reservas)
 
-        # Ordenar as reservas por data crescente
+        # Ordenar as reservas novamente antes de retornar o template
         reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
 
-        return jsonify({'success': True, 'reservas': reservas})
+        dates = generate_dates()  # Atualizar as datas para incluir a nova reserva
+
+        return render_template('index.html', dates=dates, reservas=reservas, message='Reserva feita com sucesso!')
 
     dates = generate_dates()
     reservas = load_reservas()
 
-    # Ordenar as reservas por data crescente
+    # Ordenar as reservas por data crescente antes de exibir no template
     reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
 
-    return render_template('index.html', dates=dates, reservas=reservas)
+    return render_template('index.html', dates=dates, reservas=reservas, message=' TESTE 1 ')
 
 
 @app.route('/delete', methods=['POST'])

@@ -1,0 +1,6 @@
+{
+    "05/08/2023": {
+        "nome": "Dato Carneiro",
+        "periodo": "TARDE (12:00 \u00e1s 18:00)"
+    }
+}

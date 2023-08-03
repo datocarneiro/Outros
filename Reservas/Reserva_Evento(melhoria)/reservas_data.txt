@@ -1,6 +1,0 @@
-{
-    "02/08/2023": {
-        "nome": "Dato Carneiro",
-        "periodo": "MANH\u00c3 (07:00 \u00e0s 12:00)"
-    }
-}

@@ -1,0 +1,93 @@
+/* Estilos gerais para todos os tamanhos de tela */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-left: 25%;
+    margin-top: 1rem;
+}
+
+img {
+    float: left;
+    margin-right: 10px;
+    width: 7cm;
+    height: 7cm;
+    border-radius: 50%;
+}
+
+.formulario {
+    font-size: 20px;
+    margin-left: 25%;
+    margin-top: 1rem;
+    padding: 6px;
+    text-align: center;
+    color: white;
+    background-color: rgb(100, 13, 57);
+    box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.6);
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #b73274;
+    color: white;
+}
+
+nometab {
+    color: red;
+}
+
+#total {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Media queries para responsividade */
+@media only screen and (max-width: 768px) {
+    h1 {
+        margin-left: 10%;
+    }
+    img {
+        float: none;
+        margin-right: 0;
+        width: 200px;
+        height: 200px;
+    }
+    .formulario {
+        margin-left: 10%;
+    }
+    table {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    h1 {
+        margin-left: 5%;
+        font-size: 24px;
+    }
+    img {
+        width: 150px;
+        height: 150px;
+    }
+    .formulario {
+        margin-left: 5%;
+    }
+    table {
+        width: 90%;
+    }
+}

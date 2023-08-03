@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmamosVoceVóHilda</title>
+    <!-- Link para o style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href='style.css'>
+</head>
+<body>
+    <img src="/static/vohilda.jpg" alt="Foto Vó Hilda">
+    <h1>ESCALA DE CUIDADOS VÓ HILDA</h1>
+    <form class="formulario" id="reservaForm" method="post" action="/">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        <label for="data_reserva">Data:</label>
+        <input type="date" id="data_reserva" name="data_reserva" required>
+        <label for="periodo">Período:</label>
+        <select name="periodo" id="periodo" required>                                                                                                
+            <option value="MANHÃ (07:00 ás 12:00)">MANHÃ (07:00 ás 12:00)</option>
+            <option value="TARDE (12:00 ás 18:00)">TARDE (12:00 ás 18:00)</option>
+            <option value="NOITE (18:00 ás 23:59)">NOITE (18:00 ás 23:59)</option>
+            <option value="MADRUGADA (00:00 ás 07:00)">MADRUGADA(00:00 ás 07:00)</option>
+        </select>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <table id="reservasTable" border="1">
+        <thead>
+            <tr>
+                <th class="data">Data</th>
+                <th class="nome">Nome</th>
+                <th>Período</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data, reserva in reservas.items() %}
+            <tr>
+                <td>{{ data }}</td>
+                <td>{{ reserva.nome }}</td>
+                <td>{{ reserva.periodo }}</td>
+                <td>
+                    <form class="deleteForm" action="/delete" method="post">
+                        <input type="hidden" name="data_reserva" value="{{ data }}">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Função para atualizar a tabela de reservas
+        function updateTable(reservas) {
+            const tableBody = document.querySelector('#reservasTable tbody');
+            tableBody.innerHTML = '';
+
+            for (const [data, reserva] of Object.entries(reservas)) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${data}</td>
+                    <td>${reserva.nome}</td>
+                    <td>${reserva.periodo}</td>
+                    <td>
+                        <form class="deleteForm" action="/delete" method="post">
+                            <input type="hidden" name="data_reserva" value="${data}">
+                            <button type="submit">Excluir</button>
+                        </form>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            }
+        }
+
+        // Função para enviar o formulário via AJAX
+        function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('#message').textContent = data.message;
+                    updateTable(data.reservas);
+                } else {
+                    document.querySelector('#message').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Adicionar o evento de envio do formulário
+        const reservaForm = document.querySelector('#reservaForm');
+
+        // Função para tratar o evento de exclusão e atualizar a tabela
+        function handleDelete(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector('#message').textContent = data.message;
+                    updateTable(data.reservas);
+                } else {
+                    document.querySelector('#message').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Adicionar o evento de clique aos botões "Excluir"
+        const deleteForms = document.querySelectorAll('.deleteForm');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', handleDelete);
+        });
+
+        // Carregar as reservas ao carregar a página
+        fetch('/get_reservas')
+            .then(response => response.json())
+            .then(data => {
+                updateTable(data.reservas);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    </script>
+</body>
+</html>
