@@ -11,8 +11,52 @@
 <body>
     <img src="/static/vohilda.jpg" alt="Foto Vó Hilda">
     <h1>ESCALA DE CUIDADOS VÓ HILDA</h1>
+    <h3>Chave PIX: 41985038817 - Jonathas Carneiro, para ajuda de custos</h3>
+    <div style="overflow: auto;">
+        <div style="float: left; width: 33,33%;">
+            <div class="paragrafo">
+                <p>
+                    <ul>
+                        <strong>Paciente em uso de dieta enteral via sonda material e dieta</strong>
+                        <li>5 unidades ampolas/dia (300 ou 500 ml) para dieta enteral</li>
+                        <li>1 unidade/dia de equipamento simples para dieta gravitacional</li>
+                        <li>1 unidade/dia de seringa de 50 ml.</li>
+                        <li>Fórmula enteral: pó ou líquido.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+        <div style="float: left; width: 33,33%;">
+            <div class="paragrafo">
+                <p>
+                    <ul>
+                        <strong>Opções de dieta em pó:</strong>
+                        <li>Opção 1 Nutrison Soya (Danone) - Dosagem: 330g/dia de pó.
+                            sendo 11 colheres medidoras em 200ml de água fervida ou filtrada.</li>
+                        <li>Opção 2 - Trophic Basic (Prodiet) - Dosagem: 355g/dia de pó, 
+                            sendo 8 colheres medidoras em 200ml de água fervida ou filtrada.</li>
+                        <li>Opção 3 - Nutri Enteral Soja (Nutrimed) - Dosagem: 324g/dia de pó,
+                            sendo 9 colheres medidoras em 190ml de água fervida ou filtrada.</li>
+                         Totalizando 13 latas/mês de 800g.
+                    </ul>
+                </p>
+            </div>
+        </div>
+        <div style="float: left; width: 33,33%;">
+            <div class="paragrafo">
+                <ul>
+                    <strong>Opções de dieta líquida:</strong>
+                    <li>Opção 1 - Isosource 1.5 (Nestle) - Dosagem: 1000 ml/dia.</li>
+                    <li>Opção 2 - Trophic 1.5 (Prodiet) - Dosagem: 1000 ml/dia.</li>
+                    <li>Opção 3 - Nutri Enteral 1.5 (Nutrimed) - Dosagem: 1000 ml/dia.</li>
+                    <li>Opção 4 - Nutrison Energy 1.5 (Danone) - Dosagem: 1000 ml/dia.</li>
+                    Totalizando 30 litros/mês.
+             </ul>
+            </div>
+        </div>
+    </div>
     <form class="formulario" id="reservaForm" method="post" action="/">
-        <label for="nome">Nome:</label>
+        <label for="nome"class="nomecabeçalho">Nome:</label>
         <input type="text" id="nome" name="nome" required>
         <label for="data_reserva">Data:</label>
         <input type="date" id="data_reserva" name="data_reserva" required>
@@ -42,7 +86,8 @@
                 <td>{{ reserva.nome }}</td>
                 <td>{{ reserva.periodo }}</td>
                 <td>
-                    <form class="deleteForm" action="/delete" method="post">
+                    <!-- Ação de exclusão mudou para chamar a função handleDelete() -->
+                    <form class="deleteForm" onsubmit="handleDelete(event)">
                         <input type="hidden" name="data_reserva" value="{{ data }}">
                         <button type="submit">Excluir</button>
                     </form>
@@ -102,6 +147,7 @@
         // Adicionar o evento de envio do formulário
         const reservaForm = document.querySelector('#reservaForm');
 
+        /*
         // Função para tratar o evento de exclusão e atualizar a tabela
         function handleDelete(event) {
             event.preventDefault();
@@ -112,11 +158,15 @@
                 method: form.method,
                 body: formData
             })
+        */
+
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     document.querySelector('#message').textContent = data.message;
                     updateTable(data.reservas);
+                    // Redirecionar o usuário de volta à página principal
+                    window.location.href = "/";
                 } else {
                     document.querySelector('#message').textContent = data.message;
                 }
@@ -125,13 +175,13 @@
                 console.error('Error:', error);
             });
         }
-
+/*
         // Adicionar o evento de clique aos botões "Excluir"
         const deleteForms = document.querySelectorAll('.deleteForm');
         deleteForms.forEach(form => {
             form.addEventListener('submit', handleDelete);
         });
-
+*/
         // Carregar as reservas ao carregar a página
         fetch('/get_reservas')
             .then(response => response.json())

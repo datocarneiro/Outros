@@ -102,6 +102,7 @@ def index():
     reservas = load_reservas()
 
     # Ordenar as reservas por data crescente antes de exibir no template
+    # Ordenar as reservas por data crescente antes de exibir no template
     reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
 
     return render_template('index.html', dates=dates, reservas=reservas, message=' TESTE 1 ')
@@ -126,7 +127,7 @@ def delete_reserva():
             return jsonify({'success': True, 'reservas': reservas})
         else:
             return jsonify({'success': False, 'message': 'A reserva para essa data não foi encontrada!'})
-
+        reservas = load_reservas()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5050)
+    app.run(host='0.0.0.0', port=8080)

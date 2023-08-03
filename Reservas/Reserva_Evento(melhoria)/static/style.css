@@ -7,27 +7,35 @@ body {
 
 h1 {
     margin-left: 18%;
+    margin-right: 5%;
     margin-top: 1rem;
+    margin-bottom: 2px;
+    box-shadow: 8px 8px 8px rgba(81, 79, 79, 0.2);
+}
+h3{
+    margin: 1%;
 }
 
 img {
     float: left;
+    margin-left: 8px;
     margin-right: 10px;
     width: 7cm;
     height: 7cm;
     border-radius: 50%;
+    box-shadow: 20px 10px 20px rgba(0, 0, 0, 0.6);
 }
 
 .formulario {
     font-size: 20px;
     margin-left: 18%;
-    margin-top: 1rem;
+    margin-top: 1px;
     margin-right: 15%;
     padding: 6px;
     text-align: center;
     color: white;
     background-color: #6F233F;
-    box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.6);
 }
 
 table {
@@ -35,22 +43,31 @@ table {
     border-collapse: collapse;
     width: 60%;
     margin: 20px auto;
-    margin-right: 20%;
+    margin-right: 18%;
 }
 
+/*dados da tabela*/
 th, td {
     border: 1px solid #000000;
-    padding: 8px;
+    padding:0px;
     text-align: center;
 }
 
-th {
+/*cabeçalho tabela*/
+th { 
     background-color: #9d5468;
     color: white;
+    padding: 3px;
+}
+label{
+    position: absolute, left;
+    text-align: left;
 }
 
-nometab {
-    color: red;
+input{
+    margin-left: 1px;
+    text-align: left;
+    
 }
 
 #total {
@@ -93,4 +110,23 @@ nometab {
     table {
         width: 90%;
     }
+}
+.container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.content {
+    flex: 1;
+}
+
+#reservasTable {
+    flex: 1;
+}
+.paragrafo{
+    font-size:10px;
+    margin: 0;
 }
