@@ -16,59 +16,47 @@ DATA_FILE_PATH = os.path.join(BASE_DIR, 'reservas_data.txt')
 def load_reservas():
     if os.path.exists(DATA_FILE_PATH):
         with open(DATA_FILE_PATH, 'r') as file:
-            return json.load(file)
+            reservas = json.load(file)
+            # Converter as datas para o formato "dd/mm/aaaa"
+            for date_str in list(reservas.keys()):  # Criar uma cópia das chaves
+                try:
+                    date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+                    reservas[date_obj.strftime("%d/%m/%Y")] = reservas.pop(date_str)
+                except ValueError:
+                    pass  # Se a data não puder ser convertida, ignore
+            # Ordenar as reservas por data crescente
+            reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
+            return reservas
     return {}
-
 
 # Função para salvar os dados de reservas no arquivo
 def save_reservas(reservas):
     # Salvar os dados de reservas no arquivo
     with open(DATA_FILE_PATH, 'w') as file:
-        json.dump(reservas, file)
+        json.dump(reservas, file, indent=4)
 
 def generate_dates():
-    # Carregar as reservas existentes
     reservas = load_reservas()
 
-    # Se não houver reservas, definir uma data inicial e final padrão
     if not reservas:
-        start_date = datetime.date(2023, 7, 31)
+        start_date = datetime.date(2023, 8, 2)
         end_date = datetime.date(2023, 8, 10)
     else:
-        # Verificar o formato das datas e convertê-las para o formato correto (DD/MM/YYYY)
-        dates = []
-        keys_to_modify = []  # Criar uma lista para armazenar as chaves que precisam ser modificadas
-        for date_str in reservas.keys():
-            try:
-                date_obj = datetime.datetime.strptime(date_str, "%d/%m/%Y").date()
-            except ValueError:
-                # Se a data não estiver no formato correto, tentar converter para o formato 'YYYY-MM-DD'
-                date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
-                keys_to_modify.append(date_str)  # Adicionar a chave à lista
-
-            dates.append(date_obj)
-
-        for key in keys_to_modify:
-            date_obj = datetime.datetime.strptime(key, "%Y-%m-%d").date()
-            reservas[date_obj.strftime("%d/%m/%Y")] = reservas.pop(key)
-
+        dates = [datetime.datetime.strptime(date_str, "%d/%m/%Y").date() for date_str in reservas.keys()]
         start_date = min(dates)
         end_date = max(dates)
 
-    # Gerar as datas dentro do intervalo (30 dias a partir da data mais recente ou da data atual)
     current_date = max(end_date, datetime.date.today())
-    end_date = current_date + datetime.timedelta(days=30)
+    end_date = current_date + datetime.timedelta(days=5)
 
     dates = []
     while current_date <= end_date:
-        dates.append(current_date.strftime("%d/%m/%Y"))  # Modifique o formato da data aqui
+        dates.append(current_date.strftime("%d/%m/%Y"))
         current_date += datetime.timedelta(days=1)
     return dates
 
-
 def find_reserva_by_date(data_reserva, reservas):
     return reservas.get(data_reserva)
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -77,32 +65,31 @@ def index():
         data_reserva = request.form['data_reserva']
         periodo = request.form['periodo']
 
-        # Carregar os dados de reservas na inicialização do aplicativo
         reservas = load_reservas()
 
-        reserva = find_reserva_by_date(data_reserva, reservas)
-
-        # Check if the selected date already exists in the data
         if data_reserva in reservas:
             return jsonify({'success': False, 'message': 'A reserva para essa data já foi cadastrada!'})
 
-        if reserva:
-            # If the reservation already exists, update the existing reservation
-            reserva['nome'] = nome
-            reserva['periodo'] = periodo
-        else:
-            # If the reservation does not exist, add a new one
-            reservas[data_reserva] = {'nome': nome, 'periodo': periodo}
+        # Formatar a data para o formato 'dd/mm/aaaa'
+        try:
+            date_obj = datetime.datetime.strptime(data_reserva, "%Y-%m-%d").date()
+            data_reserva = date_obj.strftime("%d/%m/%Y")
+        except ValueError:
+            return jsonify({'success': False, 'message': 'Data inválida!'})
 
-        # Salvar os dados de reservas no arquivo
+        reservas[data_reserva] = {'nome': nome, 'periodo': periodo}
         save_reservas(reservas)
 
-        return jsonify({'success': True})
+        # Ordenar as reservas por data crescente
+        reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
+
+        return jsonify({'success': True, 'reservas': reservas})
 
     dates = generate_dates()
-
-    # Carregar as reservas existentes
     reservas = load_reservas()
+
+    # Ordenar as reservas por data crescente
+    reservas = dict(sorted(reservas.items(), key=lambda item: datetime.datetime.strptime(item[0], '%d/%m/%Y')))
 
     return render_template('index.html', dates=dates, reservas=reservas)
 

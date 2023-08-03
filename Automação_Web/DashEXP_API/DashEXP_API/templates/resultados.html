@@ -14,7 +14,7 @@
             width: 100%; /* Define a tabela para ocupar toda a largura disponível */
             height: 100%;
         }
-        .titulo{
+        .titulo {
             font-size: 45px;
             margin-bottom: 0;
             margin-top: 1;
@@ -56,7 +56,7 @@
             background-color: rgb(211, 219, 228);
             color: rgb(0, 0, 0);
         }
-        .qtd{
+        .qtd {
             font-size: 80px;
         }
         h2 {
@@ -67,7 +67,7 @@
             margin-left: 15px;
             margin-bottom: -30px;
         }
-        .pd{
+        .pd {
             color: red;
             font-size: 45px;
         }
@@ -86,8 +86,8 @@
             <col style="width: 33%;">
             <col style="width: 33%;">
         </colgroup>
-        {% for palavra, quantidade in resultados.items() %}
-        {% if loop.index0 % 3 == 0 %}
+        {% for chave, valor in resultados.items() %}
+        {% if forloop.counter0 % 3 == 0 %}
         <tr>
         {% endif %}
             <td>
@@ -97,7 +97,7 @@
                 <strong class="qtd">{{ valor }}</strong>
                 </div>
             </td>
-        {% if loop.index % 3 == 0 or loop.last %}
+        {% if forloop.counter % 3 == 0 or forloop.last %}
         </tr>
         {% endif %}
         {% endfor %}
@@ -109,7 +109,8 @@
         function criarTabela(resultados) {
             const tabelaResultados = document.getElementById("tabela-resultados");
 
-            for (const chave in resultados) {const valor = resultados[chave];
+            for (const chave in resultados) {
+                const valor = resultados[chave];
 
                 const linhaHTML = `
                     <tr>

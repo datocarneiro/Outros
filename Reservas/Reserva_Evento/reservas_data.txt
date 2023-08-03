@@ -1,0 +1,14 @@
+{
+    "03/08/2023": {
+        "nome": "TESTE RETIRA",
+        "periodo": "NOITE"
+    },
+    "05/08/2023": {
+        "nome": "Dato Carneiro",
+        "periodo": "MANH\u00c3"
+    },
+    "04/08/2023": {
+        "nome": "Masculino",
+        "periodo": "NOITE"
+    }
+}

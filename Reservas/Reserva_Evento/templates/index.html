@@ -17,27 +17,29 @@
         <input type="date" name="data_reserva" id="data_reserva" required>
         <label for="periodo">Período:</label>
         <select name="periodo" id="periodo" required>                                                                                                
-            <option value="MANHÃ">MANHÃ</option>
-            <option value="NOITE">NOITE</option>
+            <option value="MANHÃ">MANHÃ (07:00 ás 12:00)</option>
+            <option value="NOITE">TARDE (12:00 ás 18:00)</option>
+            <option value="NOITE">NOITE (18:00 ás 23:59)</option>
+            <option value="NOITE">MADRUGADA(00:00 ás 07:00)</option>
         </select>
         <button type="submit">Enviar</button>
     </form>
   
-  <h2>Reservas:</h2>
-  <table id="reservasTable">
-      <tr>
-          <th class="data">Data</th>
-          <th class="nome">Nome</th>
-          <th>Período</th>
-      </tr>
-      {% for date in dates %}
-      <tr>
-          <td>{{ date }}</td>
-          <td></td>
-          <td></td>
-      </tr>
-      {% endfor %}
-  </table>
+<h2>Reservas:</h2>
+<table id="reservasTable">
+    <tr>
+        <th class="data">Data</th>
+        <th class="nome">Nome</th>
+        <th>Período</th>
+    </tr>
+    {% for date, reserva in reservas.items() %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ reserva.nome }}</td>
+        <td>{{ reserva.periodo }}</td>
+    </tr>
+    {% endfor %}
+</table>
   
     <!-- Link para o jQuery -->
   <!-- Link para o jQuery -->
