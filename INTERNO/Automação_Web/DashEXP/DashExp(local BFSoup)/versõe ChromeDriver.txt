@@ -1,0 +1,86 @@
+Link para versões diversas
+https://googlechromelabs.github.io/chrome-for-testing/
+
+baixar pela URL
+Estábulo
+Versão: 115.0.5790.102 (r1148114)
+
+Binário	Plataforma	URL	Status HTTP
+chrome	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/linux64/chrome-linux64.zip	200
+chrome	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/mac-arm64/chrome-mac-arm64.zip	200
+chrome	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/mac-x64/chrome-mac-x64.zip	200
+chrome	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/win32/chrome-win32.zip	200
+chrome	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/win64/chrome-win64.zip	200
+chromedriver	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/linux64/chromedriver-linux64.zip	200
+chromedriver	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/mac-arm64/chromedriver-mac-arm64.zip	200
+chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/mac-x64/chromedriver-mac-x64.zip	200
+chromedriver	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/win32/chromedriver-win32.zip	200
+chromedriver	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.102/win64/chromedriver-win64.zip	200
+Próxima versão: 115.0.5790.110 (r1148114)
+
+Binário	Plataforma	URL	Status HTTP
+chrome	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/linux64/chrome-linux64.zip	200
+chrome	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/mac-arm64/chrome-mac-arm64.zip	200
+chrome	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/mac-x64/chrome-mac-x64.zip	200
+chrome	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/win32/chrome-win32.zip	200
+chrome	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/win64/chrome-win64.zip	404
+chromedriver	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/linux64/chromedriver-linux64.zip	200
+chromedriver	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/mac-arm64/chromedriver-mac-arm64.zip	200
+chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/mac-x64/chromedriver-mac-x64.zip	200
+chromedriver	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/win32/chromedriver-win32.zip	200
+chromedriver	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/115.0.5790.110/win64/chromedriver-win64.zip	404
+Beta
+Versão: 116.0.5845.49 (r1160321)
+
+Binário	Plataforma	URL	Status HTTP
+chrome	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/linux64/chrome-linux64.zip	200
+chrome	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/mac-arm64/chrome-mac-arm64.zip	200
+chrome	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/mac-x64/chrome-mac-x64.zip	200
+chrome	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/win32/chrome-win32.zip	200
+chrome	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/win64/chrome-win64.zip	200
+chromedriver	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/linux64/chromedriver-linux64.zip	200
+chromedriver	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/mac-arm64/chromedriver-mac-arm64.zip	200
+chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/mac-x64/chromedriver-mac-x64.zip	200
+chromedriver	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/win32/chromedriver-win32.zip	200
+chromedriver	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.49/win64/chromedriver-win64.zip	200
+Dev
+Versão: 117.0.5911.2 (r1175078)
+
+Binário	Plataforma	URL	Status HTTP
+chrome	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/linux64/chrome-linux64.zip	200
+chrome	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/mac-arm64/chrome-mac-arm64.zip	200
+chrome	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/mac-x64/chrome-mac-x64.zip	200
+chrome	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/win32/chrome-win32.zip	200
+chrome	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/win64/chrome-win64.zip	200
+chromedriver	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/linux64/chromedriver-linux64.zip	200
+chromedriver	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/mac-arm64/chromedriver-mac-arm64.zip	200
+chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/mac-x64/chromedriver-mac-x64.zip	200
+chromedriver	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/win32/chromedriver-win32.zip	200
+chromedriver	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5911.2/win64/chromedriver-win64.zip	200
+Canário
+Versão: 117.0.5912.0 (r1175363)
+
+Binário	Plataforma	URL	Status HTTP
+chrome	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/linux64/chrome-linux64.zip	200
+chrome	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/mac-arm64/chrome-mac-arm64.zip	200
+chrome	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/mac-x64/chrome-mac-x64.zip	200
+chrome	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/win32/chrome-win32.zip	200
+chrome	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/win64/chrome-win64.zip	200
+chromedriver	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/linux64/chromedriver-linux64.zip	200
+chromedriver	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/mac-arm64/chromedriver-mac-arm64.zip	200
+chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/mac-x64/chromedriver-mac-x64.zip	200
+chromedriver	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/win32/chromedriver-win32.zip	200
+chromedriver	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5912.0/win64/chromedriver-win64.zip	200
+Próxima versão: 117.0.5913.0 (r1175549)
+
+Binário	Plataforma	URL	Status HTTP
+chrome	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/linux64/chrome-linux64.zip	200
+chrome	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/mac-arm64/chrome-mac-arm64.zip	200
+chrome	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/mac-x64/chrome-mac-x64.zip	200
+chrome	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/win32/chrome-win32.zip	404
+chrome	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/win64/chrome-win64.zip	200
+chromedriver	linux64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/linux64/chromedriver-linux64.zip	200
+chromedriver	mac-arm64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/mac-arm64/chromedriver-mac-arm64.zip	200
+chromedriver	mac-x64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/mac-x64/chromedriver-mac-x64.zip	200
+chromedriver	win32	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/win32/chromedriver-win32.zip	404
+chromedriver	win64	https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/117.0.5913.0/win64/chromedriver-win64.zip	200
