@@ -1,0 +1,55 @@
+<!--
+<!DOCTYPE html>: Essa declaração define a versão do HTML usada no documento.
+No caso, html indica que estamos utilizando a versão mais recente do HTML.
+<html>: É a tag raiz do documento HTML. Ela envolve todo o conteúdo da página.
+<head>: Esta seção contém metadados e informações sobre o documento, 
+como o título exibido na barra de título do navegador, referências a arquivos externos 
+(CSS, JavaScript, etc.) e outras configurações.
+<title>: Essa tag define o título da página, que é exibido na barra de título do navegador
+quando a página é aberta ou nos resultados de pesquisa.
+<body>: Aqui é onde todo o conteúdo visível da página é colocado, como texto,
+imagens, links e outros elementos HTML. O conteúdo dentro dessa tag é exibido no navegador.
+Essa é a estrutura básica do HTML. 
+Dentro da tag <body>, você pode adicionar várias outras tags HTML 
+para estruturar e formatar o seu conteúdo, dependendo das necessidades específicas da sua página.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Amplo.DashExpedição.Dato</title>
+  <script> /* comando JavaScript */
+    setTimeout(function() {
+       location.reload(); 
+   }, 60000); /*recarrega o conteúdo da pagina - milesegundos */
+</script> 
+</head>
+<body>
+  <h1 class="titulo">Dashboard Expedição</h1>
+  <h2>Total Pendentes:<strong class="pd">{{ total_palavras }}</strong></h2>
+  <table>
+      <colgroup>
+        <col style="width: 33%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+        <col style="width: 33%;">
+        <col style="width: 33%;">
+      </colgroup>
+    {% for keyword, occurrences in resultados.items() %}
+    {% if loop.index0 % 3 == 0 %}
+    <tr>
+    {% endif %}
+      <td>
+        <div class="interno">
+            <strong class="tpt">{{ keyword }}</strong>
+            <br>
+            <strong class="qtd">{{ occurrences }}</strong>
+        </div>
+      </td>
+    {% if loop.index % 3 == 0 or loop.last %}
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+</body>
+</html>
