@@ -11,13 +11,19 @@
 <body>
     <img src="/static/vohilda.jpg" alt="Foto Vó Hilda">
     <h1>ESCALA DE CUIDADOS VÓ HILDA</h1>
-    <h3>Chave PIX: 41985038817 - Jonathas Carneiro, para ajuda de custos</h3>
+    <h3>Chave PIX: 41985038817 - para ajuda de custos</h3>
     <div style="overflow: auto;">
         <div style="float: left; width: 33,33%;">
             <div class="paragrafo">
                 <p>
                     <ul>
-                        <strong>Paciente em uso de dieta enteral via sonda material e dieta</strong>
+                        <li><strong>A Vó esta acamada</strong></li>
+                        <li><strong>Em uso de dieta enteral via sonda nasogástrica</strong></li>
+                        <li><strong>Em uso de traqueostomia, necessitando de limpeza quando necessario</strong></li>
+                        <li><strong>Em uso de de Fraldas Geriatricas XG</strong></li>
+                        <li><strong>Necessita de troca de curativos diário</strong></li>
+
+                      <!--
                         <li>5 unidades ampolas/dia (300 ou 500 ml) para dieta enteral</li>
                         <li>1 unidade/dia de equipamento simples para dieta gravitacional</li>
                         <li>1 unidade/dia de seringa de 50 ml.</li>
@@ -51,51 +57,62 @@
                     <li>Opção 3 - Nutri Enteral 1.5 (Nutrimed) - Dosagem: 1000 ml/dia.</li>
                     <li>Opção 4 - Nutrison Energy 1.5 (Danone) - Dosagem: 1000 ml/dia.</li>
                     Totalizando 30 litros/mês.
+                      -->
              </ul>
             </div>
         </div>
     </div>
     <form class="formulario" id="reservaForm" method="post" action="/">
-        <label for="nome"class="nomecabeçalho">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-        <label for="data_reserva">Data:</label>
-        <input type="date" id="data_reserva" name="data_reserva" required>
-        <label for="periodo">Período:</label>
-        <select name="periodo" id="periodo" required>                                                                                                
-            <option value="MANHÃ (07:00 ás 12:00)">MANHÃ (07:00 ás 12:00)</option>
-            <option value="TARDE (12:00 ás 18:00)">TARDE (12:00 ás 18:00)</option>
-            <option value="NOITE (18:00 ás 23:59)">NOITE (18:00 ás 23:59)</option>
-            <option value="MADRUGADA (00:00 ás 07:00)">MADRUGADA(00:00 ás 07:00)</option>
-        </select>
+        <div class="input-wrapper">
+            <label for="nome" class="nomecabeçalho">Nome:</label>
+            <input type="text" id="nome" name="nome" maxlength="25" required>
+        </div>
+        <div class="input-wrapper">
+            <label for="data_reserva">Data:</label>
+            <input type="date" id="data_reserva" name="data_reserva" required>
+        </div>
+        <div class="input-wrapper">
+            <label for="periodo">Período:</label>
+            <select name="periodo" id="periodo" required>
+                <option value="Manhã (07:00 às 12:00)">Manhã (07:00 às 12:00)</option>
+                <option value="Tarde (12:00 às 18:00)">Tarde (12:00 ás 18:00)</option>
+                <option value="Noite (18:00 às 23:59)">Noite (18:00 ás 23:59)</option>
+                <option value="Madrugada (00:00 às 07:00)">Madrugada (00:00 às 07:00)</option>
+            </select>
+        </div>
         <button type="submit">Enviar</button>
     </form>
 
     <table id="reservasTable" border="1">
-        <thead>
-            <tr>
-                <th class="data">Data</th>
-                <th class="nome">Nome</th>
-                <th>Período</th>
-                <th>Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for data, reserva in reservas.items() %}
-            <tr>
-                <td>{{ data }}</td>
-                <td>{{ reserva.nome }}</td>
-                <td>{{ reserva.periodo }}</td>
-                <td>
-                    <!-- Ação de exclusão mudou para chamar a função handleDelete() -->
-                    <form class="deleteForm" onsubmit="handleDelete(event)">
-                        <input type="hidden" name="data_reserva" value="{{ data }}">
-                        <button type="submit">Excluir</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+          <thead>
+              <tr>
+                  <th class="data">Data</th>
+                  <th class="nome">Nome</th>
+                  <th>Período</th>
+                  <th>Ação</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for data, reservas_for_date in reservas.items() %}
+                  {% for reserva in reservas_for_date %}
+                  <tr>
+                      <td>{{ data }}</td>
+                      <td>{{ reserva.nome }}</td>
+                      <td>{{ reserva.periodo }}</td>
+                      <td>
+                          <!-- Ação de exclusão mudou para chamar a função handleDelete() -->
+                          <form class="deleteForm" onsubmit="handleDelete(event)">
+                              <input type="hidden" name="data_reserva" value="{{ data }}">
+                              <input type="hidden" name="nome" value="{{ reserva.nome }}">
+                              <button type="submit">Excluir</button>
+                          </form>
+                      </td>
+                  </tr>
+                  {% endfor %}
+              {% endfor %}
+          </tbody>
+      </table>
+  
 
     <script>
         // Função para atualizar a tabela de reservas
@@ -175,22 +192,47 @@
                 console.error('Error:', error);
             });
         }
-/*
-        // Adicionar o evento de clique aos botões "Excluir"
-        const deleteForms = document.querySelectorAll('.deleteForm');
-        deleteForms.forEach(form => {
-            form.addEventListener('submit', handleDelete);
-        });
-*/
-        // Carregar as reservas ao carregar a página
-        fetch('/get_reservas')
-            .then(response => response.json())
-            .then(data => {
-                updateTable(data.reservas);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+  /*
+          // Adicionar o evento de clique aos botões "Excluir"
+          const deleteForms = document.querySelectorAll('.deleteForm');
+          deleteForms.forEach(form => {
+              form.addEventListener('submit', handleDelete);
+          });
+  */
+          // Carregar as reservas ao carregar a página
+          fetch('/get_reservas')
+              .then(response => response.json())
+              .then(data => {
+                  updateTable(data.reservas);
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+  
+                // Obtém o elemento do campo de entrada de data
+          const dataReservaInput = document.getElementById('data_reserva');
+        
+          // Adiciona um evento para verificar a data selecionada
+          dataReservaInput.addEventListener('change', function() {
+            // Obtém o valor da data selecionada
+            const selectedDate = new Date(this.value);
+        
+            // Obtém a data atual
+            const currentDate = new Date();
+        
+            // Obtém o ano atual
+            const currentYear = currentDate.getFullYear();
+        
+            // Define o ano limite como 2023
+            const limiteAno = 2023;
+        
+            // Verifica se a data selecionada é superior a 2023
+            if (selectedDate.getFullYear() <= limiteAno) {
+              // Limpa o valor do campo de entrada
+              this.value = '';
+              alert('Por favor, selecione uma data posterior a 2023.');
+            }
+          });
     </script>
 </body>
 </html>
