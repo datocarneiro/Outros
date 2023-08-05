@@ -1,5 +1,0 @@
-extrair o arquivo  salvar na pasta abaixo
-
-C:\Users\nomedousuario\AppData\Local\Programs\selenium
-
-se não houver a pasta creie, após isso adicione o diretório nas variaveis de ambiente / path
