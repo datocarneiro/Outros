@@ -18,7 +18,7 @@ def get_driver():
 
 def login_to_external_site(navegador):
     print('Realizando login no site externo...')
-    navegador.get("https://amplo.eship.com.br/")
+    navegador.get("https:.com.br/")
     time.sleep(2)
     username_field = navegador.find_element(By.XPATH, '//*[@id="login"]')
     password_field = navegador.find_element(By.XPATH, '//*[@id="senha"]')

@@ -32,7 +32,7 @@ while True:
   
     # DEFINA AS AÇÕES QUE SERÃO AUTOMATIZADAS 
     # Acessar a página de login
-    navegador.get("https://amplo.eship.com.br/")
+    navegador.get("https:.com.br/")
     navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("xxxxxxxx") # seu login
     navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("xxxxxxxx") # sua senha
     navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()

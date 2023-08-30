@@ -24,9 +24,9 @@ def contar_palavras_chave():
     navegador = webdriver.Chrome(service=servico, options=opcoes)
     
     print('... Logando ...')
-    navegador.get("https://amplo.eship.com.br/")
-    navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dato@amplologistica.com.br")
-    navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("D@sh4123")
+    navegador.get("https:.com.br/")
+    navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("xxxxxxxxxx") # insira o login 
+    navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("xxxxxxxxx") # insira a senha 
     navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
     time.sleep(5)
     print("... Logado ...")

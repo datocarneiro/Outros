@@ -31,14 +31,14 @@ def get_driver(browser):
 
 def login_to_external_site(navegador):
     print('Realizando login no site externo...')
-    navegador.get("https://amplo.eship.com.br/")
+    navegador.get("https:.com.br/")
     time.sleep(2)
     username_field = navegador.find_element(By.XPATH, '//*[@id="login"]')
     password_field = navegador.find_element(By.XPATH, '//*[@id="senha"]')
     login_button = navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span')
 
-    username_field.send_keys("dashboard3")
-    password_field.send_keys("12341234")
+    username_field.send_keys("xxxxxxxx")
+    password_field.send_keys("xxxxxxxxx")
     login_button.click()
     time.sleep(5)
     print("Preenchendo campos de login e senha...")
