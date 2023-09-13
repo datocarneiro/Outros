@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Enviar mensagem para grupos do WhatsApp</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Enviar mensagem para grupos do WhatsApp</h1>
+    <form action="/send" method="post">
+        <label for="message">Mensagem:</label>
+        <input type="text" id="message" name="message"><br><br>
+
+        <label for="groups">Grupos:</label><br>
+        <input type="checkbox" id="group1" name="groups" value="grupo1">
+        <label for="group1">Grupo 1</label><br>
+
+        <input type="checkbox" id="group2" name="groups" value="grupo2">
+        <label for="group2">Grupo 2</label><br>
+
+        <input type="checkbox" id="group3" name="groups" value="grupo3">
+        <label for="group3">Grupo 3</label><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+
+</html>
