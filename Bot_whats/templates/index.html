@@ -5,11 +5,25 @@
     <title>Enviar mensagem para grupos do WhatsApp</title>
     <style>
         body {
-            text-align: center;
+            text-align: left;
         }
 
         form {
             display: inline-block;
+        }
+
+        .cxmensagem {
+            color: rgb(12, 12, 54);
+            width: 500%;
+            height: 150px;
+        }
+
+        .btn-enviar {
+            margin-top: 10px;
+            height: 25px;
+            color: white;
+            background-color: rgb(22, 105, 57);
+
         }
     </style>
 </head>
@@ -17,8 +31,10 @@
 <body>
     <h1>Enviar mensagem para grupos do WhatsApp</h1>
     <form action="/send" method="post">
-        <label for="message">Mensagem:</label>
-        <input type="text" id="message" name="message"><br><br>
+        <label for="message">Mensagem:</label><br>
+        <textarea class='cxmensagem' id="message" name="message"></textarea><br><br>
+
+        <input type="submit" value="Enviar" class="btn-enviar"><br><br>
 
         <label for="groups">Grupos:</label><br>
         <input type="checkbox" id="group1" name="groups" value="grupo1">
@@ -29,8 +45,6 @@
 
         <input type="checkbox" id="group3" name="groups" value="grupo3">
         <label for="group3">Grupo 3</label><br><br>
-
-        <input type="submit" value="Enviar">
     </form>
 </body>
 
