@@ -15,7 +15,7 @@ nome_base_arquivos_saida = os.path.join('C:/Users/dato/OneDrive/Documentos/Datoo
 df = pd.read_excel(caminho_arquivo_entrada)
 
 # Divida os dados em pedaços de 900 linhas usando list comprehension
-pedacos = [df[i:i+100] for i in range(0, len(df), 100)] # dititar a qtd de linha onde vai gerar a quebra
+pedacos = [df[i:i+700] for i in range(0, len(df), 700)] # dititar a qtd de linha onde vai gerar a quebra
 
 # Itere sobre cada pedaço e salve-o em um novo arquivo Excel
 for i, pedaco in enumerate(pedacos):
