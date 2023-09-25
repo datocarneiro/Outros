@@ -52,29 +52,25 @@ for i in lista_awb_formatada:
     print('-'*50)
   
     opcoes = Options()
-    opcoes.headless = True  # modo off ou não
+    opcoes.headless = False  # modo off ou não
     driver = webdriver.Chrome(service=servico, options=opcoes)
 
     print('... ENTRANDO NO SITE DA LATAM, AGUARDE, "vai pegar um café apressado(a)!" ...')
     # https://www.latamcargo.com/en/trackshipment?docNumber=12801530&docPrefix=957&soType=SO
+    # 13127026 TRANSFERENCIA , 13128710 EM ROTA, 13034092 EM ROTA 
+
 
     link = driver.get(f"https://www.latamcargo.com/en/trackshipment?docNumber={i}&docPrefix=957&soType=SO")
     print("... horas depoiS, O SITE FOI CARREGADO")
 
     # movimentacoes = driver.find_element(By.XPATH, '#statusTable > tbody > tr:nth-child(1) > td.Event')
-    movimentacoes = driver.find_element(By.CSS_SELECTOR, '#statusTable > tbody > tr:nth-child(1) > td.Event')
+    movimentacoes = driver.find_element(By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[2]/text()').click()
+      
 
-    
-    # //*[@id="statusTable"]/tbody/tr[1]/td[1]
-    # //*[@id="statusTable"]/tbody/tr[1]/td[1]/text()
-    # //*[@id="statusTable"]/tbody/tr[1]/td[2]/text()
-    # //*[@id="statusTable"]
-    # //*[@id="nav-tracking"]/div/div[1]/div[6]/div/div[2]/div/div//td[contains(@class,'movementStatus')]
-    # #statusTable > tbody > tr:nth-child(1) > td.Event
     print('passou XPATH ........................................')
 
-    '''
+
     lista_movimentacoes = []
     lista_movimentacoes = lista_movimentacoes.append(movimentacoes.text)
-    '''
+
     driver.quit()
