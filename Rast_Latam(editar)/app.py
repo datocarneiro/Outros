@@ -8,9 +8,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+import pandas as pd
+from IPython.display import display
+
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-arquivo = os.path.join(diretorio_atual, 'rastreamento.xlsx')
+arquivo = os.path.join(diretorio_atual, 'rastreamento1.xlsx')
 
 # Carregar planilha
 planilha = load_workbook(arquivo)
@@ -31,16 +34,18 @@ for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:], aba_ativa["C"][1:], 
     if coluna_d.value != 'ENTREGUE':
         lista.append(coluna_c.value)
 
+print(type(lista[1]))
+print(lista)
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
 lista_awb_formatada = []
 for i in lista:
-    awb_formatada = int(str(i)[3:])
+    awb_formatada = str(i)[3:]
     lista_awb_formatada.append(awb_formatada)
     
 # EXIBIR SOMENTE AS PENDENTE DE ENTREGA
-print("-"*40)
+print("-"*90)
 print(f' As pendente de entrega são: {lista_awb_formatada}')
-print("-"*40)
+print("-"*90)
  
 servico = Service(ChromeDriverManager().install())
 
@@ -75,5 +80,6 @@ dicionario = {}
 for awb in lista_awb_formatada:
     dicionario[awb] = captura_status(awb)
 print(dicionario)
-    
-time.sleep(5)
+
+dicionario_df = pd.DataFrame(dicionario) 
+display(dicionario_df)

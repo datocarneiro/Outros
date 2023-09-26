@@ -28,7 +28,7 @@ for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:], aba_ativa["C"][1:], 
     '''
 
     # se os dados da coluna "D(status)" forem diferente de "Entregue", adicione(append) à lista os dados da coluna "C(AWB)".
-    if coluna_d.value != 'ENTREGUE':
+    if coluna_d.value != 'ENTREGUE' or 'entregue':
         lista.append(coluna_c.value)
 
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
