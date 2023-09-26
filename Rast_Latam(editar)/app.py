@@ -13,7 +13,7 @@ from IPython.display import display
 
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-arquivo = os.path.join(diretorio_atual, 'rastreamento1.xlsx')
+arquivo = os.path.join(diretorio_atual, 'Rastreamento1.xlsx')
 
 # Carregar planilha
 planilha = load_workbook(arquivo)
@@ -23,19 +23,15 @@ aba_ativa = planilha.active
 lista = []
 
 for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:], aba_ativa["C"][1:], aba_ativa["D"][1:]):
-    '''
-    # PRINTAR NO TERMINAL TODOS OS STATUS 
-    print(f'Franquia: {coluna_a.value}')
-    print(f'AWB: {coluna_c.value}')
-    print(f'Status: {coluna_d.value}')
-    '''
-
     # se os dados da coluna "D(status)" forem diferente de "Entregue", adicione(append) à lista os dados da coluna "C(AWB)".
     if coluna_d.value != 'ENTREGUE':
-        lista.append(coluna_c.value)
+        if coluna_c.value is not None:
+            lista.append(coluna_c.value)
 
+print("-"*90)
 print(type(lista[1]))
 print(lista)
+print("-"*90)
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
 lista_awb_formatada = []
 for i in lista:
