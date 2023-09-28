@@ -9,10 +9,19 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
+import tkinter as tk
+from tkinter import filedialog
 
+# Solicitar ao usuário que selecione o arquivo Excel
+root = tk.Tk()
+root.withdraw()
+arquivo = filedialog.askopenfilename()
 
-diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-arquivo = os.path.join(diretorio_atual, 'Rastreamento.xlsx')
+if not arquivo.endswith('.xlsx'):
+    raise ValueError("Por favor, selecione um arquivo Excel (.xlsx)")
+
+# Solicitar ao usuário que escolha o nome e diretório de saída
+arquivo_saida = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Arquivos Excel", "*.xlsx")])
 
 # Carregar planilha
 planilha = load_workbook(arquivo)
@@ -78,7 +87,13 @@ def captura_status(awb):
 dados_rastreamento = []
 for awb in lista:
     status, data = captura_status(awb)
-    dados_rastreamento.append({'AWB | ': awb, 'STATUS | ': status, 'DATA_EVENTO | ': data})
+    dados_rastreamento.append({'AWB': awb, 'STATUS': status, 'DATA_EVENTO': data})
 
 df_rastreamento = pd.DataFrame(dados_rastreamento)
 print(df_rastreamento)
+
+
+# Salvar o DataFrame modificado em um arquivo Excel com o nome escolhido pelo usuário
+df_rastreamento.to_excel(arquivo_saida, index=False)
+
+print(f"Arquivo Excel '{arquivo_saida}' criado com sucesso.")
