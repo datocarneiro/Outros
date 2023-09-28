@@ -28,29 +28,33 @@ for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:], aba_ativa["C"][1:], 
         if coluna_c.value is not None:
             lista.append(coluna_c.value)
 
-print("-"*90)
-print(type(lista[1]))
-print(lista)
-print("-"*90)
+print("="*180)
+print(f'As pendente de entrega são: {lista}')
+print("="*180)
+
+'''
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
 lista_awb_formatada = []
 for i in lista:
     awb_formatada = str(i)[3:]
     lista_awb_formatada.append(awb_formatada)
-    
+
+
 # EXIBIR SOMENTE AS PENDENTE DE ENTREGA
-print("-"*90)
+print("="*90)
 print(f' As pendente de entrega são: {lista_awb_formatada}')
-print("-"*90)
- 
+print("="*90)
+'''
+
 servico = Service(ChromeDriverManager().install())
+
+# ABRI NAVEGADOR
+opcoes = Options()
+opcoes.headless = False  # modo off ou não
+driver = webdriver.Chrome(service=servico, options=opcoes)
 
 # FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
 def captura_status(awb):
-    opcoes = Options()
-    opcoes.headless = False  # modo off ou não
-    driver = webdriver.Chrome(service=servico, options=opcoes)
-
     # https://www.latamcargo.com/en/trackshipment?docNumber=12801530&docPrefix=957&soType=SO
     # 13127026 TRANSFERENCIA , 13128710 EM ROTA, 13034092 EM ROTA 
 
@@ -62,18 +66,24 @@ def captura_status(awb):
     status_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[1]')))
 
     status = status_evento.text 
-    print(status)
+    print(f'{awb}, {status}')
 
     data_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
     data = data_evento.text 
-    print(data)
+    print(f'{awb}, {data}')
 
-    return [status, data]
-
+    tabela = {}
+    tabela['Awb'] = awb 
+    tabela['Status'] = status
+    tabela['Data_Evento'] = data
+    print("="*180)
+    print(tabela)
+    print("="*180)
+    return [tabela]
 
 
 dicionario = {}
-for awb in lista_awb_formatada:
+for awb in lista:
     dicionario[awb] = captura_status(awb)
 print(dicionario)
 
