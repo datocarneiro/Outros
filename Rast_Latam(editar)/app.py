@@ -53,6 +53,7 @@ opcoes = Options()
 opcoes.headless = False  # modo off ou não
 driver = webdriver.Chrome(service=servico, options=opcoes)
 
+tabela = {}
 # FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
 def captura_status(awb):
     # https://www.latamcargo.com/en/trackshipment?docNumber=12801530&docPrefix=957&soType=SO
@@ -71,9 +72,9 @@ def captura_status(awb):
     data_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
     data = data_evento.text 
 
-    tabela = []
-    tabela.append(status)
-    tabela.append(data)
+    tabela = {}
+    tabela['status'] = status
+    tabela['Data_evento'] = data
     print("="*150)
     print(f' printando tabela {tabela}')
     print("="*150)

@@ -8,6 +8,7 @@ root = tk.Tk()
 root.withdraw()
 file_path = filedialog.askopenfilename()
 
+
 if not file_path.endswith('.xlsx'):
     raise ValueError("Por favor, selecione um arquivo Excel (.xlsx)")
 

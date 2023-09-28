@@ -32,25 +32,29 @@ print("-"*90)
 print(type(lista[1]))
 print(lista)
 print("-"*90)
+
+'''
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
 lista_awb_formatada = []
 for i in lista:
     awb_formatada = str(i)[3:]
     lista_awb_formatada.append(awb_formatada)
-    
+
 # EXIBIR SOMENTE AS PENDENTE DE ENTREGA
 print("-"*90)
 print(f' As pendente de entrega são: {lista_awb_formatada}')
 print("-"*90)
- 
+'''
 servico = Service(ChromeDriverManager().install())
 
 # FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
-def captura_status(awb):
-    opcoes = Options()
-    opcoes.headless = False  # modo off ou não
-    driver = webdriver.Chrome(service=servico, options=opcoes)
+opcoes = Options()
+opcoes.headless = False  # modo off ou não
+driver = webdriver.Chrome(service=servico, options=opcoes)
 
+
+def captura_status(awb):
+  
     # https://www.latamcargo.com/en/trackshipment?docNumber=12801530&docPrefix=957&soType=SO
     # 13127026 TRANSFERENCIA , 13128710 EM ROTA, 13034092 EM ROTA 
 
@@ -71,11 +75,11 @@ def captura_status(awb):
     return [status, data]
 
 
+dados_rastreamento = []
+for awb in lista:
+    status, data = captura_status(awb)
+    dados_rastreamento.append({'AWB\t': awb, 'Status\t': status, 'Data\t': data})
 
-dicionario = {}
-for awb in lista_awb_formatada:
-    dicionario[awb] = captura_status(awb)
-print(dicionario)
+df_rastreamento = pd.DataFrame(dados_rastreamento)
 
-dicionario_df = pd.DataFrame(dicionario) 
-display(dicionario_df)
+print(df_rastreamento)
