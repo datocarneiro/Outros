@@ -28,9 +28,9 @@ for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:], aba_ativa["C"][1:], 
         if coluna_c.value is not None:
             lista.append(coluna_c.value)
 
-print("="*180)
+print("="*150)
 print(f'As pendente de entrega são: {lista}')
-print("="*180)
+print("="*150)
 
 '''
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
@@ -70,22 +70,23 @@ def captura_status(awb):
 
     data_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
     data = data_evento.text 
-    print(f'{awb}, {data}')
 
-    tabela = {}
-    tabela['Awb'] = awb 
-    tabela['Status'] = status
-    tabela['Data_Evento'] = data
-    print("="*180)
-    print(tabela)
-    print("="*180)
+    tabela = []
+    tabela.append(status)
+    tabela.append(data)
+    print("="*150)
+    print(f' printando tabela {tabela}')
+    print("="*150)
+ 
     return [tabela]
 
-
+print("="*150)
 dicionario = {}
 for awb in lista:
     dicionario[awb] = captura_status(awb)
-print(dicionario)
+print(f'printando dicionario {dicionario}')
 
-dicionario_df = pd.DataFrame(dicionario) 
+
+print("="*150)
+dicionario_df = pd.DataFrame() 
 display(dicionario_df)
