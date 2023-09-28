@@ -9,7 +9,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
-from IPython.display import display
 
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
@@ -28,10 +27,9 @@ for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:], aba_ativa["C"][1:], 
         if coluna_c.value is not None:
             lista.append(coluna_c.value)
 
-print("-"*90)
-print(type(lista[1]))
-print(lista)
-print("-"*90)
+print("="*150)
+print(f'As pendente de entrega são: {lista}')
+print("="*150)
 
 '''
 # FORMATANDO O CODIGO AWB, RETIRANDO OS 3 PRIMEIROS DIGITOS
@@ -40,21 +38,23 @@ for i in lista:
     awb_formatada = str(i)[3:]
     lista_awb_formatada.append(awb_formatada)
 
+
 # EXIBIR SOMENTE AS PENDENTE DE ENTREGA
-print("-"*90)
+print("="*90)
 print(f' As pendente de entrega são: {lista_awb_formatada}')
-print("-"*90)
+print("="*90)
 '''
+
 servico = Service(ChromeDriverManager().install())
 
-# FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
+# ABRI NAVEGADOR
 opcoes = Options()
 opcoes.headless = False  # modo off ou não
 driver = webdriver.Chrome(service=servico, options=opcoes)
 
-
+tabela = {}
+# FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
 def captura_status(awb):
-  
     # https://www.latamcargo.com/en/trackshipment?docNumber=12801530&docPrefix=957&soType=SO
     # 13127026 TRANSFERENCIA , 13128710 EM ROTA, 13034092 EM ROTA 
 
@@ -64,13 +64,13 @@ def captura_status(awb):
     wait = WebDriverWait(driver, 10)
 
     status_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[1]')))
-
     status = status_evento.text 
-    print(status)
+    
 
     data_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
     data = data_evento.text 
-    print(data)
+
+    print(f'dados capturados: | AWB: {awb} | STATUS:{status} | DATA_EVENTO: {data} |')
 
     return [status, data]
 
@@ -78,8 +78,7 @@ def captura_status(awb):
 dados_rastreamento = []
 for awb in lista:
     status, data = captura_status(awb)
-    dados_rastreamento.append({'AWB\t': awb, 'Status\t': status, 'Data\t': data})
+    dados_rastreamento.append({'AWB | ': awb, 'STATUS | ': status, 'DATA_EVENTO | ': data})
 
 df_rastreamento = pd.DataFrame(dados_rastreamento)
-
 print(df_rastreamento)

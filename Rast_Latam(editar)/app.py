@@ -9,11 +9,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
-from IPython.display import display
 
 
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
-arquivo = os.path.join(diretorio_atual, 'Rastreamento1.xlsx')
+arquivo = os.path.join(diretorio_atual, 'Rastreamento.xlsx')
 
 # Carregar planilha
 planilha = load_workbook(arquivo)
@@ -65,29 +64,21 @@ def captura_status(awb):
     wait = WebDriverWait(driver, 10)
 
     status_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[1]')))
-
     status = status_evento.text 
-    print(f'{awb}, {status}')
+    
 
     data_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
     data = data_evento.text 
 
-    tabela = {}
-    tabela['status'] = status
-    tabela['Data_evento'] = data
-    print("="*150)
-    print(f' printando tabela {tabela}')
-    print("="*150)
- 
-    return [tabela]
+    print(f'dados capturados: | AWB: {awb} | STATUS:{status} | DATA_EVENTO: {data} |')
 
-print("="*150)
-dicionario = {}
+    return [status, data]
+
+
+dados_rastreamento = []
 for awb in lista:
-    dicionario[awb] = captura_status(awb)
-print(f'printando dicionario {dicionario}')
+    status, data = captura_status(awb)
+    dados_rastreamento.append({'AWB | ': awb, 'STATUS | ': status, 'DATA_EVENTO | ': data})
 
-
-print("="*150)
-dicionario_df = pd.DataFrame() 
-display(dicionario_df)
+df_rastreamento = pd.DataFrame(dados_rastreamento)
+print(df_rastreamento)
