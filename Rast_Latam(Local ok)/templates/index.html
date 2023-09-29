@@ -17,7 +17,7 @@
         <label for="file">Selecione o arquivo Excel:</label>
         <input type="file" id="file" name="file" required>
         <br>
-        <input type="submit" value="Escolha onde salvar o arquivo de de saida">
+        <input type="submit" value="Informe onde salvar as consultas">
     </form>
 
     <script>
@@ -30,6 +30,15 @@
             link.click();
         }
     </script>
+    </form>
+    <div>
+        <h5>Pendentes consultadas:</h5>
+        <p>{{ pendentes }}</p>
+    </div>
+    <div>
+        <h2>Resultado:</h2>
+        <p class="resultado">{{ resultado }}</p>
+    </div>
 
 </body>
 

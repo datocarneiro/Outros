@@ -27,10 +27,12 @@ def process_form():
     # Solicitar ao usuário que escolha o nome e diretório de saída
     arquivo_saida = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Arquivos Excel", "*.xlsx")])
 
+
     # Salvar arquivo Excel enviado pelo usuário
     filename = secure_filename(file.filename)
     file.save(filename)
-
+    
+    
     if not filename.endswith('.xlsx'):
         return "Por favor, selecione um arquivo Excel (.xlsx)"
 
@@ -90,7 +92,8 @@ def process_form():
 
     print(f"Arquivo Excel '{arquivo_saida}' criado com sucesso.")
 
-    return "Consulta de rastreamento realizada com sucesso!"
+    resultado = "Todas as consultas foram realizadas com sucesso"
+    return render_template('index.html', resultado=resultado, pendentes=lista)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=8080)
