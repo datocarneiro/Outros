@@ -18,19 +18,16 @@
         <label for="file">Selecione o arquivo Excel:</label>
         <input type="file" id="file" name="file" required>
         <br>
-        <input type="submit" value="Escolha onde salvar o arquivo de de saida">
+        <input type="submit" value="Iniciar rastreamentos">
     </form>
-
-    <script>
-        function chooseSaveLocation() {
-            const fileInput = document.getElementById('file');
-
-            const link = document.createElement('a');
-            link.href = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,';
-            link.download = 'resultado.xlsx';
-            link.click();
-        }
-    </script>
+    <div>
+        <h5>Pendentes:</h5>
+        <p>{{ pendentes }}</p>
+    </div>
+    <div>
+        <h2>Resultado:</h2>
+        <p class="resultado">{{ resultado }}</p>
+    </div>
 
 </body>
 

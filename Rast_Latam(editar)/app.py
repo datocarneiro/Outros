@@ -1,5 +1,4 @@
-from openpyxl import Workbook, load_workbook
-import time
+from openpyxl import load_workbook
 import os
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -9,10 +8,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import pandas as pd
-import tkinter as tk
-from tkinter import filedialog
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
+import pathlib
+
 
 app = Flask(__name__)
 
@@ -24,18 +23,14 @@ def index():
 def process_form():
     file = request.files['file']
     
-    # Solicitar ao usuário que escolha o nome e diretório de saída
-    arquivo_saida = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Arquivos Excel", "*.xlsx")])
+    # Solicitar ao usuário que escolha o nome de saída para o arquivo DataFrame
+    arquivo_saida = secure_filename(file.filename).replace('.xlsx', '_modificado.xlsx')
 
-    # Salvar arquivo Excel enviado pelo usuário
-    filename = secure_filename(file.filename)
-    file.save(filename)
-
-    if not filename.endswith('.xlsx'):
+    if not file.filename.endswith('.xlsx'):
         return "Por favor, selecione um arquivo Excel (.xlsx)"
 
     # Carregar planilha
-    planilha = load_workbook(filename)
+    planilha = load_workbook(file)
     aba_ativa = planilha.active
 
     # LER A PLANILHA, E CRIAR UMA LISTA SOMENTE COM AS ENTREGAS DIFERENTE DE "ENTREGUE"
@@ -74,9 +69,9 @@ def process_form():
         data = data_evento.text 
 
         print(f'dados capturados: | AWB: {awb} | STATUS:{status} | DATA_EVENTO: {data} |')
-
+      
         return [status, data]
-
+        
     dados_rastreamento = []
     for awb in lista:
         status, data = captura_status(awb)
@@ -85,12 +80,26 @@ def process_form():
     df_rastreamento = pd.DataFrame(dados_rastreamento)
     print(df_rastreamento)
 
-    # Salvar o DataFrame modificado em um arquivo Excel com o nome escolhido pelo usuário
-    df_rastreamento.to_excel(arquivo_saida, index=False)
+  
+    # Obter o diretório da pasta de downloads do sistema operacional
+    diretorio_downloads = str(pathlib.Path.home() / "Downloads")
+
+    # Caminho completo para o arquivo de saída na pasta de downloads
+    caminho_saida = os.path.join(diretorio_downloads, arquivo_saida)
+
+    # Salvar o DataFrame modificado em um arquivo Excel na pasta de downloads
+    df_rastreamento.to_excel(caminho_saida, index=False)
+
 
     print(f"Arquivo Excel '{arquivo_saida}' criado com sucesso.")
 
-    return "Consulta de rastreamento realizada com sucesso!"
+    # return "Consulta de rastreamento realizada com sucesso!"
+    # Renderizar a página HTML e passar a variável resultado como argumento
+    
+    #resultado = f'A última consulta de rastreamento retornou: | AWB: {awb} | STATUS:{status} | DATA_EVENTO: {data} |'
+    #return render_template('index.html', resultado=resultado)
+    resultado = "Todas as consultas foram realizadas com sucesso"
+    return render_template('index.html', resultado=resultado, pendentes=lista)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
