@@ -21,7 +21,7 @@ driver = webdriver.Chrome(options=options) # replit
 # Inicialização do aplicativo Flask
 app = Flask(__name__)
 
-lista_pendentes = []  # Variável global para armazenar a lista
+lista_pendentes = [] # Variável global para armazenar a lista
 
 @app.route('/')
 def index():
@@ -55,13 +55,15 @@ def preparar_dados_planilha():
     print("="*150)
 
     statuses, datas = capturar_status_pendentes()
-    
-    return render_template('index.html', pendentes=lista_pendentes, statuses=statuses, datas=datas)
+    capturas = []  # Lista para armazenar os valores de captura
 
+    for awb, status, data in zip(lista_pendentes, statuses, datas):
+        captura = f'dados capturados: | AWB: {awb} | STATUS:{status} | DATA_EVENTO: {data} |'
+        capturas.append(captura)  # Adicionar a captura à lista
+    
+    return render_template('index.html', pendentes=lista_pendentes, statuses=statuses, datas=datas, capturas=capturas)
 
 # FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
-
-
 def captura_status(awb):
     driver.get(f"https://www.latamcargo.com/en/trackshipment?docNumber={awb}&docPrefix=957&soType=SO")
     
