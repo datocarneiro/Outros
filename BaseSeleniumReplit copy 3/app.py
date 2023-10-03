@@ -84,8 +84,8 @@ def preparar_dados_planilha():
     datas = df_rastreamento['DATA_EVENTO']
 
     # Salvar o DataFrame em um arquivo Excel na pasta "Downloads"
-    nome_arquivo = 'rastreamento.xlsx'
-    caminho_arquivo = os.path.join(os.path.expanduser("~"), "C:/Downloads", nome_arquivo)
+    nome_arquivo = 'rastreamento.modificado.xlsx'
+    caminho_arquivo = os.path.join(os.path.expanduser("~"), "Downloads", nome_arquivo)
     df_rastreamento.to_excel(caminho_arquivo, index=False)
 
     return render_template('index.html', pendentes=lista_pendentes, statuses=statuses, datas=datas)
