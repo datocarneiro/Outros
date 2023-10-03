@@ -30,8 +30,10 @@
     </div>
     <div>
         <h2>Status do processo:</h2>
-        {% for captura in capturas %}
-            <p>{{ captura }}</p>
+        {% for i in range(awbs|length) %}
+            {% set awb = awbs[i] %}
+            {% set captura = capturas[i] %}
+            <p>{{ awb }} - {{ captura }}</p>
         {% endfor %}
     </div>
 
