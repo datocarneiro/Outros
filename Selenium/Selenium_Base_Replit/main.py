@@ -15,7 +15,7 @@ options.headless = False  # Executar o Chrome de forma oculta
 driver = webdriver.Chrome(options=options)
 
 #############################################################################
-'''
+
 # para rodar local usar essa configuração aqui
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -24,7 +24,7 @@ servico = Service(ChromeDriverManager().install())
 opcoes = Options()
 opcoes.headless = True  # modo off ou não
 driver = webdriver.Chrome(service=servico, options=opcoes)
-'''
+
 #############################################################################
 driver.get("https://google.com.br/")
 time.sleep(10)
