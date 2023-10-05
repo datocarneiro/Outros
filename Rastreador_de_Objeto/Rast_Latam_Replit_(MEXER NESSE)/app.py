@@ -12,24 +12,37 @@ import pandas as pd
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
+from webdriver_manager.chrome import ChromeDriverManager
 
+'''
 options = Options()
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-options.headless = False  # Executar o Chrome de forma oculta
+options.headless = True  # Executar o Chrome de forma oculta
 driver = webdriver.Chrome(options=options)  # replit
+'''
+
+#################################################################################
+from webdriver_manager.chrome import ChromeDriverManager
+servico = Service(ChromeDriverManager().install())
+
+opcoes = Options()
+opcoes.headless = True  # modo off ou não
+navegador = webdriver.Chrome(service=servico, options=opcoes)
+
+#############################################################################################################
 
 # Inicialização do aplicativo Flask
 app = Flask(__name__)
 
 lista_pendentes = []  # Variável global para armazenar a lista
 
-
+##############################################################################################################################################
 @app.route('/')
 def index():
-  return render_template('index.html', pendentes=lista_pendentes)
+  return render_template('index.html', pendentes=lista_pendentes)                                       # return index
 
-
+#############################################################################################################################################
 @app.route('/', methods=['POST'])
 def preparar_dados_planilha():
   global lista_pendentes  # Acessando a variável global
@@ -68,11 +81,11 @@ def preparar_dados_planilha():
 
   return render_template('index.html',
                          pendentes=lista_pendentes,
-                         statuses=statuses,
+                         statuses=statuses,                                                #return preparar_dados_planilha
                          datas=datas,
                          capturas=capturas)
 
-
+##################################################################################################################################################################
 # FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
 def captura_status(awb):
   driver.get(
@@ -100,10 +113,11 @@ def captura_status(awb):
     # Lidar com o erro de tempo limite
     status = "Erro de tempo limite"
     data = "Erro de tempo limite"
-    print("Erro de tempo limite ao capturar os dados")
+    print("Erro de tempo limite ao capturar os dados")                                          #return capturar_status
+
     return status, data
 
-
+#######################################################################################################################################################################
 def capturar_status_pendentes():
   dados_rastreamento = []
   statuses = []  # Lista para armazenar os valores de status
@@ -119,10 +133,10 @@ def capturar_status_pendentes():
     statuses.append(status)  # Adicionar o status à lista
     datas.append(data)  # Adicionar a data à lista
 
-  # df_rastreamento = pd.DataFrame(dados_rastreamento)
-
+  # df_rastreamento = pd.DataFrame(dados_rastreamento)                                          # return capturar_status_pendentes
+    
   return statuses, datas
 
-
+###########################################################################################################################################################################
 if __name__ == '__main__':
   app.run(host="0.0.0.0", port=8080)

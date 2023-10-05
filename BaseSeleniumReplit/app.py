@@ -1,9 +1,29 @@
-import time
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from flask import Flask, render_template
+
+############################################################################
+
+# para rodar no replit usar essas configuraçõa 
+options = Options()
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.headless = False  # Executar o Chrome de forma oculta
+
+navegador = webdriver.Chrome(options=options)
+#############################################################################
+
+# para rodar local usar essa configuração aqui 
+from webdriver_manager.chrome import ChromeDriverManager
+servico = Service(ChromeDriverManager().install())
+
+opcoes = Options()
+opcoes.headless = True  # modo off ou não
+navegador = webdriver.Chrome(service=servico, options=opcoes)
+
+#############################################################################
+
 
 # Inicialização do aplicativo Flask
 app = Flask(__name__)
@@ -13,13 +33,6 @@ def abrir_navegador():
     resultados = {}
     palavras_chave = []
 
-    options = Options()
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.headless = False  # Executar o Chrome de forma oculta
-
-    navegador = webdriver.Chrome(options=options)
-    
     print('... Logando ...')
     navegador.get("https://amplo.eship.com.br/")
     print("... abriu página ...")
