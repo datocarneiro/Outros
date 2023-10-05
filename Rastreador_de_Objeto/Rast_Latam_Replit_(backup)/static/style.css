@@ -16,8 +16,6 @@ h1 {
     border: #317232;
     padding: 0%;
     margin-bottom: 0;
-    margin-left: 10cm;
-
 }
 form {
     display: grid;
@@ -83,8 +81,9 @@ h4.marca {
     text-align: left;
     margin: 0%;
 }
-.pendentes{
-    margin-top: 60px;
+.pendentes {
+     margin-top: 70px;
+    /* Outros estilos para as divs */
 }
 .dados-capturados {
     margin-top: 0;
