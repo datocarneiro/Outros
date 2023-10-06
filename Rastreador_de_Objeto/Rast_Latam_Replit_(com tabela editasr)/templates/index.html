@@ -20,21 +20,23 @@
         <img class="img2" src="/static/legenda.jpg" alt="Layout Planilha Base">
     </div>
     <div class="central">
-    <form action="/" method="post" enctype="multipart/form-data">
-        <label for="file">Selecione o arquivo Excel:</label>
-        <input type="file" id="file" name="file" required>
-        <br>
-        <input type="submit" value="Iniciar Rastreamentos">
-    </form>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="file">Selecione o arquivo Excel:</label>
+            <input type="file" id="file" name="file" required>
+            <br>
+            <input type="submit" value="Consultar Pendentes">
+            <a href='/resultado'><button class="botao-resultado">Iniciar Rastreamento</button></a>
+        </form>
     </div>
     <div class="pendentes">
-        <h5>Pendentes:</h5>
+        <h3>Pendentes "não entregue":</h3>
         {% if pendentes %}
             <p>{{ pendentes }}</p>
         {% else %}
-            <p>...</p>
+            <p>Aguardando precessar pendentes...</p>
         {% endif %}
     </div>
+    <!--
     <div class="dados-capturados">
         <h3>Dados Capturados:</h3>
         <p>AWB, STATUS, DATA_EVENTO</p>
@@ -45,6 +47,7 @@
         {% else %}
             <p>Aguardando carregamento do arquivo ...</p>
         {% endif %}
+    -->
     </div>
 </body>
 
