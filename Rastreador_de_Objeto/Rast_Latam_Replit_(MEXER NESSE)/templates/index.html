@@ -59,8 +59,14 @@
     </section>
 
     <div class="table-container">
-        <table>
-            {{ tabela.to_html() | safe }}
-        </table>
+        {% if tabela is defined and tabela is not none %}
+            <table>
+                {{ tabela.to_html(classes='data') | safe }}
+            </table>
+        {% else %}
+            <p>Nenhum resultado disponível.</p>
+        {% endif %}
+        <a href="/resultados">Ver resultado</a>
     </div>
 </body>
+</html>

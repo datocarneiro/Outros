@@ -1,115 +1,94 @@
+import time
 from selenium import webdriver
-# from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, request, redirect, url_for
 from openpyxl import load_workbook
-from werkzeug.utils import secure_filename
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
-##########################################################################
-'''
-# para rodar no replit usar essas configuraçõa
-options = Options()
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-options.headless = False  # Executar o Chrome de forma oculta
-
-driver = webdriver.Chrome(options=options)
-'''
-#############################################################################
-
-# para rodar local usar essa configuração aqui
 from webdriver_manager.chrome import ChromeDriverManager
 
-servico = Service(ChromeDriverManager().install())
-
-opcoes = Options()
-opcoes.headless = True  # modo off ou não
-driver = webdriver.Chrome(service=servico, options=opcoes)
-
-#############################################################################
-
-# Inicialização do aplicativo Flask
+# Inicializa o aplicativo Flask
 app = Flask(__name__)
 
-lista_pendentes = []  # Variável global para armazenar a lista
+# Variáveis globais
+lista_pendentes = []
+tabela = None  # Inicializa a tabela como None
 
-#####################################################################################################################################
+
+# Inicializa o ChromeDriver com opções
+servico = Service(ChromeDriverManager().install())
+opcoes = webdriver.ChromeOptions()
+opcoes.headless = True  # Defina como True para o modo headless
+driver = webdriver.Chrome(service=servico, options=opcoes)
+
+# Define rotas
 @app.route('/')
 def index():
-    tabela_html = tabela.to_html()
-    return render_template('index.html', pendentes=lista_pendentes, tabela=tabela_html)
+    if tabela is not None:
+        return render_template('index.html', pendentes=lista_pendentes, tabela=tabela.to_html(classes='data'))
+    else:
+        return render_template('index.html', pendentes=lista_pendentes, tabela=None)
 
+# @app.route('/resultados')
+#def mostrar_tabela():
+#   return render_template('resultados.html', tabela=tabela.to_html(classes='data'))
 
-#####################################################################################################################################
 @app.route('/', methods=['POST'])
 def preparar_dados_planilha():
-    global lista_pendentes  # Acessando a variável global
-    file = request.files['file']
+    global lista_pendentes
+    global tabela
 
-    # Solicitar ao usuário que escolha o nome de saída para o arquivo DataFrame
-    # arquivo_saida = secure_filename(file.filename).replace('.xlsx', '_modificado.xlsx')
+    file = request.files['file']
 
     if not file.filename.endswith('.xlsx'):
         return "Por favor, selecione um arquivo Excel (.xlsx)"
 
-    # Carregar planilha
     planilha = load_workbook(file)
     aba_ativa = planilha.active
 
-    # LER A PLANILHA, E CRIAR UMA LISTA SOMENTE COM AS ENTREGAS DIFERENTE DE "ENTREGUE"
     lista_pendentes = []
     for coluna_a, coluna_c, coluna_d in zip(aba_ativa["A"][1:],
                                             aba_ativa["C"][1:],
                                             aba_ativa["D"][1:]):
-        # se os dados da coluna "D(status)" forem diferente de "Entregue", adicione(append) à lista os dados da coluna "C(AWB)".
         if coluna_d.value != 'ENTREGUE':
             if coluna_c.value is not None:
                 lista_pendentes.append(coluna_c.value)
 
-    print("=" * 150)
-    print(f'As pendente de entrega são: {lista_pendentes}')
-    print("=" * 150)
-
     statuses, datas = capturar_status_pendentes()
-    capturas = []  # Lista para armazenar os valores de captura
+    capturas = []
 
     for awb, status, data in zip(lista_pendentes, statuses, datas):
         captura = f'{awb}    ,{status}    ,{data}'
-        capturas.append(captura)  # Adicionar a captura à lista
+        capturas.append(captura)
 
-    
+    # Atualizar a tabela global
+    tabela = pd.DataFrame({
+        'AWB': lista_pendentes,
+        'STATUS': statuses,
+        'DATA_EVENTO': datas
+    })
+
 
     return render_template('index.html',
-                         pendentes=lista_pendentes,
-                         statuses=statuses,
-                         datas=datas,
-                         capturas=capturas)
-                        
+                           pendentes=lista_pendentes,
+                           statuses=statuses,
+                           datas=datas,
+                           capturas=capturas)
 
-#################################################################################################################################
-# FUNÇÃO PARA CONSULTAR STATUS DE RASTREAMENTO NO SITE DA LATAM
+# Função para capturar status de rastreamento no site da LATAM Cargo
 def captura_status(awb):
-    driver.get(
-        f"https://www.latamcargo.com/en/trackshipment?docNumber={awb}&docPrefix=957&soType=SO"
-    )
+    driver.get(f"https://www.latamcargo.com/en/trackshipment?docNumber={awb}&docPrefix=957&soType=SO")
 
-    wait = WebDriverWait(driver, 30)  # Aumentar o tempo limite para 30 segundos
+    wait = WebDriverWait(driver, 30)
 
     try:
-        status_evento = wait.until(
-            EC.visibility_of_element_located(
-                (By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[1]')))
+        status_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[1]')))
         status = status_evento.text
 
-        data_evento = wait.until(
-            EC.visibility_of_element_located(
-                (By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
+        data_evento = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="statusTable"]/tbody/tr[1]/td[6]')))
         data = data_evento.text
 
         captura = f'dados capturados,AWB,{awb},STATUS,{status},DATA_EVENTO,{data}'
@@ -117,17 +96,16 @@ def captura_status(awb):
 
         return status, data
     except TimeoutException:
-        # Lidar com o erro de tempo limite
         status = "Erro de tempo limite"
         data = "Erro de tempo limite"
         print("Erro de tempo limite ao capturar os dados")
         return status, data
 
-##################################################################################################################################
+# Função para capturar status de rastreamento das encomendas pendentes
 def capturar_status_pendentes():
     dados_rastreamento = []
-    statuses = []  # Lista para armazenar os valores de status
-    datas = []  # Lista para armazenar os valores de data
+    statuses = []
+    datas = []
 
     for awb in lista_pendentes:
         status, data = captura_status(awb)
@@ -136,21 +114,10 @@ def capturar_status_pendentes():
             'STATUS': status,
             'DATA_EVENTO': data
         })
-        statuses.append(status)  # Adicionar o status à lista
-        datas.append(data)  # Adicionar a data à lista
+        statuses.append(status)
+        datas.append(data)
 
-  
-    df = mostrar_tabela(dados_rastreamento)
-
-    return statuses, datas, df
-
-#############################################################################################################
-def mostrar_tabela(dados_rastreamento):
-    global tabela  # Acessando a variável global
-    tabela = pd.DataFrame(dados_rastreamento)  # Atualiza a variável tabela com os dados
-    print(tabela)  # Imprima os dados para verificar
-    return render_template('index.html', tabela=tabela.to_html())
-
+    return statuses, datas
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
