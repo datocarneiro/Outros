@@ -3,51 +3,42 @@
 
 <head>
     <title>Consulta de Rastreamento Amplo</title>
+    <h4 class="marca">dato®</h4>
     <link rel="stylesheet" type="text/css" href="../static/style.css">
 </head>
 
 <body>
-    <header>
-        <h1>Consultar Objeto</h1>
-        <h4 class="marca">dato®</h4>
-    </header>
-
-    <section class="paragrafo1">
-        <h2>Layout planilha base:</h2>
+    <h1>Consultar Objeto</h1>
+    <div class="paragrafo1">
+        <h4>Layout planilha base:</h4>
         <p>✅ Cabeçalho e disposição das colunas devem ser idênticos.</p>
         <p>✅ Coluna "C" deve conter só informações válidas na Latam cargo.</p>
         <p>✅ Arquivo na extensão ".xlsx"</p>
-        <figure>
-            <img class="img1" src="/static/layout.jpg" alt="Layout Planilha Base">
-        </figure>
-    </section>
-
-    <section class="paragrafo2">
-        <figure>
-            <img class="img2" src="/static/legenda.jpg" alt="Legenda">
-        </figure>
-    </section>
-
+        <img class="img1" src="/static/layout.jpg" alt="Layout Planilha Base">
+    </div>
+    <div class="paragrafo2">
+        <img class="img2" src="/static/legenda.jpg" alt="Layout Planilha Base">
+    </div>
     <div class="central">
         <form action="/" method="post" enctype="multipart/form-data">
             <label for="file">Selecione o arquivo Excel:</label>
             <input type="file" id="file" name="file" required>
             <br>
-            <input type="submit" value="Iniciar Rastreamentos">
+            <input type="submit" value="Consultar Pendentes">
+            <a href='/resultado'><button class="botao-resultado">Iniciar Rastreamento</button></a>
         </form>
     </div>
-
-    <section class="pendentes">
-        <h2>Pendentes:</h2>
+    <div class="pendentes">
+        <h3>Pendentes "não entregue":</h3>
         {% if pendentes %}
             <p>{{ pendentes }}</p>
         {% else %}
-            <p>...</p>
+            <p>Aguardando precessar pendentes...</p>
         {% endif %}
-    </section>
-
-    <section class="dados-capturados">
-        <h2>Dados Capturados:</h2>
+    </div>
+    <!--
+    <div class="dados-capturados">
+        <h3>Dados Capturados:</h3>
         <p>AWB, STATUS, DATA_EVENTO</p>
         {% if capturas %}
             {% for captura in capturas %}
@@ -56,17 +47,8 @@
         {% else %}
             <p>Aguardando carregamento do arquivo ...</p>
         {% endif %}
-    </section>
-
-    <div class="table-container">
-        {% if tabela is defined and tabela is not none %}
-            <table>
-                {{ tabela.to_html(classes='data') | safe }}
-            </table>
-        {% else %}
-            <p>Nenhum resultado disponível.</p>
-        {% endif %}
-        <a href="/resultados">Ver resultado</a>
+    -->
     </div>
 </body>
+
 </html>
