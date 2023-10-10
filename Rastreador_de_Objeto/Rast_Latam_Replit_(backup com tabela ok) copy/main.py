@@ -2,7 +2,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, send_file
 from openpyxl import load_workbook
 from werkzeug.utils import secure_filename
 from selenium.webdriver.support.ui import WebDriverWait
@@ -49,8 +49,18 @@ def resultado():
     table_html = df.to_html(classes='table table-bordered', index=False)
     return render_template('resultado.html', table_html=table_html)
 
+def gerar_excel():
+    i = datafra()
+    # Salve o DataFrame em um arquivo Excel temporário
+    print(f'dffffffffff{i}')
+    with pd.ExcelWriter('arquivo_temp.xlsx', engine='xlsxwriter') as writer:
+        i.to_excel(writer, sheet_name='Sheet1', index=False)
 
-@app.route('/consultar-pendentes', methods=['POST'])
+    # Envie o arquivo Excel temporário como resposta
+    return send_file('arquivo_temp.xlsx', as_attachment=True)
+
+
+@app.route('/', methods=['POST'])
 def preparar_dados_planilha():
     global lista_pendentes  # Acessando a variável global
     file = request.files['file']
@@ -136,10 +146,17 @@ def capturar_status_pendentes():
                     datas.append(data)
 
         df = pd.DataFrame(dados_rastreamento)
+        exp = datafra(df)
 
-        return statuses, datas, df
+
+        return statuses, datas, df,
     else:
         return [], [], None  # Retorna vazios se o arquivo não estiver definido na sessão
+
+def datafra(df):
+    i = df
+    print(f'iiiiiiiii....{i}..................')    
+    return i,
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)

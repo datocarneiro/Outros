@@ -25,78 +25,19 @@
             <input type="file" id="file" name="file" accept=".xlsx" required>
             <br>
             <input type="submit" value="Consultar Pendentes">
-            <a href='#' class="botao-resultado" id="iniciar-rastreamento">Iniciar Rastreamento</a>
+            <a href='/resultado' class="botao-resultado">Iniciar Rastreamento</a>
         </form>
+        
     </div>
     <div class="pendentes">
         <h3>Pendentes "não entregue":</h3>
         {% if pendentes %}
-        <p>{{ pendentes }}</p>
+            <p>{{ pendentes }}</p>
         {% else %}
-        <p>Aguardando processar pendentes...</p>
+            <p>Aguardando precessar pendentes...</p>
         {% endif %}
     </div>
-    <div class="loading" id="loading" style="display: none;">
-        <img src="/static/loading.gif" alt="Carregando...">
-        <p>Carregando...</p>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-            const loading = document.querySelector(".loading");
-            const iniciarRastreamentoButton = document.getElementById("iniciar-rastreamento");
-
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                // Exibir o elemento de carregamento
-                loading.style.display = "block";
-
-                // Aqui você pode enviar a solicitação POST para o Flask
-                fetch("/", {
-                    method: "POST",
-                    body: new FormData(form)
-                })
-                .then(response => response.text())
-                .then(result => {
-                    // Após o processamento, ocultar o elemento de carregamento
-                    loading.style.display = "none";
-                    
-                    // Redirecionar para a página de resultados
-                    window.location.href = "/resultado";
-                })
-                .catch(error => {
-                    console.error(error);
-                    loading.style.display = "none";
-                });
-            });
-
-            iniciarRastreamentoButton.addEventListener("click", function (event) {
-                event.preventDefault();
-
-                // Exibir o elemento de carregamento
-                loading.style.display = "block";
-
-                // Aqui você pode enviar a solicitação POST para o Flask
-                fetch("/resultado", {
-                    method: "POST",
-                    body: new FormData(form)
-                })
-                .then(response => response.text())
-                .then(result => {
-                    // Após o processamento, ocultar o elemento de carregamento
-                    loading.style.display = "none";
-
-                    // Redirecionar para a página de resultados
-                    window.location.href = "/resultado";
-                })
-                .catch(error => {
-                    console.error(error);
-                    loading.style.display = "none";
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
