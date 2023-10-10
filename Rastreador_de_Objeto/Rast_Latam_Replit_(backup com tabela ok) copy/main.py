@@ -49,7 +49,8 @@ def resultado():
     table_html = df.to_html(classes='table table-bordered', index=False)
     return render_template('resultado.html', table_html=table_html)
 
-@app.route('/', methods=['POST'])
+
+@app.route('/consultar-pendentes', methods=['POST'])
 def preparar_dados_planilha():
     global lista_pendentes  # Acessando a variável global
     file = request.files['file']

@@ -9,15 +9,23 @@
     <style>
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: auto; /* Defina a largura como automática para ajustar ao conteúdo */
+            margin: 0 auto; /* Isso centralizará a tabela na tela */
+            max-width: calc(100% - 50px); /* Define a largura máxima com margens laterais de 25px */
         }
-
-        th,
+    
+        /* th - referente aos títulos da tabela */
+        th {
+            text-align: center;
+            padding-left: 100px; /* Padding apenas à esquerda */
+            padding-right: 100px; /* Padding apenas à direita */
+            border-bottom: 1px solid #ddd;
+        }
+    
+        /* td - referente aos dados da tabela */
         td {
-            padding: 8px;
-            text-align: left;
-            color: #31568a;
-            border-bottom: 1px solid #2b4161;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
         }
     </style>
 </head>

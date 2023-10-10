@@ -3,8 +3,6 @@
 
 <head>
     <title>Exemplo Flask</title>
-    <h4 class="marca">dato®</h4>
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
 
     <style>
         table {
@@ -31,15 +29,15 @@
 </head>
 
 <body>
-    <h1>Tabela de resultados</h1>
-    <div>
-        <a href='/'><button class="nova-consulta">Iniciar nova consulta</button></a>
-    </div>
+    <h1>Dados da tabela:</h1>
+    <a href='resultado'></a>
     <table>
         <tbody>
-            {{ table_html|safe }}
+            {{ table_html|safe }} <!--Aqui é os dados processado no Back-end-->
         </tbody>
     </table>
 
     
 </body>
+
+</html>
