@@ -2,8 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-nome_correto = "Dato"
-senha_correta = "dato123"  # Senha correta
+nome_correto = "xxxx"
+senha_correta = "xxxxxx"  # Senha correta
 
 @app.route('/')
 def login():
