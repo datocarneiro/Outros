@@ -15,6 +15,7 @@ from selenium.common.exceptions import TimeoutException
 app = Flask(__name__)
 app.secret_key = 'dato123'  # Defina uma chave secreta adequada
 
+
 ##########################################################################
 '''
 # para rodar no replit usar essas configuraçõa
