@@ -45,7 +45,8 @@
                     <input type="text" name="nome" id="nome" required value="{{ request.form['nome'] }}">
                     <label for="senha">Senha:</label>
                     <input type="password" name="senha" id="password" required> <!-- Correção no id aqui -->
-                    <input type="submit" value="Autenticar credenciais">
+                    <input type="submit" value="Autenticar credenciais" class="botão">
+
                 </form>
                 <p>{{ mensagem_erro }}</p>
             </div>

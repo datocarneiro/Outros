@@ -65,13 +65,14 @@ body {
 }
 .eula {
   color: #999;
+  padding-top: 20px;
   font-size: 14px;
   line-height: 1.5;
   margin: 40px;
 }
 .right {
   background: #474A59;
-  box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
+  box-shadow: 5px 5px 40px 16px rgba(0,0,0,0.22);
   color: #F1F1F2;
   position: relative;
   width: 50%;
@@ -140,4 +141,16 @@ input::-moz-focus-inner {
 p {
   color: rgb(0, 195, 255);
 }
+.botão {
+  margin-top: 20px;
+  padding-bottom: 30px;
+  border: 1px solid #686868; /* Borda personalizada */
+  border-radius: 5px; /* Cantos arredondados */
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); /* Sombra no texto */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra que cria o efeito 3D */
+  transition: transform 0.1s; /* Efeito de escala quando o botão é pressionado */
+}
 
+.botão:hover {
+  transform: scale(1.05); /* Efeito de escala quando o mouse passa por cima */
+}
