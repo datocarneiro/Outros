@@ -15,6 +15,8 @@ from selenium.common.exceptions import TimeoutException
 app = Flask(__name__)
 app.secret_key = 'dato123'  # Defina uma chave secreta adequada
 
+# branch
+
 ##########################################################################
 '''
 # para rodar no replit usar essas configuraçõa
@@ -159,4 +161,5 @@ def datafra(df):
     return i,
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="0.0.0.0", port=8080, debug=True)
+
