@@ -100,3 +100,20 @@ def exibir_resultados():
 
 if __name__ == '__main__':
     app.run()
+
+
+# precisa trocar o --hidden-import=tkinter para as bibliotecas que estou utilizando, e atualizar o diretorio da pasta 
+
+# criar uma pasta virtual 
+# python -m venv "nome da pasta"
+# cria o codigo dentro 
+# bibliotecas
+# fazer o deplay
+
+''' FAZER DEPLOY EXECUTAVEL
+pip install pyinstaller
+pyinstaller --onefile --hidden-import=flask --hidden-import=selenium --hidden-import=time  --noconsole d:/Repositorio/Python/YoutubeTools/nome do programa.py
+'''
+
+# onfile -> irá criar o execultavel 
+# noconsole -> irá rodar o terminal em segundo plano para o usuario

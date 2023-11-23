@@ -3,7 +3,6 @@ meses = int(input('Por quantos meses? '))
 
 imposto = 0.15
 rendimentos = 0.01
-
 for i in range(0, meses):
     lucroreal = 0
     valor_inicial = investimento ++ lucroreal
