@@ -105,7 +105,7 @@ if __name__ == '__main__':
 # precisa trocar o --hidden-import=tkinter para as bibliotecas que estou utilizando, e atualizar o diretorio da pasta 
 
 # criar uma pasta virtual 
-# python -m venv "nome da pasta"
+# 
 # cria o codigo dentro 
 # bibliotecas
 # fazer o deplay
