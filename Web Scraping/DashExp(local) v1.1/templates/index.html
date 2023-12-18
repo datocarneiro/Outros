@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <title>Dato.DashboardEXP</title>
+<head>
+    <!-- <meta http-equiv="refresh" content="60">  - comando recarrega a página(F5), Fora o tempo de processamento do código-->
+
+    <script> /* trecho código JavaScript*/
+        setTimeout(function() {
+            location.reload(); 
+        }, 5000); /*  Ao contrário do comando anterior, esse método recarrega (milisegundos) apenas o conteúdo da página,
+                       sem afetar a estrutura HTML. Fora o tempo de processamento do código */
+    </script> 
+
+    <title>DashByDato</title>
+    <style>
+        html {
+            background-color: rgb(211, 219, 228);
+        }
+        body {
+            margin: 2px;
+        }
+        table {
+            border-collapse: separate;
+            width: 100%; /* Define a tabela para ocupar toda a largura disponível */
+            height: 100%;
+        }
+        .countdow{
+            color: black;
+        }
+        .titulo{
+            font-size: 45px;
+            margin-bottom: 0;
+            margin-top: 1;
+            text-align: center;
+            color: white;
+            background-color: rgb(135, 6, 6);
+            box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.6); /* Define a sombra 3D */
+        }
+        .marca {
+            float: right;
+            text-align: right;
+            width: 20%;
+            font-size: 25px;
+            margin-right: 25px;
+            margin-top: 0px;
+        }
+        th,
+        td {
+            padding: 5px;
+        }
+        .interno {
+            width: 93%;
+            height: 93%;
+            font-size: 40px;
+            text-align: center;
+            padding: 15px;
+            border: 0px outset rgb(237, 235, 234);    
+            border-radius: 30px; /* Define o raio do arredondamento da borda */
+            box-shadow: 16px 13px 20px rgba(120, 119, 119, 0.6); /* Define a sombra 3D */   
+            background-color: rgb(233, 235, 236); 
+        }
+        /*tr:nth-child(even) {
+            
+            background-color: rgb(255, 255, 255); 
+            color: rgb(0, 0, 0);
+
+        }*/
+        .tpt {
+            background-color: rgb(211, 219, 228);
+            color: rgb(0, 0, 0);
+        }
+        .qtd{
+            font-size: 80px;
+        }
+        h2 {
+            float: left;
+            width: 80%;
+            color: rgb(10, 28, 80);
+            font-size: 40px;
+            margin-left: 15px;
+            margin-bottom: -30px;
+        }
+        .pd{
+            color: red;
+            font-size: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class ="basetitulo">   
+    <h1 class="titulo">Dashboard Expedição </h1> 
+    <h2>Total Pendentes: <strong class="pd">{{ total_palavras }}</strong></h2>
+    <h3 class="marca">dato®</h3>
+    </div>
+    <table>
+        <colgroup>
+            <col style="width: 33%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 33%;">
+            <col style="width: 33%;">
+          </colgroup>
+        {% for palavra, quantidade in resultados.items() %}
+        {% if loop.index0 % 3 == 0 %}
+        <tr>
+        {% endif %}
+            <td>
+                <div class="interno">
+                <strong class="tpt">{{ palavra }}</strong>
+                <br>
+                <strong class="qtd">{{ quantidade }}</strong>
+                </div>
+            </td>
+        {% if loop.index % 3 == 0 or loop.last %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    
+</body>
+
+</html>
