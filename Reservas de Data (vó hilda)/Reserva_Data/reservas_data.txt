@@ -28,5 +28,11 @@
             "nome": "Dato Carneiro",
             "periodo": "Manh\u00e3 (07:00 \u00e0s 12:00)"
         }
+    ],
+    "18/12/2023": [
+        {
+            "nome": "Datoo Carneiro",
+            "periodo": "Noite (18:00 \u00e0s 23:59)"
+        }
     ]
 }
