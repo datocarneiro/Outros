@@ -3,9 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import json
 import random
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-
+#teste casa
 
 app = Flask(__name__)
 # teste ramificação 1234
