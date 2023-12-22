@@ -60,5 +60,35 @@
             {% endfor %}
         </tbody>
     </table>
+
+        <!-- Adicione estas linhas dentro do bloco body no seu arquivo resultado.html -->
+    <div>
+        <h3>Setor Zagueiro (Time 1): {{ porcentagem_zagueiro_time1 }}%</h3>
+        {{ grafico_barras_time1 | safe }}
+    </div>
+    <div>
+        <h3>Setor Meia (Time 1): {{ porcentagem_meia_time1 }}%</h3>
+        {{ grafico_barras_time1 | safe }}
+    </div>
+    <div>
+        <h3>Setor Atacante (Time 1): {{ porcentagem_atacante_time1 }}%</h3>
+        {{ grafico_barras_time1 | safe }}
+    </div>
+
+    <hr>
+
+    <div>
+        <h3>Setor Zagueiro (Time 2): {{ porcentagem_zagueiro_time2 }}%</h3>
+        {{ grafico_barras_time2 | safe }}
+    </div>
+    <div>
+        <h3>Setor Meia (Time 2): {{ porcentagem_meia_time2 }}%</h3>
+        {{ grafico_barras_time2 | safe }}
+    </div>
+    <div>
+        <h3>Setor Atacante (Time 2): {{ porcentagem_atacante_time2 }}%</h3>
+        {{ grafico_barras_time2 | safe }}
+    </div>
+
 </body>
 </html>

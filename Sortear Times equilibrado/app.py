@@ -3,9 +3,10 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import json
 import random
+from plotly.graph_objects import go
 
 app = Flask(__name__)
-# teste ramificação 
+# teste ramificação 1234
 
 
 def carregar_jogadores(caminho_arquivo='jogadores.json'):
@@ -87,58 +88,87 @@ def sortear_times(jogadores):
 
 
 # ...
+
 def realizar_sorteio():
-  jogadores = carregar_jogadores()
+    jogadores = carregar_jogadores()
 
-  # Verificar se há jogadores pendentes
-  if any(jogador['status'] == 'pendente' for jogador in jogadores):
-    mensagem = "Aguarde até que todos os jogadores confirmem o status."
-    return None, mensagem
-  else:
-    # Filtrar jogadores que estão dentro
-    jogadores_dentro = [
-        jogador for jogador in jogadores if jogador['status'] == 'dentro'
-    ]
+    # Verificar se há jogadores pendentes
+    if any(jogador['status'] == 'pendente' for jogador in jogadores):
+        mensagem = "Aguarde até que todos os jogadores confirmem o status."
+        return None, mensagem
+    else:
+        # Filtrar jogadores que estão dentro
+        jogadores_dentro = [
+            jogador for jogador in jogadores if jogador['status'] == 'dentro'
+        ]
 
-    # Ordenar jogadores por posição desejada
-    posicoes_desejadas = ['Goleiro', 'Zagueiro', 'Meia', 'Atacante']
-    jogadores_dentro.sort(
-        key=lambda x: (posicoes_desejadas.index(x['posicao']), x['nivel']))
+        # Ordenar jogadores por posição desejada
+        posicoes_desejadas = ['Goleiro', 'Zagueiro', 'Meia', 'Atacante']
+        jogadores_dentro.sort(
+            key=lambda x: (posicoes_desejadas.index(x['posicao']), x['nivel']))
 
-    # Adicione prints para depuração
-    # print("Jogadores dentro:", jogadores_dentro)
+        # Dividir jogadores por nota e posição
+        jogadores_dentro.sort(key=lambda x: (x['nivel'], x['posicao']))
 
-    # Dividir jogadores por nota e posição
-    jogadores_dentro.sort(key=lambda x: (x['nivel'], x['posicao']))
+        # Dividir jogadores em dois times, garantindo equilíbrio nas notas e posições
+        time1 = jogadores_dentro[::2]
+        time2 = jogadores_dentro[1::2]
 
-    # Adicione prints para depuração
-    # print("Jogadores ordenados:", jogadores_dentro)
+        # Calcular somatório dos níveis para cada time
+        somatorio_niveis_time1 = sum(jogador['nivel'] for jogador in time1)
+        somatorio_niveis_time2 = sum(jogador['nivel'] for jogador in time2)
 
-    # Dividir jogadores em dois times, garantindo equilíbrio nas notas e posições
-    time1 = jogadores_dentro[::2]
-    time2 = jogadores_dentro[1::2]
+        # Calcular porcentagem de cada setor para o Time 1
+        total_zagueiros_time1 = sum(1 for jogador in time1 if jogador['posicao'] == 'Zagueiro')
+        total_meias_time1 = sum(1 for jogador in time1 if jogador['posicao'] == 'Meia')
+        total_atacantes_time1 = sum(1 for jogador in time1 if jogador['posicao'] == 'Atacante')
 
-    # Adicione prints para depuração
-    # print("Time 1:", time1)
-    # print("Time 2:", time2)
+        porcentagem_zagueiro_time1 = (total_zagueiros_time1 / len(time1)) * 100
+        porcentagem_meia_time1 = (total_meias_time1 / len(time1)) * 100
+        porcentagem_atacante_time1 = (total_atacantes_time1 / len(time1)) * 100
 
-    # Calcular somatório dos níveis para cada time
-    somatorio_niveis_time1 = sum(jogador['nivel'] for jogador in time1)
-    somatorio_niveis_time2 = sum(jogador['nivel'] for jogador in time2)
+        # Calcular porcentagem de cada setor para o Time 2
+        total_zagueiros_time2 = sum(1 for jogador in time2 if jogador['posicao'] == 'Zagueiro')
+        total_meias_time2 = sum(1 for jogador in time2 if jogador['posicao'] == 'Meia')
+        total_atacantes_time2 = sum(1 for jogador in time2 if jogador['posicao'] == 'Atacante')
 
-    # Adicione prints para depuração
-    # print("Somatório Níveis Time 1:", somatorio_niveis_time1)
-    # print("Somatório Níveis Time 2:", somatorio_niveis_time2)
+        porcentagem_zagueiro_time2 = (total_zagueiros_time2 / len(time2)) * 100
+        porcentagem_meia_time2 = (total_meias_time2 / len(time2)) * 100
+        porcentagem_atacante_time2 = (total_atacantes_time2 / len(time2)) * 100
 
-    return {
-        "time1": time1,
-        "time2": time2,
-        "somatorio_niveis_time1": somatorio_niveis_time1,
-        "somatorio_niveis_time2": somatorio_niveis_time2
-    }, None
+        return {
+            "time1": time1,
+            "time2": time2,
+            "somatorio_niveis_time1": somatorio_niveis_time1,
+            "somatorio_niveis_time2": somatorio_niveis_time2,
+            "porcentagem_zagueiro_time1": porcentagem_zagueiro_time1,
+            "porcentagem_meia_time1": porcentagem_meia_time1,
+            "porcentagem_atacante_time1": porcentagem_atacante_time1,
+            "porcentagem_zagueiro_time2": porcentagem_zagueiro_time2,
+            "porcentagem_meia_time2": porcentagem_meia_time2,
+            "porcentagem_atacante_time2": porcentagem_atacante_time2,
+            "grafico_barras_time1": gerar_grafico_barras(porcentagem_zagueiro_time1, porcentagem_meia_time1, porcentagem_atacante_time1),
+            "grafico_barras_time2": gerar_grafico_barras(porcentagem_zagueiro_time2, porcentagem_meia_time2, porcentagem_atacante_time2)
+        }, None
 
   #####################
+def gerar_grafico_barras(zagueiro, meio, atacante):
+    # Crie um gráfico de barras
+    fig = go.Figure(data=[
+        go.Bar(x=['Zagueiro', 'Meia', 'Atacante'], y=[zagueiro, meio, atacante])
+    ])
 
+    # Atualize o layout para adicionar título e rótulos
+    fig.update_layout(
+        title='Distribuição de Posições',
+        xaxis=dict(title='Posição'),
+        yaxis=dict(title='Porcentagem (%)')
+    )
+
+    # Salve o gráfico como HTML
+    grafico_html = fig.to_html(full_html=False)
+
+    return grafico_html
 
 @app.route('/sortear', methods=['POST'])
 def sortear():
