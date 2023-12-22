@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import json
 import random
-#teste casa
+#teste casa 2 
 
 app = Flask(__name__)
 # teste ramificação 1234
