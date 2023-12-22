@@ -236,8 +236,9 @@ def mudar_status(nome):
       novo_status = request.form.get('novo_status')
       jogador['status'] = novo_status
   salvar_jogadores(jogadores)
-  return redirect(url_for('index'))
+  return redirect(url_for('index')) 
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=9090)
+    # Ativa o modo de depuração para reiniciar automaticamente o servidor em caso de alterações no código
+    app.run(host='0.0.0.0', port=9090, debug=True)
