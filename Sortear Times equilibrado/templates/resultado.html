@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado do Sorteio</title>
+    <style>
+        table {
+            width: 18%;
+            border-collapse: collapse;
+            margin-top: 5px;
+            align-items: center;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 0px;
+          
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resultado do Sorteio</h1>
+
+    <h2>Time Rosa</h2>
+    <p><strong>Somatório de Níveis: {{ resultado_sorteio.somatorio_niveis_time1 }}</strong></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th><th>Posição</th><th>Nível</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jogador in resultado_sorteio.time1 | sort(attribute='posicao') %}
+            <tr>
+                <td>{{ jogador.nome }}</td><td>{{ jogador.posicao }}</td><td>{{ jogador.nivel }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr> <!-- Adicionei uma linha horizontal para separar os times -->
+
+    <h2>Time Azul</h2>
+    <p><strong>Somatório de Níveis: {{ resultado_sorteio.somatorio_niveis_time2 }}</strong></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th><th>Posição</th><th>Nível</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jogador in resultado_sorteio.time2 | sort(attribute='posicao') %}
+            <tr>
+                <td>{{ jogador.nome }}</td><td>{{ jogador.posicao }}</td><td>{{ jogador.nivel }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
