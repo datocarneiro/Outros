@@ -5,7 +5,7 @@ import json
 import random
 
 app = Flask(__name__)
-
+# teste ramificação 
 
 
 def carregar_jogadores(caminho_arquivo='jogadores.json'):
