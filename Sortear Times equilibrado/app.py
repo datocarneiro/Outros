@@ -3,7 +3,9 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import json
 import random
-from plotly.graph_objects import go
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+
 
 app = Flask(__name__)
 # teste ramificação 1234
@@ -89,6 +91,8 @@ def sortear_times(jogadores):
 
 # ...
 
+# ... (código anterior)
+
 def realizar_sorteio():
     jogadores = carregar_jogadores()
 
@@ -118,57 +122,66 @@ def realizar_sorteio():
         somatorio_niveis_time1 = sum(jogador['nivel'] for jogador in time1)
         somatorio_niveis_time2 = sum(jogador['nivel'] for jogador in time2)
 
-        # Calcular porcentagem de cada setor para o Time 1
-        total_zagueiros_time1 = sum(1 for jogador in time1 if jogador['posicao'] == 'Zagueiro')
-        total_meias_time1 = sum(1 for jogador in time1 if jogador['posicao'] == 'Meia')
-        total_atacantes_time1 = sum(1 for jogador in time1 if jogador['posicao'] == 'Atacante')
+        # Calcular somatório dos níveis para cada setor do Time 1
+        soma_niveis_goleiros_zagueiros_time1 = sum(jogador['nivel'] for jogador in time1 if jogador['posicao'] in ('Goleiro', 'Zagueiro'))
+        soma_niveis_meias_time1 = sum(jogador['nivel'] for jogador in time1 if jogador['posicao'] == 'Meia')
+        soma_niveis_atacantes_time1 = sum(jogador['nivel'] for jogador in time1 if jogador['posicao'] == 'Atacante')
 
-        porcentagem_zagueiro_time1 = (total_zagueiros_time1 / len(time1)) * 100
-        porcentagem_meia_time1 = (total_meias_time1 / len(time1)) * 100
-        porcentagem_atacante_time1 = (total_atacantes_time1 / len(time1)) * 100
+        # Calcular somatório total dos níveis para o Time 1
+        somatorio_niveis_time1 = soma_niveis_goleiros_zagueiros_time1 + soma_niveis_meias_time1 + soma_niveis_atacantes_time1
 
-        # Calcular porcentagem de cada setor para o Time 2
-        total_zagueiros_time2 = sum(1 for jogador in time2 if jogador['posicao'] == 'Zagueiro')
-        total_meias_time2 = sum(1 for jogador in time2 if jogador['posicao'] == 'Meia')
-        total_atacantes_time2 = sum(1 for jogador in time2 if jogador['posicao'] == 'Atacante')
+        # Cálculos de porcentagem para o Time 1
+        porcentagem_goleiros_zagueiros_time1 = round((soma_niveis_goleiros_zagueiros_time1 / somatorio_niveis_time1) * 100)
+        porcentagem_meia_time1 = round((soma_niveis_meias_time1 / somatorio_niveis_time1) * 100)
+        porcentagem_atacante_time1 = round((soma_niveis_atacantes_time1 / somatorio_niveis_time1) * 100)
 
-        porcentagem_zagueiro_time2 = (total_zagueiros_time2 / len(time2)) * 100
-        porcentagem_meia_time2 = (total_meias_time2 / len(time2)) * 100
-        porcentagem_atacante_time2 = (total_atacantes_time2 / len(time2)) * 100
 
-        return {
-            "time1": time1,
-            "time2": time2,
-            "somatorio_niveis_time1": somatorio_niveis_time1,
-            "somatorio_niveis_time2": somatorio_niveis_time2,
-            "porcentagem_zagueiro_time1": porcentagem_zagueiro_time1,
-            "porcentagem_meia_time1": porcentagem_meia_time1,
-            "porcentagem_atacante_time1": porcentagem_atacante_time1,
-            "porcentagem_zagueiro_time2": porcentagem_zagueiro_time2,
-            "porcentagem_meia_time2": porcentagem_meia_time2,
-            "porcentagem_atacante_time2": porcentagem_atacante_time2,
-            "grafico_barras_time1": gerar_grafico_barras(porcentagem_zagueiro_time1, porcentagem_meia_time1, porcentagem_atacante_time1),
-            "grafico_barras_time2": gerar_grafico_barras(porcentagem_zagueiro_time2, porcentagem_meia_time2, porcentagem_atacante_time2)
-        }, None
+        print(soma_niveis_goleiros_zagueiros_time1)
+        print(soma_niveis_meias_time1)
+        print(soma_niveis_atacantes_time1)
+
+        print(porcentagem_goleiros_zagueiros_time1)
+        print(porcentagem_meia_time1)
+        print(porcentagem_atacante_time1)
+
+        # Calcular somatório dos níveis para cada setor do Time 2
+        soma_niveis_goleiros_zagueiros_time2 = sum(jogador['nivel'] for jogador in time2 if jogador['posicao'] in ('Goleiro', 'Zagueiro'))
+        soma_niveis_meias_time2 = sum(jogador['nivel'] for jogador in time2 if jogador['posicao'] == 'Meia')
+        soma_niveis_atacantes_time2 = sum(jogador['nivel'] for jogador in time2 if jogador['posicao'] == 'Atacante')
+
+        # Calcular somatório total dos níveis para o Time 2
+        somatorio_niveis_time2 = soma_niveis_goleiros_zagueiros_time2 + soma_niveis_meias_time2 + soma_niveis_atacantes_time2
+
+        # Cálculos de porcentagem para o Time 2
+        porcentagem_goleiros_zagueiros_time2 = round((soma_niveis_goleiros_zagueiros_time2 / somatorio_niveis_time2) * 100)
+        porcentagem_meia_time2 = round((soma_niveis_meias_time2 / somatorio_niveis_time2) * 100)
+        porcentagem_atacante_time2 = round((soma_niveis_atacantes_time2 / somatorio_niveis_time2) * 100)
+
+        print(soma_niveis_goleiros_zagueiros_time2)
+        print(soma_niveis_meias_time2)
+        print(soma_niveis_atacantes_time2)
+
+        print(porcentagem_goleiros_zagueiros_time2)
+        print(porcentagem_meia_time2)
+        print(porcentagem_atacante_time2)
+
+
+        times_sorteados = {
+          "time1": time1,
+          "time2": time2,
+          "somatorio_niveis_time1": somatorio_niveis_time1,
+          "somatorio_niveis_time2": somatorio_niveis_time2,
+          "porcentagem_goleiros_zagueiros_time1": porcentagem_goleiros_zagueiros_time1,
+          "porcentagem_meia_time1": porcentagem_meia_time1,
+          "porcentagem_atacante_time1": porcentagem_atacante_time1,
+          "porcentagem_goleiros_zagueiros_time2": porcentagem_goleiros_zagueiros_time2,
+          "porcentagem_meia_time2": porcentagem_meia_time2,
+          "porcentagem_atacante_time2": porcentagem_atacante_time2
+        }
+
+        return times_sorteados, None
 
   #####################
-def gerar_grafico_barras(zagueiro, meio, atacante):
-    # Crie um gráfico de barras
-    fig = go.Figure(data=[
-        go.Bar(x=['Zagueiro', 'Meia', 'Atacante'], y=[zagueiro, meio, atacante])
-    ])
-
-    # Atualize o layout para adicionar título e rótulos
-    fig.update_layout(
-        title='Distribuição de Posições',
-        xaxis=dict(title='Posição'),
-        yaxis=dict(title='Porcentagem (%)')
-    )
-
-    # Salve o gráfico como HTML
-    grafico_html = fig.to_html(full_html=False)
-
-    return grafico_html
 
 @app.route('/sortear', methods=['POST'])
 def sortear():
