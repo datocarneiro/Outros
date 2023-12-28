@@ -1,6 +1,7 @@
 import time #teste
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+from markupsafe import Markup
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
@@ -10,9 +11,46 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 servico = Service(ChromeDriverManager().install())
+import concurrent.futures
+
 
 app = Flask(__name__)
-def contar_palavras_chave():
+
+nome_correto = "asd"
+senha_correta = "asd"  # Senha correta
+palavras_chave = [] 
+
+@app.route('/')
+def login():
+    return render_template('login.html', mensagem_erro="")
+
+@app.route('/verificar_senha', methods=['POST'])
+def verificar_senha():
+    nome_inserido = request.form['nome']
+    senha_inserida = request.form['senha']
+    
+    if nome_inserido == nome_correto and senha_inserida == senha_correta:
+        # Nome e senha corretos, redirecionar para a página principal ou outra rota
+        return redirect(url_for('login_passou'))
+    else:
+        # Nome ou senha incorretos, exibir uma mensagem de erro
+        mensagem_erro = "Nome ou senha incorretos. Tente novamente."
+        return render_template('login.html', mensagem_erro=mensagem_erro)
+    
+@app.route('/login_passou')
+def login_passou():
+    
+    # Renderiza o template e envia a página para o cliente
+    rendered_template = render_template('gerando_dados.html')
+    # Adiciona um script JavaScript para chamar a rota '/executar_contar_palavras_chave' após o carregamento da página
+    script = Markup('<script>setTimeout(function() { window.location.href = "/executar_contar_palavras_chave"; }, 1000);</script>')
+    
+    rendered_template += script
+    
+    return rendered_template 
+
+
+def contar_palavras_chave_async():
     print('... Iniciando código ...')
     global resultados, palavras_chave  # usar as variáveis globais
     resultados = {}
@@ -43,67 +81,76 @@ def contar_palavras_chave():
                     resultados[palavra] += conteudo_elemento.count(palavra)
                     print(f'... Palavra {palavra} encontrada ...')
         except NoSuchElementException:
-            break
             print("... While except ...")
+            break
+            
         print('... Proxima página ...')
         proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
         time.sleep(5)
         if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
-            break
             print("... Len DISABLE ...")
+            break
+            
         proxima_pagina[0].click()
     # Atualizar a exibição dos resultados na página
     print('... Atualizando Resultados ...')
     resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
     total_palavras = sum(resultados.values())
     print('... Return Resultados ...')
+
     return resultados, total_palavras
-@app.route('/')
-def exibir_resultados():
+
+@app.route('/executar_contar_palavras_chave')
+def executar_contar_palavras_chave():
     global palavras_chave, resultados  # usar as variáveis globais
-    palavras_chave = ["TOTAL EXP",
-                        "FM",
-                        "DATO TESTE",
-                        "AG AMINTAS",
-                        "AG LAMENHA",
-                        "OLIST RETIRA",
-                        "AG ANGELO",
-                        "ENTREGA OSVALDO",
-                        "JAD",
-                        "ESM",
-                        "LATAM",
-                        "AZUL",
-                        "GOL",
-                        "ANDREIA SSA",
-                        "BIT HOME",
-                        "RETIRA",
-                        "BLING",
-                        "SUBWAY - AMPLO",
-                        "BRASPRESS",
-                        "MULHERES",
-                        "RODONAVES",
-                        "PAULISTANA",
-                        "ADW",
-                        "TECMAR",
-                        "MAEX",
-                        "BEMOL",
-                        "DESTAK",
-                        "AVANCE",
-                        "DOMINIO",
-                        "EBTRANS",
-                        "RAFAEL BERNAL",
-                        "RODOVIASUL",
-                        "URANOLOG",
-                        "RODOVITOR",
-                        "TRANSPO-ALMENARA",
-                        "LOGGI",
-                        "AGF XAXIM",
-                        "AMAZON",
-                        ]
-    resultados, total_palavras = contar_palavras_chave()
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        resultados, total_palavras = contar_palavras_chave_async()
+        palavras_chave = ["TOTAL EXP",
+                    "FM",
+                    "DATO TESTE",
+                    "AG AMINTAS",
+                    "AG LAMENHA",
+                    "OLIST RETIRA",
+                    "AG ANGELO",
+                    "ENTREGA OSVALDO",
+                    "JAD",
+                    "ESM",
+                    "LATAM",
+                    "AZUL",
+                    "GOL",
+                    "ANDREIA SSA",
+                    "BIT HOME",
+                    "RETIRA",
+                    "BLING",
+                    "SUBWAY - AMPLO",
+                    "BRASPRESS",
+                    "MULHERES",
+                    "RODONAVES",
+                    "PAULISTANA",
+                    "ADW",
+                    "TECMAR",
+                    "MAEX",
+                    "BEMOL",
+                    "DESTAK",
+                    "AVANCE",
+                    "DOMINIO",
+                    "EBTRANS",
+                    "RAFAEL BERNAL",
+                    "RODOVIASUL",
+                    "URANOLOG",
+                    "RODOVITOR",
+                    "TRANSPO-ALMENARA",
+                    "LOGGI",
+                    "AGF XAXIM",
+                    "AMAZON",
+                    ]
+        
+    resultados, total_palavras = contar_palavras_chave_async()
     # Remover palavras-chave com valor zero
     palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
     resultados = {palavra: quantidade for palavra, quantidade in resultados.items() if quantidade != 0}
-    return render_template('index.html', resultados=resultados, total_palavras=total_palavras)
+    return render_template('index.html', resultados=resultados, total_palavras=total_palavras) 
+    
+
 if __name__ == '__main__':
     app.run()
