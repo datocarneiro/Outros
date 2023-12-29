@@ -13,6 +13,9 @@ from selenium.common.exceptions import NoSuchElementException
 servico = Service(ChromeDriverManager().install())
 import concurrent.futures
 
+'''
+versão 1.2 = tela de login, tela de espera
+'''
 
 app = Flask(__name__)
 
