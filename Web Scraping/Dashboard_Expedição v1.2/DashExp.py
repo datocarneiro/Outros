@@ -14,7 +14,7 @@ servico = Service(ChromeDriverManager().install())
 import concurrent.futures
 
 '''
-versão 1.2 = tela de login, tela de espera
+versão 1.2 = tela de login, tela de espera (teste )
 '''
 
 app = Flask(__name__)
@@ -41,16 +41,19 @@ def verificar_senha():
         return render_template('login.html', mensagem_erro=mensagem_erro)
     
 @app.route('/login_passou')
-def login_passou():
+def login_passou(): 
+    # Adiciona estilos embutidos para estilizar a mensagem
+    estilos = '<style>.conteudo-gerado { font-size: 50px; color: blue; }</style>'
     
     # Renderiza o template e envia a página para o cliente
     rendered_template = render_template('gerando_dados.html')
-    # Adiciona um script JavaScript para chamar a rota '/executar_contar_palavras_chave' após o carregamento da página
-    script = Markup('<script>setTimeout(function() { window.location.href = "/executar_contar_palavras_chave"; }, 1000);</script>')
     
+    # Adiciona estilos e script JavaScript ao HTML
+    rendered_template = Markup(estilos + rendered_template)
+    script = Markup('<script>setTimeout(function() { window.location.href = "/executar_contar_palavras_chave"; }, 1000);</script>')
     rendered_template += script
     
-    return rendered_template 
+    return rendered_template
 
 
 def contar_palavras_chave_async():
@@ -153,7 +156,9 @@ def executar_contar_palavras_chave():
     palavras_chave = [palavra for palavra in palavras_chave if resultados.get(palavra, 0) != 0]
     resultados = {palavra: quantidade for palavra, quantidade in resultados.items() if quantidade != 0}
     return render_template('index.html', resultados=resultados, total_palavras=total_palavras) 
-    
+
+
+
 
 if __name__ == '__main__':
     app.run()
