@@ -10,7 +10,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
-servico = Service(ChromeDriverManager().install())
 import concurrent.futures
 
 '''
@@ -19,8 +18,8 @@ versão 1.2 = tela de login, tela de espera (teste )
 
 app = Flask(__name__)
 
-nome_correto = "asd"
-senha_correta = "asd"  # Senha correta
+nome_correto = "amplo"
+senha_correta = "3033"  # Senha correta
 palavras_chave = [] 
 
 @app.route('/')
@@ -55,54 +54,84 @@ def login_passou():
     
     return rendered_template
 
+def aguardar_elemento_xpath(driver, xpath, tempo_limite=10):
+    try:
+        elemento = WebDriverWait(driver, tempo_limite).until(
+            EC.presence_of_element_located((By.XPATH, xpath))
+        )
+        return elemento
+    except:
+        raise Exception(f"Elemento XPath {xpath} não encontrado após {tempo_limite} segundos")
+
 
 def contar_palavras_chave_async():
     print('... Iniciando código ...')
     global resultados, palavras_chave  # usar as variáveis globais
     resultados = {}
+
+
+
+    ########################################################################## 
+    servico = Service(ChromeDriverManager().install())
+
     opcoes = Options()
     opcoes.headless = True  # modo off ou não
     navegador = webdriver.Chrome(service=servico, options=opcoes)
+    ##########################################################################
+
+    # para rodar no replit usar essas configuraçõa
+    # options = Options()
+    # options.add_argument("--no-sandbox")
+    # options.add_argument("--disable-dev-shm-usage")
+    # options.headless = True  # Executar o Chrome de forma oculta
+
+    # print('Antes de iniciar o WebDriver')
+    # navegador = webdriver.Chrome(options=options)
+    # print('Após iniciar o WebDriver')
+    #############################################################################
+
     print('... Logando ...')
     navegador.get("https://amplo.eship.com.br/")
-    navegador.find_element(By.XPATH, '//*[@id="login"]').send_keys("dato@amplologistica.com.br")
-    navegador.find_element(By.XPATH, '//*[@id="senha"]').send_keys("D@sh4123")
-    navegador.find_element(By.XPATH, '//*[@id="Entrar"]/span').click()
-    time.sleep(5)
-    print("... Logado ...")
-    navegador.find_element(By.XPATH, '//*[@id="FormListarOrdem"]/ul/li[2]/div/a[3]/div').click()
+    aguardar_elemento_xpath(navegador, '//*[@id="login"]', tempo_limite=10).send_keys("dato@amplologistica.com.br")
+    aguardar_elemento_xpath(navegador, '//*[@id="senha"]', tempo_limite=10).send_keys("D@sh4123")
+    aguardar_elemento_xpath(navegador, '//*[@id="Entrar"]/span', tempo_limite=10).click()
+
+    aguardar_elemento_xpath(navegador, '//*[@id="FormListarOrdem"]/ul/li[2]/div/a[3]/div').click()
+
+
     print('... Abriu lista para 100... e iniciando FOR ...')
     time.sleep(5)
     for palavra in palavras_chave:
         resultados[palavra] = 0
-    print("... passou for ...")
+   
     while True:
-        print('... Iniciando FOR ...')
         try:
+            aguardar_elemento_xpath(navegador, '//*[@id="FormListarOrdem"]')
             elementos = navegador.find_elements(By.XPATH, '//*[@id="FormListarOrdem"]')
-            time.sleep(5)
+            
             for elemento in elementos:
                 conteudo_elemento = elemento.text
                 for palavra in palavras_chave:
                     resultados[palavra] += conteudo_elemento.count(palavra)
-                    print(f'... Palavra {palavra} encontrada ...')
         except NoSuchElementException:
             print("... While except ...")
             break
             
         print('... Proxima página ...')
-        proxima_pagina = navegador.find_elements(By.XPATH, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]')
-        time.sleep(5)
-        if len(proxima_pagina) == 0 or "disable" in proxima_pagina[0].get_attribute("class"):
+    # Substitua time.sleep(5) por aguardar_elemento_xpath(navegador, 'XPath do elemento', tempo_limite)
+        proxima_pagina = aguardar_elemento_xpath(navegador, '/html/body/main/form/div[1]/div[2]/div/div[2]/div/ul/li[6]', tempo_limite=10)
+    
+        # Correção aqui: remova o uso de len() e ajuste a condição
+        if not proxima_pagina or "disable" in proxima_pagina.get_attribute("class"):
             print("... Len DISABLE ...")
             break
-            
         proxima_pagina[0].click()
+
+
     # Atualizar a exibição dos resultados na página
-    print('... Atualizando Resultados ...')
     resultados = {palavra: int(quantidade) for palavra, quantidade in resultados.items()}
     total_palavras = sum(resultados.values())
-    print('... Return Resultados ...')
+    print('... Exuibindo resultado (função contar_palavras_chaves_sync)...')
 
     return resultados, total_palavras
 
@@ -158,7 +187,5 @@ def executar_contar_palavras_chave():
     return render_template('index.html', resultados=resultados, total_palavras=total_palavras) 
 
 
-
-
 if __name__ == '__main__':
-    app.run()
+  app.run(host="0.0.0.0", port=9090)
