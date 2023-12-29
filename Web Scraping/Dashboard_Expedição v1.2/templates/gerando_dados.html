@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> 
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Título Aqui</title>
-    <!-- Link para o arquivo CSS na pasta static -->
-    <link rel="stylesheet" type="text/css" href="static/styleaguardando.css">
+    <title>Página Principal da aplicação</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="conteudo-gerado">
-        <h6 class="marca2">dato®</h6>
-        <p>
-            Bem vindo
-            Aguarde ...
-            Os dados estão sendo gerados
-        </p>
-        <div class="loading"></div>
-    </div>
+    <h1>Bem vindo</h1>
+    <h1>Aguarde ...</h1>
+    <h1>Os dados estão sendo gerados</h1>
 </body>
 </html>
