@@ -14,10 +14,22 @@
     <title>DashByDato</title>
     <style>
         html {
-            background-color: rgb(211, 219, 228);
+            background-color: rgb(211, 219, 228); 
         }
-        body {
-            margin: 2px;
+        body, html {
+            margin: 5px; 
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; 
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background-image: url("https://amplologistica.com.br/wp-content/uploads/2019/09/Amplo.jpeg");
+            background-size: cover;
+            opacity: 0.2;
         }
         table {
             border-collapse: separate;
@@ -28,7 +40,7 @@
             color: black;
         }
         .titulo{
-            font-size: 45px;
+            font-size: 25px;
             margin-bottom: 0;
             margin-top: 1;
             text-align: center;
@@ -39,8 +51,8 @@
         .marca {
             float: right;
             text-align: right;
-            width: 20%;
-            font-size: 40px;
+            width: 15%;
+            font-size: 28px;
             margin-right: 25px;
             margin-top: 0px;
         }
@@ -51,7 +63,7 @@
         .interno {
             width: 93%;
             height: 93%;
-            font-size: 40px;
+            font-size: 15px;
             text-align: center;
             padding: 15px;
             border: 0px outset rgb(237, 235, 234);    
@@ -68,21 +80,22 @@
         .tpt {
             background-color: rgb(211, 219, 228);
             color: rgb(0, 0, 0);
+            font-size: 20px;
         }
         .qtd{
-            font-size: 80px;
+            font-size: 40px;
         }
         h2 {
             float: left;
             width: 80%;
             color: rgb(10, 28, 80);
-            font-size: 40px;
+            font-size: 20px;
             margin-left: 15px;
             margin-bottom: -30px;
         }
         .pd{
             color: red;
-            font-size: 60px;
+            font-size: 35px;
         }
     </style>
 </head>
@@ -95,12 +108,16 @@
     </div>
     <table>
         <colgroup>
-            <col style="width: 33%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
-            <col style="width: 33%;">
-            <col style="width: 33%;">
+            <col style="width: 20%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 20%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 20%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 20%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+            <col style="width: 20%;"> <!-- Define que cada coluna deve ocupar 25% da largura total da tabela -->
+
+    
           </colgroup>
         {% for palavra, quantidade in resultados.items() %}
-        {% if loop.index0 % 3 == 0 %}
+        {% if loop.index0 % 5 == 0 %}
         <tr>
         {% endif %}
             <td>
@@ -110,7 +127,7 @@
                 <strong class="qtd">{{ quantidade }}</strong>
                 </div>
             </td>
-        {% if loop.index % 3 == 0 or loop.last %}
+        {% if loop.index % 5 == 0 or loop.last %}
         </tr>
         {% endif %}
         {% endfor %}
