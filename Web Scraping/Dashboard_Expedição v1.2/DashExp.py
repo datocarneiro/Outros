@@ -13,7 +13,7 @@ from selenium.common.exceptions import NoSuchElementException
 import concurrent.futures
 
 '''
-versão 1.2 = tela de login, tela de espera (teste )
+versão 1.2 = tela de login, tela de espera (teste ) 
 '''
 
 app = Flask(__name__)
