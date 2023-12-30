@@ -16,8 +16,20 @@
         html {
             background-color: rgb(211, 219, 228);
         }
-        body {
-            margin: 2px;
+        body, html {
+            margin: 5px; 
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background-image: url("https://amplologistica.com.br/wp-content/uploads/2019/09/Amplo.jpeg");
+            background-size: cover;
+            opacity: 0.2;
         }
         table {
             border-collapse: separate;
