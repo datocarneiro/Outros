@@ -88,7 +88,7 @@ def contar_palavras_chave_async():
     # print('Antes de iniciar o WebDriver')
     # navegador = webdriver.Chrome(options=options)
     # print('Após iniciar o WebDriver')
-    #############################################################################
+    ############################################################################# 
 
     print('... Logando ...')
     navegador.get("https://amplo.eship.com.br/")
@@ -188,4 +188,4 @@ def executar_contar_palavras_chave():
 
 
 if __name__ == '__main__':
-  app.run(host="0.0.0.0", port=9090)
+    app.run(host="0.0.0.0", port=9090) 
