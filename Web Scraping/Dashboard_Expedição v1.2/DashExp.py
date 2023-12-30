@@ -10,10 +10,15 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+<<<<<<< HEAD
+servico = Service(ChromeDriverManager().install())
+import concurrent.futures 
+=======
 import concurrent.futures
+>>>>>>> development_Servidor
 
 '''
-versão 1.2 = tela de login, tela de espera (teste )
+versão 1.2 = tela de login, tela de espera (teste ) 
 '''
 
 app = Flask(__name__)
