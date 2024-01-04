@@ -8,7 +8,7 @@ while True:
                 raise ValueError('Digite apenas números.')
             
             
-            informado = tuple(map(str, cpf_input))          # python gerar_CPF.py
+            informado = tuple(map(str, cpf_input))         
             
             # Verifica se o CPF tem 11 dígitos
             if len(informado) != 9:
@@ -26,11 +26,10 @@ while True:
     for i in nove_digitos:
         resultado += int(i) * numero_regressivo1
         numero_regressivo1 -= 1
-
     primeiro_digito = (resultado * 10) % 11 if (resultado * 10) % 11 <= 9 else 0
     print(f'Validando o primeiro dígito:... {primeiro_digito}')
 
-    #concatenando os 9 digitos + o primeiro dígito
+    #concatenando os 9 digitos com o primeiro dígito
     dez_digitos = list(nove_digitos)
     dez_digitos.append(str(primeiro_digito))
 
@@ -40,16 +39,14 @@ while True:
     for i in dez_digitos:
         resultado += int(i) * numero_regressivo2
         numero_regressivo2 -= 1
-
     segundo_digito = (resultado * 10) % 11 if (resultado * 10) % 11 <= 9 else 0
     print(f'Validando o segundo dígito:... {segundo_digito}')
 
+    #concatenando os 10 digitos com o segundo dígito
     resultado_cpf = dez_digitos
-
     resultado_cpf.append(str(segundo_digito)) 
 
     cpf_unido = ''.join(resultado_cpf) # o delimitador é chamado antes
-
     cpf_validado = f'{cpf_unido[:9]}-{cpf_unido[9:]}'
     print(f'\n\t{cpf_validado}\n')
 
