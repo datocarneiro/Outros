@@ -18,7 +18,6 @@ while True:
 cpf_informado = ''.join(informado) # o delimitador é chamado antes
 cpf_digitado_armazenado = f'{cpf_informado[:9]}-{cpf_informado[9:]}'
 print(f'CPF informado: {cpf_digitado_armazenado}')
-print('='*50)
 # variavel irá armazenar somente os 9 primeiros dígitos para o calculo
 nove_digitos = informado[:9]   
 # Calculo do primeiro dígito
@@ -39,8 +38,6 @@ for i in dez_digitos:
     numero_regressivo2 -= 1
 segundo_digito = (resultado * 10) % 11 if (resultado * 10) % 11 <= 9 else 0
 # print(f"Validando o segundo dígito:... ' * '") # {segundo_digito}')
-print(f"\t\t ... Validando ...") # {segundo_digito}')
-print('='*50)
 #concatenando os 9 digitos + o primeiro dígito
 onze_digitos = list(dez_digitos)
 onze_digitos.append(str(segundo_digito))
@@ -48,9 +45,10 @@ onze_digitos.append(str(segundo_digito))
 cpf_unido = ''.join(onze_digitos) # o delimitador é chamado antes
 cpf_validado = f'{cpf_unido[:9]}-{cpf_unido[9:]}'
 # validando o CPF digitado com o que foi calculado
+print(f"\t\t ... Validando ...") # {segundo_digito}')
 if cpf_digitado_armazenado == cpf_validado:
     print(f'\n\t ... O cpf "{cpf_validado}" é: VÁLIDO ...\n')
 else:
     print(f'\n\t ... O cpf "{cpf_digitado_armazenado}" é: INVÁLIDO ...\n')
-print('='*50)
+
 
