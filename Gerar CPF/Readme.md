@@ -1,7 +1,8 @@
-O programa gera CPF válido para cadastros em sistemas diversos
+# **O programa gera CPF válido**
 
-o usuario deve ingformar 9 dígitos
-na sequencia o prgrama calcula os dígitos valídos para um CPF
+# para cadastros em sistemas diversos
+
+**o usuario deve ingformar 9 dígitosna sequencia o prgrama calculaos dígitos valídos para um CPF**
 
 
     Calculo do primeiro dígito do CPF
