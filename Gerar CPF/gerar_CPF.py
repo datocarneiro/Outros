@@ -1,29 +1,10 @@
-# entrada de dados com validação, perem gera somnete um cpf
-# while True:   
-#     while True:
-#         try:
-#             cpf_input = input("Digite 9 digitos [apenas números]: ")
-#             # Verifica se a entrada contém apenas números
-#             if not cpf_input.isdigit():
-#                 raise ValueError('Digite apenas números.')    
-#             informado = tuple(map(str, cpf_input))              
-#             # Verifica se o CPF tem 11 dígitos
-#             if len(informado) != 9:
-#                 raise ValueError('informe somente 9 dígitos.')         
-#             break
-#         except ValueError as e:
-#             print(e)
-
 import random
-
 qtd_cpf = int(input('Quantos deseja gerar?: '))
-
 for i in range(qtd_cpf):
     # gerando 9 digitos
     nove_digitos = ''
     for i in range(9):
         nove_digitos += str(random.randint(0, 9))
-
     #calculando o primeiro dígito
     resultado = 0
     numero_regressivo1 = 10
