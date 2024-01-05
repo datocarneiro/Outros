@@ -16,6 +16,7 @@
         contagem regressiva começando de 10
 
         Ex.:  746.824.890-70 (746824890)
+        EX: resultado sendo > 9: (364408470)
                             10  9  8  7  6  5  4  3  2
                         *  7  4  6  8  2  4  8  9  0
         Resultado da conta: 70  36 48 56 12 20 32 27 0
