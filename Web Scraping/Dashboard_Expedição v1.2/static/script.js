@@ -11,7 +11,7 @@ document.querySelector('#nome').addEventListener('focus', function(e) {
     strokeDasharray: {
       value: '240 1386',
       duration: 700,
-      easing: 'easeOutQuart'
+      easing: 'easeOutQuart' 
     }
   });
 });

@@ -9,7 +9,7 @@ body::before {
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0;
+    left: 0; 
     z-index: -1;
     background-image: url("https://amplologistica.com.br/wp-content/uploads/2019/09/Amplo.jpeg");
     background-size: cover;
@@ -27,7 +27,7 @@ body::before {
 .conteudo-gerado p {
     /* Adicione estilos desejados aqui */
     padding: 20px;
-    color: rgb(1, 43, 121);
+    color: rgb(2, 39, 107);
     font-size: 45px; /* Ajuste o tamanho conforme necessário */
 }
 
